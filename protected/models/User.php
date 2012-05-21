@@ -9,6 +9,7 @@
  * @property string $password
  * @property string $salt
  * @property string $email
+ * @property string $realname
  *
  * The followings are the available model relations:
  * @property Category[] $tblCategories
@@ -41,11 +42,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('username, password, email', 'length', 'max'=>128),
+			array('username, password, email, realname', 'required'),
+			array('username, password, email, realname', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, email', 'safe', 'on'=>'search'),
+			array('id, username, email, realname', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +70,7 @@ class User extends CActiveRecord
 		return array(
 			'username' => 'Username',
 			'email' => 'Email',
+			'realname' => 'Full name',
 		);
 	}
 
@@ -86,6 +88,7 @@ class User extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('email',$this->email,true);
+		$criteria->compare('realname',$this->realname,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
