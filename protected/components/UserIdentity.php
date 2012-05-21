@@ -29,6 +29,8 @@ class UserIdentity extends CUserIdentity
 		{
 			$this->_id=$user->id;
 			$this->username=$user->username;
+			// set isAdmin property of Yii::app()->user
+			$this->setState('isAdmin', $this->username == "admin");
 			$this->errorCode=self::ERROR_NONE;
 		}
 		return ($this->errorCode==self::ERROR_NONE);
@@ -37,14 +39,5 @@ class UserIdentity extends CUserIdentity
 	public function getId()
 	{
 		return $this->_id;
-	}
-
-	/**
-	 * Checks if the user is an admin. TODO: why is this not working?
-	 * @return boolean whether admin or not.
-	 */
-	public function isAdmin()
-	{
-		return ($this->username == "admin");
 	}
 }
