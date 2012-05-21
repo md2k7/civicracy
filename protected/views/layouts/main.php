@@ -28,9 +28,6 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'Categories', 'url'=>array('/category/admin'), 'visible'=>(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin)),
 				array('label'=>'Users', 'url'=>array('/user/admin'), 'visible'=>(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin)),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
