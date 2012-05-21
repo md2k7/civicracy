@@ -7,6 +7,7 @@
  * @property integer $id
  * @property string $username
  * @property string $password
+ * @property string $salt
  * @property string $email
  *
  * The followings are the available model relations:
@@ -40,8 +41,8 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('username, password, email', 'length', 'max'=>128),
+			array('username, password, salt, email', 'required'),
+			array('username, password, salt, email', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, username, email', 'safe', 'on'=>'search'),
@@ -69,6 +70,7 @@ class User extends CActiveRecord
 			'id' => 'ID',
 			'username' => 'Username',
 			'password' => 'Password',
+			'salt' => 'Salt',
 			'email' => 'Email',
 		);
 	}
@@ -87,10 +89,21 @@ class User extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('password',$this->password,true);
+		$criteria->compare('salt',$this->salt,true);
 		$criteria->compare('email',$this->email,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function validatePassword($password)
+	{
+		return $this->hashPassword($password,$this->salt)===$this->password;
+	}
+ 
+	public function hashPassword($password,$salt)
+	{
+		return md5($salt.$password);
 	}
 }
