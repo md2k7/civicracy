@@ -1,23 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "tbl_user".
+ * This is the model class for table "tbl_category".
  *
- * The followings are the available columns in table 'tbl_user':
+ * The followings are the available columns in table 'tbl_category':
  * @property integer $id
- * @property string $username
- * @property string $password
- * @property string $email
+ * @property string $name
  *
  * The followings are the available model relations:
- * @property Category[] $tblCategories
+ * @property User[] $tblUsers
  */
-class User extends CActiveRecord
+class Category extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return Category the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -29,7 +27,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_user';
+		return 'tbl_category';
 	}
 
 	/**
@@ -40,11 +38,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('username, password, email', 'length', 'max'=>128),
+			array('name', 'required'),
+			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, email', 'safe', 'on'=>'search'),
+			array('id, name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,7 +54,7 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblCategories' => array(self::MANY_MANY, 'Category', 'tbl_vote(voter_id, category_id)'),
+			'tblUsers' => array(self::MANY_MANY, 'User', 'tbl_vote(category_id, voter_id)'),
 		);
 	}
 
@@ -67,9 +65,7 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
-			'password' => 'Password',
-			'email' => 'Email',
+			'name' => 'Name',
 		);
 	}
 
@@ -85,9 +81,7 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('email',$this->email,true);
+		$criteria->compare('name',$this->name,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
