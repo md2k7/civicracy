@@ -1,11 +1,10 @@
 <?php
 $this->breadcrumbs=array(
-	'Categories'=>array('index'),
+	'Categories'=>array('admin'),
 	'Create',
 );
 
 $this->menu=array(
-	array('label'=>'List Category', 'url'=>array('index')),
 	array('label'=>'Manage Category', 'url'=>array('admin')),
 );
 ?>
