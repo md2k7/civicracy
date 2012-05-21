@@ -106,4 +106,31 @@ class User extends CActiveRecord
 	{
 		return md5($salt.$password);
 	}
+
+	/**
+	 * Override save() method of CActiveRecord to generate a fresh salt for new passwords
+	 */
+	public function save($runValidation=true, $attributes=NULL)
+	{
+		if($attributes === NULL || in_array('password', $attributes))
+		{
+			$this->salt = $this->createSalt();
+			$this->password = md5($this->salt . $this->password);
+			if($attributes !== NULL && !in_array('salt', $attributes))
+				$attributes[] = 'salt';
+		}
+		return parent::save($runValidation, $attributes);
+	}
+
+	private function createSalt()
+	{
+		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!"§$%&/()=?';
+		$len = 20;
+		$salt = '';
+
+		for($i = 0; $i < $len; $i++)
+			$salt .= substr($alphabet, rand(0, strlen($alphabet) - 1), 1);
+
+		return $salt;
+	}
 }
