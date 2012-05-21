@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Users'=>array('index'),
-	$model->id,
+	'Users'=>array('admin'),
+	$model->username,
 );
 
 $this->menu=array(
@@ -13,14 +13,12 @@ $this->menu=array(
 );
 ?>
 
-<h1>View User #<?php echo $model->id; ?></h1>
+<h1>View User <?php echo $model->username; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'id',
 		'username',
-		'password',
 		'email',
 	),
 )); ?>

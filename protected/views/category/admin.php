@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Categories'=>array('index'),
+	'Categories'=>array('admin'),
 	'Manage',
 );
 
