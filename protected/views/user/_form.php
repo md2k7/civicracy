@@ -16,6 +16,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'realname'); ?>
+		<?php echo $form->textField($model,'realname',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'realname'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'password'); ?>
 		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'password'); ?>
