@@ -54,7 +54,7 @@ class Category extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblUsers' => array(self::MANY_MANY, 'User', 'tbl_vote(category_id, voter_id)'),
+			'votes' => array(self::HAS_MANY, 'Vote', 'category_id'),
 		);
 	}
 

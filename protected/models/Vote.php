@@ -53,6 +53,9 @@ class Vote extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'category'=>array(self::BELONGS_TO, 'Category', 'category_id'),
+			'voter'=>array(self::BELONGS_TO, 'User', 'voter_id'),
+			'candidate'=>array(self::BELONGS_TO, 'User', 'candidate_id'),
 		);
 	}
 

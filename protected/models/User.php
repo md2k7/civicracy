@@ -58,7 +58,8 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'tblCategories' => array(self::MANY_MANY, 'Category', 'tbl_vote(voter_id, category_id)'),
+			'votes' => array(self::HAS_MANY, 'Vote', 'voter_id'),
+			'supporters' => array(self::HAS_MANY, 'Vote', 'candidate_id'),
 		);
 	}
 
