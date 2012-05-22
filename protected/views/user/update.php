@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'Users'=>array('admin'),
-	$model->id=>array('view','id'=>$model->id),
+	$model->username=>array('view','id'=>$model->id),
 	'Update',
 );
 

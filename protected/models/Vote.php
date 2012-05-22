@@ -37,11 +37,10 @@ class Vote extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('category_id, voter_id, candidate_id, reason', 'required'),
-			array('category_id, voter_id, candidate_id', 'numerical', 'integerOnly'=>true),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('category_id, voter_id, candidate_id, reason', 'safe', 'on'=>'search'),
+			array('category_id, candidate_id, reason', 'required'),
+			array('category_id, candidate_id', 'numerical', 'integerOnly'=>true),
+			array('category_id', 'isValidCategory'),
+			array('candidate_id', 'isValidCandidate'),
 		);
 	}
 
@@ -91,5 +90,26 @@ class Vote extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	/*
+	 * @param string $attribute the name of the attribute to be validated
+	 * @param array $params options specified in the validation rule
+	 */
+	public function isValidCategory($attribute, $params)
+	{
+		if(Category::model()->findByPk($this->category_id) === null)
+			$this->addError($attribute, 'Incorrect category.');
+	}
+
+	/*
+	 * @param string $attribute the name of the attribute to be validated
+	 * @param array $params options specified in the validation rule
+	 */
+	public function isValidCandidate($attribute, $params)
+	{
+		// TODO: cycle detection
+		if(User::model()->findByPk($this->candidate_id) === null)
+			$this->addError($attribute, 'Incorrect candidate.');
 	}
 }

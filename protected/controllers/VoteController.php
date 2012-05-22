@@ -115,8 +115,11 @@ class VoteController extends Controller
 		{
 			$model->attributes=$_POST['Vote'];
 			$model->voter_id = Yii::app()->user->id; // for security, we don't use a hidden field for this
-			if($model->save())
-				$this->redirect(array('view','id'=>$id));
+			if($model->validate())
+			{
+				if($model->save())
+					$this->redirect(array('view','id'=>$id));
+			}
 		}
 
 		$this->render('update', array(
