@@ -66,8 +66,17 @@ class Category extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Name',
+			'name' => 'Category',
 		);
+	}
+
+	/**
+	 * Used in vote/index to determine the candidate name for a category
+	 * @return the candidate in this category voted for by us
+	 */
+	public function getCandidate()
+	{
+		return Vote::model()->with('candidate')->find('category_id=:category_id AND voter_id=:voter_id', array(':category_id' => $this->id, ':voter_id' => Yii::app()->user->id))->candidate->realname;
 	}
 
 	/**
