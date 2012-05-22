@@ -77,12 +77,16 @@ class VoteController extends Controller
 		));
 	}
 
-	public function actionDelete($categoryId)
+	/**
+	 * Delete the vote in a category.
+	 * @param id category ID
+	 */
+	public function actionDelete($id)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			$this->loadVoteByCategoryId($categoryId)->delete();
+			$this->loadVoteByCategoryId($id)->delete();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -96,10 +100,14 @@ class VoteController extends Controller
 		$this->render('update');
 	}
 
-	public function actionView($categoryId)
+	/**
+	 * View the vote history for a given category.
+	 * @param id category ID
+	 */
+	public function actionView($id)
 	{
 		$this->render('view', array(
-			'voteHistory' => loadVoteHistory($categoryId),
+			'voteHistory' => loadVoteHistory($id),
 		));
 	}
 
@@ -138,11 +146,11 @@ class VoteController extends Controller
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer the ID of the model to be loaded
+	 * @param id category ID
 	 */
-	private function loadVoteByCategoryId($categoryId)
+	private function loadVoteByCategoryId($id)
 	{
-		$model=Category::model()->findByPk($categoryId)->getCandidate();
+		$model=Category::model()->findByPk($id)->getCandidate();
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
