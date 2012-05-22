@@ -44,6 +44,7 @@ class User extends CActiveRecord
 		return array(
 			array('username, password, email, realname', 'required'),
 			array('username, password, email, realname', 'length', 'max'=>128),
+			array('username, realname', 'isUniqueAttribute'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('username, realname', 'safe', 'on'=>'search'),
@@ -131,5 +132,15 @@ class User extends CActiveRecord
 			$salt .= substr($alphabet, rand(0, strlen($alphabet) - 1), 1);
 
 		return $salt;
+	}
+
+	/*
+	 * @param string $attribute the name of the attribute to be validated
+	 * @param array $params options specified in the validation rule
+	 */
+	public function isUniqueAttribute($attribute, $params)
+	{
+		if($this->find($attribute . '=:val', array(':val' => $this->getAttribute($attribute))) !== null)
+			$this->addError($attribute, $this->getAttributeLabel($attribute) . ' duplicate: ' . $this->getAttribute($attribute) . ' is already registered.');
 	}
 }
