@@ -115,6 +115,7 @@ class VoteController extends Controller
 		{
 			$model->attributes=$_POST['Vote'];
 			$model->voter_id = Yii::app()->user->id; // for security, we don't use a hidden field for this
+			$model->setCandidate($_POST['candidate']);
 			if($model->validate())
 			{
 				if($model->save())
@@ -125,7 +126,20 @@ class VoteController extends Controller
 		$this->render('update', array(
 			'model' => $model,
 			'categoryModel' => $categoryModel,
+			'candidates' => $this->loadCandidates(),
 		));
+	}
+
+	/**
+	 * @return array of candidate names
+	 */
+	private function loadCandidates()
+	{
+		$candidates = User::model()->findAll();
+		$list = array();
+		foreach($candidates as $c)
+			$list[] = $c->realname;
+		return $list;
 	}
 
 	/**

@@ -16,7 +16,19 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'candidate_id'); ?>
-		<?php echo $form->textField($model,'candidate_id',array('size'=>60,'maxlength'=>128)); ?>
+<?php
+
+$this->widget('ext.combobox.EJuiComboBox', array(
+	'name' => 'candidate',
+	'data' => $candidates,
+	'options' => array(
+		'allowText' => false,
+	),
+	// Options passed to the text input
+	'htmlOptions' => array('size' => 45),
+));
+
+?>
 		<?php echo $form->error($model,'candidate_id'); ?>
 	</div>
 

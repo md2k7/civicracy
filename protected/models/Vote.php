@@ -103,6 +103,15 @@ class Vote extends CActiveRecord
 	}
 
 	/*
+	 * Set the candidate_id from a realname of a user
+	 */
+	public function setCandidate($candidateName)
+	{
+		$candidate = User::model()->find('realname=:realname', array(':realname' => $candidateName));
+		$this->candidate_id = ($candidate !== null) ? $candidate->id : -1;
+	}
+
+	/*
 	 * @param string $attribute the name of the attribute to be validated
 	 * @param array $params options specified in the validation rule
 	 */
@@ -143,7 +152,7 @@ class Vote extends CActiveRecord
 		$history = array();
 		$voterId = $startUserId !== null ? $startUserId : Yii::app()->user->id;
 		$run = true;
-		$voters = array();
+		$voters = array(); // cycle prevention in software (this prevents hangups if the DB is already broken)
 
 		while($run)
 		{
