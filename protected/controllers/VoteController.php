@@ -79,7 +79,7 @@ class VoteController extends Controller
 
 	/**
 	 * Delete the vote in a category.
-	 * @param id category ID
+	 * @param integer category ID
 	 */
 	public function actionDelete($id)
 	{
@@ -92,7 +92,6 @@ class VoteController extends Controller
 			if(!isset($_GET['ajax']))
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 		}
-		$this->render('delete');
 	}
 
 	public function actionUpdate()
@@ -102,12 +101,14 @@ class VoteController extends Controller
 
 	/**
 	 * View the vote history for a given category.
-	 * @param id category ID
+	 * @param integer category ID
 	 */
 	public function actionView($id)
 	{
 		$this->render('view', array(
-			'voteHistory' => loadVoteHistory($id),
+			'voteHistory' => $this->loadVoteHistory($id),
+			'category' => Category::model()->findByPk($id)->name,
+			'id' => $id,
 		));
 	}
 
@@ -139,20 +140,23 @@ class VoteController extends Controller
 
 		return new CArrayDataProvider($history, array(
 			'id' => 'vote_history',
-//			'keys' => array(VoteHistory::model()->attributeNames()),
+			'keyField' => 'realname',
 		));
 	}
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param id category ID
+	 * @param integer category ID
 	 */
-	private function loadVoteByCategoryId($id)
+	private function loadVoteByCategoryId($categoryId)
 	{
-		$model=Category::model()->findByPk($id)->getCandidate();
-		if($model===null)
+		$model=Category::model()->with('votes')->find('voter_id=:voter_id AND category_id=:category_id', array(
+			':voter_id' => Yii::app()->user->id,
+			':category_id' => $categoryId,
+		));
+		if($model === null || $model->votes === null || count($model->votes) != 1)
 			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
+		return $model->votes[0];
 	}
 }
