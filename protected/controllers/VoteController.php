@@ -86,7 +86,10 @@ class VoteController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			$this->loadVoteByCategoryId($id)->delete();
+			$vote = $this->loadVoteByCategoryId($id);
+			if($vote === null)
+				throw new CHttpException(404,'The requested page does not exist.');
+			$vote->delete();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -94,9 +97,32 @@ class VoteController extends Controller
 		}
 	}
 
-	public function actionUpdate()
+	/**
+	 * Enter vote for a given category.
+	 * @param integer category ID
+	 */
+	public function actionUpdate($id)
 	{
-		$this->render('update');
+		$model = $this->loadVoteByCategoryId($id);
+		if($model === null)
+		{
+			$model = new Vote;
+			$model->category_id = $id;
+		}
+		$categoryModel = Category::model()->findByPk($id);
+
+		if(isset($_POST['Vote']))
+		{
+			$model->attributes=$_POST['Vote'];
+			$model->voter_id = Yii::app()->user->id; // for security, we don't use a hidden field for this
+			if($model->save())
+				$this->redirect(array('view','id'=>$id));
+		}
+
+		$this->render('update', array(
+			'model' => $model,
+			'categoryModel' => $categoryModel,
+		));
 	}
 
 	/**
@@ -108,6 +134,7 @@ class VoteController extends Controller
 		$this->render('view', array(
 			'voteHistory' => $this->loadVoteHistory($id),
 			'category' => Category::model()->findByPk($id)->name,
+			'reason' => $this->loadVoteByCategoryId($id)->reason,
 			'id' => $id,
 		));
 	}
@@ -125,7 +152,7 @@ class VoteController extends Controller
 		{
 			// we could use a prepared statement here to improve performance
 			$vote = Vote::model()->with('candidate')->find('voter_id=:voter_id AND category_id=:category_id', array(':voter_id' => $voterId, ':category_id' => $categoryId));
-			if($vote !== NULL)
+			if($vote !== NULL && $voterId != $vote->candidate_id)
 			{
 				$voterId = $vote->candidate_id;
 				$entry = new VoteHistory;
@@ -156,7 +183,7 @@ class VoteController extends Controller
 			':category_id' => $categoryId,
 		));
 		if($model === null || $model->votes === null || count($model->votes) != 1)
-			throw new CHttpException(404,'The requested page does not exist.');
+			return null;
 		return $model->votes[0];
 	}
 }
