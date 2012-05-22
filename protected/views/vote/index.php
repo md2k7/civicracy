@@ -32,6 +32,7 @@ $this->breadcrumbs=array(
 		),
 		array(
 			'class' => 'CButtonColumn',
+			'viewButtonUrl' => 'Yii::app()->urlManager->createUrl("view", array("columnId" => $data->id))',
 		),
 	),
 )); ?>
