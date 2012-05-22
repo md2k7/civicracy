@@ -51,10 +51,11 @@ class Category extends CActiveRecord
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
 			'votes' => array(self::HAS_MANY, 'Vote', 'category_id'),
+
+			/* statistical queries */
+			'voteCount' => array(self::STAT, 'Vote', 'category_id'),
 		);
 	}
 
