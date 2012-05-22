@@ -76,7 +76,7 @@ class Category extends CActiveRecord
 	 */
 	public function getCandidate()
 	{
-		return Vote::model()->with('candidate')->find('category_id=:category_id AND voter_id=:voter_id', array(':category_id' => $this->id, ':voter_id' => Yii::app()->user->id))->candidate->realname;
+		return Vote::model()->with('candidate')->find('category_id=:category_id AND voter_id=:voter_id', array(':category_id' => $this->id, ':voter_id' => Yii::app()->user->id))->candidate;
 	}
 
 	/**

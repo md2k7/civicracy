@@ -66,7 +66,7 @@ class VoteController extends Controller
 		// get categories where we haven't voted yet
 		$freeVote = new CActiveDataProvider('Category', array(
 			'criteria' => array(
-				'condition' => 'not exists (select 1 from tbl_vote where voter_id='.Yii::app()->user->id.' and category_id=t.id)',
+				'condition' => 'NOT EXISTS (SELECT 1 FROM tbl_vote WHERE voter_id='.Yii::app()->user->id.' AND category_id=t.id)',
 			),
 		));
 
@@ -82,8 +82,17 @@ class VoteController extends Controller
 		$this->render('create');
 	}
 
-	public function actionDelete()
+	public function actionDelete($categoryId)
 	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$this->loadVoteByCategoryId($categoryId)->delete();
+
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+		}
 		$this->render('delete');
 	}
 
@@ -96,4 +105,17 @@ class VoteController extends Controller
 	{
 		$this->render('view');
 	}
-} 
+
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer the ID of the model to be loaded
+	 */
+	public function loadVoteByCategoryId($categoryId)
+	{
+		$model=Category::model()->findByPk($categoryId)->getCandidate();
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
+}

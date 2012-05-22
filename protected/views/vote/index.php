@@ -28,7 +28,7 @@ $this->breadcrumbs=array(
 		'name', // category name
 		array(
 			'header' => User::model()->getAttributeLabel('realname'),
-			'value' => '$data->getCandidate()',
+			'value' => '$data->getCandidate()->realname',
 		),
 		array(
 			'class' => 'CButtonColumn',
