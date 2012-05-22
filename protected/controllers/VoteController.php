@@ -135,42 +135,10 @@ class VoteController extends Controller
 	public function actionView($id)
 	{
 		$this->render('view', array(
-			'voteHistory' => $this->loadVoteHistory($id),
+			'voteHistory' => Vote::model()->loadVoteHistory($id),
 			'category' => Category::model()->findByPk($id)->name,
 			'reason' => $this->loadVoteByCategoryId($id)->reason,
 			'id' => $id,
-		));
-	}
-
-	/**
-	 * Recursively load the vote history for a given category ID.
-	 */
-	private function loadVoteHistory($categoryId)
-	{
-		$history = array();
-		$voterId = Yii::app()->user->id;
-		$run = true;
-
-		while($run)
-		{
-			// we could use a prepared statement here to improve performance
-			$vote = Vote::model()->with('candidate')->find('voter_id=:voter_id AND category_id=:category_id', array(':voter_id' => $voterId, ':category_id' => $categoryId));
-			if($vote !== NULL && $voterId != $vote->candidate_id)
-			{
-				$voterId = $vote->candidate_id;
-				$entry = new VoteHistory;
-				$entry->realname = $vote->candidate->realname;
-				$history[] = $entry;
-			}
-			else
-			{
-				$run = false;
-			}
-		}
-
-		return new CArrayDataProvider($history, array(
-			'id' => 'vote_history',
-			'keyField' => 'realname',
 		));
 	}
 

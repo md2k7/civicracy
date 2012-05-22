@@ -108,8 +108,65 @@ class Vote extends CActiveRecord
 	 */
 	public function isValidCandidate($attribute, $params)
 	{
-		// TODO: cycle detection
-		if(User::model()->findByPk($this->candidate_id) === null)
+		$chainLink = ' -&gt; ';
+
+		$candidate = User::model()->findByPk($this->candidate_id);
+		if($candidate === null)
+		{
 			$this->addError($attribute, 'Incorrect candidate.');
+		}
+		else
+		{
+			// cycle detection (note: this may be a race condition - we should obtain a DB lock before checking for loops, and release it after saving the vote)
+			$history = $this->loadVoteHistory($this->category_id, $this->candidate_id)->rawData;
+			$chain = $candidate->realname . $chainLink;
+			foreach($history as $entry)
+			{
+				if($entry->candidate_id == Yii::app()->user->id)
+				{
+					$this->addError($attribute, 'Cycle found in the chain of votes: ' . $chain . Yii::app()->user->realName . '. Please meet and discuss.');
+					break;
+				}
+				$chain .= $entry->realname . $chainLink;
+			}
+		}
+	}
+
+	/**
+	 * Recursively load the vote history for a given category ID.
+	 * @param integer $categoryId
+	 * @param integer $startUserId if given, start at this user, instead of generating the history for the current user
+	 * @return CArrayDataProvider providing the vote history
+	 */
+	public function loadVoteHistory($categoryId, $startUserId=null)
+	{
+		$history = array();
+		$voterId = $startUserId !== null ? $startUserId : Yii::app()->user->id;
+		$run = true;
+		$voters = array();
+
+		while($run)
+		{
+			// we could use a prepared statement here to improve performance
+			$vote = Vote::model()->with('candidate')->find('voter_id=:voter_id AND category_id=:category_id', array(':voter_id' => $voterId, ':category_id' => $categoryId));
+			if($vote !== null && $voterId != $vote->candidate_id && !in_array($vote->candidate_id, $voters))
+			{
+				$voterId = $vote->candidate_id;
+				$entry = new VoteHistory;
+				$entry->candidate_id = $vote->candidate_id;
+				$entry->realname = $vote->candidate->realname;
+				$history[] = $entry;
+				$voters[] = $voterId;
+			}
+			else
+			{
+				$run = false;
+			}
+		}
+
+		return new CArrayDataProvider($history, array(
+			'id' => 'vote_history',
+			'keyField' => 'realname',
+		));
 	}
 }
