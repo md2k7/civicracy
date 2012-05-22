@@ -63,9 +63,17 @@ class VoteController extends Controller
 			),
 		));
 
+		// get categories where we haven't voted yet
+		$freeVote = new CActiveDataProvider('Category', array(
+			'criteria' => array(
+				'condition' => 'not exists (select 1 from tbl_vote where voter_id='.Yii::app()->user->id.' and category_id=t.id)',
+			),
+		));
+
 		$this->render('index', array(
 			'ownWeight' => $ownWeight,
 			'votedFor' => $votedFor,
+			'freeVote' => $freeVote,
 		));
 	}
 

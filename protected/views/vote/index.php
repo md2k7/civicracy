@@ -1,11 +1,9 @@
 <?php
+
 $this->breadcrumbs=array(
     'Vote',
 );
 
-$this->menu=array(
-	array('label'=>'Manage Vote', 'url'=>array('admin')),
-);
 ?>
 <h1>Hello, <?php echo Yii::app()->user->realName; ?>!</h1>
 
@@ -41,4 +39,14 @@ $this->menu=array(
 
 <h2>Yet to vote for</h2>
 
-<?php /* echo $this->renderPartial('_form', array('model'=>$model)); */ ?>
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'vote-grid',
+	'dataProvider'=>$freeVote,
+	'columns'=>array(
+		'name', // category name
+		array(
+			'class' => 'CButtonColumn',
+			'template' => '{update}',
+		),
+	),
+)); ?>
