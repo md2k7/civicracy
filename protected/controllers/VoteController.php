@@ -77,11 +77,6 @@ class VoteController extends Controller
 		));
 	}
 
-	public function actionCreate()
-	{
-		$this->render('create');
-	}
-
 	public function actionDelete($categoryId)
 	{
 		if(Yii::app()->request->isPostRequest)
@@ -101,9 +96,43 @@ class VoteController extends Controller
 		$this->render('update');
 	}
 
-	public function actionView()
+	public function actionView($categoryId)
 	{
-		$this->render('view');
+		$this->render('view', array(
+			'voteHistory' => loadVoteHistory($categoryId),
+		));
+	}
+
+	/**
+	 * Recursively load the vote history for a given category ID.
+	 */
+	private function loadVoteHistory($categoryId)
+	{
+		$history = array();
+		$voterId = Yii::app()->user->id;
+		$run = true;
+
+		while($run)
+		{
+			// we could use a prepared statement here to improve performance
+			$vote = Vote::model()->with('candidate')->find('voter_id=:voter_id AND category_id=:category_id', array(':voter_id' => $voterId, ':category_id' => $categoryId));
+			if($vote !== NULL)
+			{
+				$voterId = $vote->candidate_id;
+				$entry = new VoteHistory;
+				$entry->realname = $vote->candidate->realname;
+				$history[] = $entry;
+			}
+			else
+			{
+				$run = false;
+			}
+		}
+
+		return new CArrayDataProvider($history, array(
+			'id' => 'vote_history',
+//			'keys' => array(VoteHistory::model()->attributeNames()),
+		));
 	}
 
 	/**
@@ -111,7 +140,7 @@ class VoteController extends Controller
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the ID of the model to be loaded
 	 */
-	public function loadVoteByCategoryId($categoryId)
+	private function loadVoteByCategoryId($categoryId)
 	{
 		$model=Category::model()->findByPk($categoryId)->getCandidate();
 		if($model===null)
