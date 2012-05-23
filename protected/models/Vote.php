@@ -64,9 +64,6 @@ class Vote extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'category_id' => Yii::t('app', 'Category'),
-			'voter_id' => Yii::t('app', 'Voter'),
-			'candidate_id' => Yii::t('app', 'Candidate'),
 			'reason' => Yii::t('app', 'Reason'),
 		);
 	}
