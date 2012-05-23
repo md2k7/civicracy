@@ -67,7 +67,7 @@ return array (
   'Username' => 'Benutzername',
   'Users' => 'Benutzer',
   'View Category' => 'Kategorie anzeigen',
-  'View User' => 'Benutzer angeigen',
+  'View User' => 'Benutzer anzeigen',
   'View User {user}' => 'Benutzer {user} anzeigen',
   'View {category} Vote' => '{category}-Stimme anzeigen',
   'Vote' => 'Abstimmen',
