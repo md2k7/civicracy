@@ -88,7 +88,7 @@ class VoteController extends Controller
 			// we only allow deletion via POST request
 			$vote = $this->loadVoteByCategoryId($id);
 			if($vote === null)
-				throw new CHttpException(404,'The requested page does not exist.');
+				throw new CHttpException(404, Yii::t('app', 'The requested page does not exist.'));
 			$vote->delete();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser

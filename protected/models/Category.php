@@ -66,7 +66,7 @@ class Category extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Category',
+			'name' => Yii::t('app', 'Category'),
 		);
 	}
 

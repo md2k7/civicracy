@@ -70,9 +70,10 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'username' => 'Username',
-			'email' => 'Email',
-			'realname' => 'Full name',
+			'username' => Yii::t('app', 'Username'),
+			'password' => Yii::t('app', 'Password'),
+			'email' => Yii::t('app', 'Email'),
+			'realname' => Yii::t('app', 'Full name'),
 		);
 	}
 
@@ -142,5 +143,6 @@ class User extends CActiveRecord
 	{
 		if($this->find($attribute . '=:val', array(':val' => $this->getAttribute($attribute))) !== null)
 			$this->addError($attribute, $this->getAttributeLabel($attribute) . ' duplicate: ' . $this->getAttribute($attribute) . ' is already registered.');
+			$this->addError($attribute, Yii::t('app', '{attribute} duplicate: {value} is already registered.', array('{attribute}' => $this->getAttributeLabel($attribute), '{value}' => $this->getAttribute($attribute))));
 	}
 }
