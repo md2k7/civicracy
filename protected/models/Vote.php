@@ -162,8 +162,8 @@ class Vote extends CActiveRecord
 				$voterId = $vote->candidate_id;
 				$entry = new VoteHistory;
 				$entry->candidate_id = $vote->candidate_id;
-				//$entry->reason = $vote->candidate->votes[...]->reason;
-				$entry->reason = 'bla bla';
+				$otherVote = User::model()->findByPk($vote->candidate_id)->loadVoteByCategoryId($categoryId);
+				$entry->reason = ($otherVote !== null) ? $otherVote->reason : '';
 				$entry->realname = $vote->candidate->realname;
 				$history[] = $entry;
 				$voters[] = $voterId;

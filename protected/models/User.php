@@ -144,4 +144,20 @@ class User extends CActiveRecord
 		if($this->find($attribute . '=:val', array(':val' => $this->getAttribute($attribute))) !== null)
 			$this->addError($attribute, Yii::t('app', '{attribute} duplicate: {value} is already registered.', array('{attribute}' => $this->getAttributeLabel($attribute), '{value}' => $this->getAttribute($attribute))));
 	}
+
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer category ID
+	 */
+	public function loadVoteByCategoryId($categoryId)
+	{
+		$model=Category::model()->with('votes')->find('voter_id=:voter_id AND category_id=:category_id', array(
+			':voter_id' => $this->id,
+			':category_id' => $categoryId,
+		));
+		if($model === null || $model->votes === null || count($model->votes) != 1)
+			return null;
+		return $model->votes[0];
+	}
 }

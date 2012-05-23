@@ -86,7 +86,7 @@ class VoteController extends Controller
 		if(Yii::app()->request->isPostRequest)
 		{
 			// we only allow deletion via POST request
-			$vote = $this->loadVoteByCategoryId($id);
+			$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
 			if($vote === null)
 				throw new CHttpException(404, Yii::t('app', 'The requested page does not exist.'));
 			$vote->delete();
@@ -103,7 +103,7 @@ class VoteController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model = $this->loadVoteByCategoryId($id);
+		$model = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
 		if($model === null)
 		{
 			$model = new Vote;
@@ -151,24 +151,8 @@ class VoteController extends Controller
 		$this->render('view', array(
 			'voteHistory' => Vote::model()->loadVoteHistory($id),
 			'category' => Category::model()->findByPk($id)->name,
-			'reason' => $this->loadVoteByCategoryId($id)->reason,
+			'reason' => User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id)->reason,
 			'id' => $id,
 		));
-	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer category ID
-	 */
-	private function loadVoteByCategoryId($categoryId)
-	{
-		$model=Category::model()->with('votes')->find('voter_id=:voter_id AND category_id=:category_id', array(
-			':voter_id' => Yii::app()->user->id,
-			':category_id' => $categoryId,
-		));
-		if($model === null || $model->votes === null || count($model->votes) != 1)
-			return null;
-		return $model->votes[0];
 	}
 }
