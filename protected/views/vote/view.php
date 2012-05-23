@@ -22,5 +22,9 @@ $this->menu=array(
 			'header' => User::model()->getAttributeLabel('realname'),
 			'value' => '$data->realname',
 		),
+		array(
+			'header' => Vote::model()->getAttributeLabel('reason'),
+			'value' => '$data->reason',
+		),
 	),
 )); ?>

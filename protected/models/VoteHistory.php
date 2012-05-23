@@ -6,6 +6,7 @@
 class VoteHistory extends CModel
 {
 	public $realname;
+	public $reason;
 	public $candidate_id; // only used via PHP at the moment
 
 	/**
@@ -13,11 +14,14 @@ class VoteHistory extends CModel
 	 */
 	public function attributeLabels()
 	{
-		return array('realname' => User::model()->getAttributeLabel('realname'));
+		return array(
+			'realname' => User::model()->getAttributeLabel('realname'),
+			'reason' => Vote::model()->getAttributeLabel('reason'),
+		);
 	}
 
 	public function attributeNames()
 	{
-		return array('realname');
+		return array('realname', 'reason');
 	}
 }
