@@ -14,7 +14,10 @@ $this->breadcrumbs=array(
 	'dataProvider'=>$ownWeight,
 	'columns'=>array(
 		'name', // category name
-		'voteCount',
+		array(
+			'header' => Yii::t('app', 'Vote count'),
+			'value' => '$data->voteCount',
+		),
 	),
 )); ?>
 

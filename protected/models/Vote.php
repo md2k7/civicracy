@@ -65,6 +65,7 @@ class Vote extends CActiveRecord
 	{
 		return array(
 			'reason' => Yii::t('app', 'Reason'),
+			'candidate_id' => Yii::t('app', 'Candidate'),
 		);
 	}
 
