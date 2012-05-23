@@ -47,7 +47,7 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		<?php Yii::t('app', 'Copyright &copy; {date} by David Madl.', array('{date}' => date('Y'))); ?><br/>
+		<?php echo Yii::t('app', 'Copyright &copy; {date} by David Madl.', array('{date}' => date('Y'))); ?><br/>
 		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
 
