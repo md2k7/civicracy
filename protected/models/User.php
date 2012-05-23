@@ -142,7 +142,6 @@ class User extends CActiveRecord
 	public function isUniqueAttribute($attribute, $params)
 	{
 		if($this->find($attribute . '=:val', array(':val' => $this->getAttribute($attribute))) !== null)
-			$this->addError($attribute, $this->getAttributeLabel($attribute) . ' duplicate: ' . $this->getAttribute($attribute) . ' is already registered.');
 			$this->addError($attribute, Yii::t('app', '{attribute} duplicate: {value} is already registered.', array('{attribute}' => $this->getAttributeLabel($attribute), '{value}' => $this->getAttribute($attribute))));
 	}
 }
