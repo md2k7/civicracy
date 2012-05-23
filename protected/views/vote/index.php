@@ -1,13 +1,13 @@
 <?php
 
 $this->breadcrumbs=array(
-    'Vote',
+    Yii::t('app', 'Vote'),
 );
 
 ?>
-<h1>Hello, <?php echo Yii::app()->user->realName; ?>!</h1>
+<h1><?php echo Yii::t('app', 'Hello, {realname}!', array('{realname}' => Yii::app()->user->realName)); ?></h1>
 
-<h2>Own weight</h2>
+<h2><?php echo Yii::t('app', 'Own weight'); ?></h2>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'own-votes-grid',
@@ -19,7 +19,7 @@ $this->breadcrumbs=array(
 )); ?>
 
 
-<h2>Voted for</h2>
+<h2><?php echo Yii::t('app', 'Voted for'); ?></h2>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'voted-grid',
@@ -37,7 +37,7 @@ $this->breadcrumbs=array(
 )); ?>
 
 
-<h2>Yet to vote for</h2>
+<h2><?php echo Yii::t('app', 'Yet to vote for'); ?></h2>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'vote-grid',
