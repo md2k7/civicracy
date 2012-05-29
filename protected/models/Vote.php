@@ -131,7 +131,7 @@ class Vote extends CActiveRecord
 			{
 				if($entry->candidate_id == Yii::app()->user->id)
 				{
-					$chain .= Yii::app()->user->realName;
+					$chain .= Yii::app()->user->realname;
 					$this->addError($attribute, Yii::t('app', 'Cycle found in the chain of votes: {chain}. Please meet and discuss.', array('{chain}' => $chain)));
 					break;
 				}

@@ -31,8 +31,8 @@ class UserIdentity extends CUserIdentity
 			$this->_id=$user->id;
 			$this->username=$user->username;
 			// set isAdmin property of Yii::app()->user
-			$this->setState('isAdmin', $this->username == "admin");
-			$this->setState('realName', $user->realname);
+			$this->setState('isAdmin', $this->username == 'admin');
+			$this->setState('realname', $user->realname);
 			$this->errorCode=self::ERROR_NONE;
 		}
 		return ($this->errorCode==self::ERROR_NONE);
