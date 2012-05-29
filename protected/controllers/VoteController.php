@@ -135,7 +135,7 @@ class VoteController extends Controller
 	 */
 	private function loadCandidates()
 	{
-		$candidates = User::model()->findAll();
+		$candidates = User::model()->findAll("username != :adminUser", array('adminUser' => 'admin'));
 		$list = array();
 		foreach($candidates as $c)
 			$list[] = $c->realname;
