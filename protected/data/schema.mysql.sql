@@ -80,3 +80,8 @@ ALTER TABLE `tbl_vote`
   ADD CONSTRAINT `tbl_vote_ibfk_2` FOREIGN KEY (`voter_id`) REFERENCES `tbl_user` (`id`),
   ADD CONSTRAINT `tbl_vote_ibfk_3` FOREIGN KEY (`candidate_id`) REFERENCES `tbl_user` (`id`);
 
+
+-- insert an admin/admin user so we can log in and create more users
+INSERT INTO `tbl_user` (`id`, `username`, `password`, `salt`, `email`, `realname`) VALUES
+(1, 'admin', 'd0d5d84abe6a79d394e109f1e0898324', 'NvWe02d8VnUogM8', 'root@eruditorum.org', 'Der Herr Administrator');
+
