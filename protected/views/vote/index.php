@@ -27,6 +27,7 @@ $this->breadcrumbs=array(
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'voted-grid',
 	'dataProvider'=>$votedFor,
+	'afterAjaxUpdate'=>"function(id, data){ $.fn.yiiGridView.update('vote-grid'); }",
 	'columns'=>array(
 		'name', // category name
 		array(
