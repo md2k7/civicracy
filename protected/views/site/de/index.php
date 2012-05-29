@@ -24,7 +24,6 @@
 	<li>Passwort ändern</li>
 	<li>Admin: Passwort für Benutzer per E-Mail zurücksetzen</li>
 	<li>"Admin-User erstellen" für Setup</li>
-	<li>Silk Favicons nutzen und in Credits auf <a href="http://www.famfamfam.com/lab/icons/silk/">http://www.famfamfam.com/lab/icons/silk/</a> verlinken</li>
 	<li>Kategorie-Beschreibung</li>
 	<li>CSV import von Benutzern über die Admin-Oberfläche</li>
 	<li>Anzeigen der Stimmen aller Leute, oder zumindest Top-Ranking (wer wird zum Rat?)</li>

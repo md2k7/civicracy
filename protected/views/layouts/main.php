@@ -52,6 +52,7 @@
 		<?php echo $this->renderPartial('//site/_version'); ?><br/>
 		<?php /* echo Yii::t('app', 'Copyright &copy; {date} by David Madl.', array('{date}' => date('Y'))); ?><br/><?php */ ?>
 		<?php /* echo Yii::powered(); */ ?>
+		Uses a <a href="http://www.famfamfam.com/lab/icons/silk/">Silk</a> favicon.<br/>
 	</div><!-- footer -->
 
 </div><!-- page -->
