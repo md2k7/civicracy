@@ -49,7 +49,7 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		<?php echo $this->renderPartial('_version'); ?><br/>
+		<?php echo $this->renderPartial('//site/_version'); ?><br/>
 		<?php echo Yii::t('app', 'Copyright &copy; {date} by David Madl.', array('{date}' => date('Y'))); ?><br/>
 		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
