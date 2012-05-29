@@ -50,8 +50,8 @@
 
 	<div id="footer">
 		<?php echo $this->renderPartial('//site/_version'); ?><br/>
-		<?php echo Yii::t('app', 'Copyright &copy; {date} by David Madl.', array('{date}' => date('Y'))); ?><br/>
-		<?php echo Yii::powered(); ?>
+		<?php /* echo Yii::t('app', 'Copyright &copy; {date} by David Madl.', array('{date}' => date('Y'))); ?><br/><?php */ ?>
+		<?php /* echo Yii::powered(); */ ?>
 	</div><!-- footer -->
 
 </div><!-- page -->

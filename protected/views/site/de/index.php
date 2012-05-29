@@ -3,7 +3,7 @@
 <h1>Willkommen bei <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
 <p><?php echo $this->renderPartial('_version'); ?></p>
 
-<h2>Benutzer</h2>
+<h2>Test-Benutzer</h2>
 <ul>
 	<li>Admin: admin/admin</li>
 	<li>weitere User (im Moment 1-4): user1/user1, user2/user2, usw.</li>
