@@ -5,10 +5,10 @@
 
 <h2>Test-Benutzer</h2>
 <ul>
-	<li>Admin: admin/admin</li>
+	<li>Admin: admin/admin (als Admin darf man nicht abstimmen)</li>
 	<li>weitere User (im Moment 1-4): user1/user1, user2/user2, usw.</li>
 </ul>
-<p><i>Diese Benutzer können im Testsystem nicht geändert oder gelöscht werden.</i></p>
+<p>Anmeldung mit diesen Benutzern ist jederzeit möglich. <i>Diese Benutzer können im Testsystem nicht geändert oder gelöscht werden.</i></p>
 
 <h2>Bekannte Bugs</h2>
 
