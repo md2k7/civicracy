@@ -45,7 +45,8 @@ class VoteController extends Controller
 			'criteria' => array(
 				'with' => array(
 					'voteCount' => array(
-						'condition' => 'candidate_id=' . Yii::app()->user->id,
+						'condition' => 'candidate_id=:userId',
+						'params' => array('userId' => Yii::app()->user->id),
 					)
 				),
 			),
@@ -56,7 +57,8 @@ class VoteController extends Controller
 			'criteria' => array(
 				'with' => array(
 					'votes' => array(
-						'condition' => 'voter_id=' . Yii::app()->user->id,
+						'condition' => 'voter_id=:userId',
+						'params' => array('userId' => Yii::app()->user->id),
 					)
 				),
 				'together' => true,
@@ -66,7 +68,8 @@ class VoteController extends Controller
 		// get categories where we haven't voted yet
 		$freeVote = new CActiveDataProvider('Category', array(
 			'criteria' => array(
-				'condition' => 'NOT EXISTS (SELECT 1 FROM tbl_vote WHERE voter_id='.Yii::app()->user->id.' AND category_id=t.id)',
+				'condition' => 'NOT EXISTS (SELECT 1 FROM tbl_vote WHERE voter_id=:userId AND category_id=t.id)',
+				'params' => array('userId' => Yii::app()->user->id),
 			),
 		));
 
