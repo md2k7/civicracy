@@ -8,7 +8,7 @@
 	<li>Admin: admin/admin</li>
 	<li>weitere User (im Moment 1-4): user1/user1, user2/user2, usw.</li>
 </ul>
-<i>Diese Benutzer können im Testsystem nicht geändert oder gelöscht werden.</i>
+<p><i>Diese Benutzer können im Testsystem nicht geändert oder gelöscht werden.</i></p>
 
 <h2>Bekannte Bugs</h2>
 
