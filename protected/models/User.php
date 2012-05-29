@@ -125,7 +125,7 @@ class User extends CActiveRecord
 
 	private function createSalt()
 	{
-		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!"§$%&/()=?';
+		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!§$%&/()=[]{}+#-*~.,_';
 		$len = 20;
 		$salt = '';
 
