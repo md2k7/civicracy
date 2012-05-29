@@ -85,6 +85,10 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
+
+			// for test environment, make sure no-one changes admin or users 1-4
+			$this->restrictUsers($model);
+
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -92,6 +96,14 @@ class UserController extends Controller
 		$this->render('update',array(
 			'model'=>$model,
 		));
+	}
+
+	private function restrictUsers($model)
+	{
+		// for test environment, make sure no-one changes admin or users 1-4
+		$restricted = array('admin', 'user1', 'user2', 'user3', 'user4');
+		if(in_array($model->username, $restricted))
+			throw new CHttpException(403, 'Bitte vorhandene Test-Benutzer nicht ändern! Bitte einen neuen Benutzer anlegen, um die Benutzerverwaltung zu testen.');
 	}
 
 	/**
@@ -103,6 +115,9 @@ class UserController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
+			// for test environment, make sure no-one changes admin or users 1-4
+			$this->restrictUsers($this->loadModel($id));
+
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 
