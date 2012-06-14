@@ -13,9 +13,12 @@ $this->breadcrumbs=array(
 	'id'=>'own-votes-grid',
 	'dataProvider'=>$ownWeight,
 	'columns'=>array(
-		'name', // category name
 		array(
-			'header' => Yii::t('app', 'Vote count'),
+			'header' => VoteCount::model()->getAttributeLabel('categoryName'),
+			'value' => '$data->categoryName',
+		),
+		array(
+			'header' => VoteCount::model()->getAttributeLabel('voteCount'),
 			'value' => '$data->voteCount',
 		),
 	),

@@ -98,6 +98,31 @@ class User extends CActiveRecord
 		));
 	}
 
+	/**
+	 * @return CArrayDataProvider providing our weights per category
+	 */
+	public function getVoteCount()
+	{
+		$categories = Category::model()->findAll();
+		$voteCount = array();
+
+		foreach($categories as $c) {
+			$votes = Vote::model()->findAllByAttributes(array('category_id' => $c->id));
+			$graph = new VoteGraph($votes);
+			$weights = $graph->getWeights();
+
+			$entry = new VoteCount;
+			$entry->categoryName = $c->name;
+			$entry->voteCount = $weights[$this->id];
+			$voteCount[] = $entry;
+		}
+
+		return new CArrayDataProvider($voteCount, array(
+			'id' => 'vote_count',
+			'keyField' => 'categoryName',
+		));
+	}
+
 	public function validatePassword($password)
 	{
 		return $this->hashPassword($password,$this->salt)===$this->password;
