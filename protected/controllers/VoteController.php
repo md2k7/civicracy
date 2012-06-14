@@ -41,16 +41,7 @@ class VoteController extends Controller
 	public function actionIndex()
 	{
 		// get vote counts for us
-		$ownWeight = new CActiveDataProvider('Category', array(
-			'criteria' => array(
-				'with' => array(
-					'voteCount' => array(
-						'condition' => 'candidate_id=:userId',
-						'params' => array('userId' => Yii::app()->user->id),
-					)
-				),
-			),
-		));
+		$ownWeight = User::model()->findByPk(Yii::app()->user->id)->getVoteCount();
 
 		// get categories where we've voted
 		$votedFor = new CActiveDataProvider('Category', array(

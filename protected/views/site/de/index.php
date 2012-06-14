@@ -30,4 +30,5 @@
 	<li>Zyklenbehandlung wie im <a href="http://www.demokratieforschung.at/forum/board18-demokratiesimulation/board22-diskussionen/10-civicracy-webplattform-erster-ansatz/#post63">Forum</a></li>
 	<li>change credits (im Moment fehlt dazu ein Konzept)</li>
 	<li>Historisierung der Wahlen (d.h. meine Stimme im Zeitverlauf), zumindest auf der Datenbank</li>
+	<li>i18n auf bereich.name ändern</li>
 </ul>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Simple model class for single-column "voter" history.
+ * Simple model class for voter history.
  */
 class VoteHistory extends CModel
 {
