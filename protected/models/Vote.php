@@ -124,6 +124,8 @@ class Vote extends CActiveRecord
 		}
 		else
 		{
+			// cycle detection disabled: new algorithm in VoteGraph can handle cycles
+			/*
 			// cycle detection (note: this may be a race condition - we should obtain a DB lock before checking for loops, and release it after saving the vote)
 			$history = $this->loadVoteHistory($this->category_id, $this->candidate_id)->rawData;
 			$chain = $candidate->realname . $chainLink;
@@ -137,6 +139,7 @@ class Vote extends CActiveRecord
 				}
 				$chain .= $entry->realname . $chainLink;
 			}
+			*/
 		}
 	}
 
@@ -151,7 +154,7 @@ class Vote extends CActiveRecord
 		$history = array();
 		$voterId = $startUserId !== null ? $startUserId : Yii::app()->user->id;
 		$run = true;
-		$voters = array(); // cycle prevention in software (this prevents hangups if the DB is already broken)
+		$voters = array(Yii::app()->user->id); // cycle prevention in software (prevents hangups if the DB contains cycles)
 
 		while($run)
 		{
