@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 ?>
 <h1><?php echo Yii::t('app', 'Hello, {realname}!', array('{realname}' => Yii::app()->user->realname)); ?></h1>
 
-<h2><?php echo Yii::t('app', 'Own weight'); ?></h2>
+<h2><?php echo Yii::t('app', 'Responsibility'); /* was: Own weight */ ?></h2>
 <?php $this->renderPartial('ownWeight'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(

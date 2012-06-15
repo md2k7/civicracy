@@ -51,7 +51,7 @@ return array (
   'Manage User' => 'Benutzer verwalten',
   'Manage Users' => 'Benutzer verwalten',
   'Operations' => 'Aktionen',
-  'Own weight' => 'Eigene Gewichtung',
+  'Responsibility' => 'Verantwortung',
   'Password' => 'Passwort',
   'Reason' => 'Begründung',
   'Remember me next time' => 'Angemeldet bleiben',
