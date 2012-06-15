@@ -6,6 +6,7 @@
 class VoteGraph
 {
 	private $nodes = array();
+	private $weightsValid = false;
 
 	/**
 	 * Create a new VoteGraph instance from voting data of a specific Category
@@ -38,6 +39,8 @@ class VoteGraph
 	public function getWeights()
 	{
 		$weights = array();
+		if(!$this->weightsValid)
+			$this->calculateWeights();
 
 		foreach($this->nodes as $n)
 			$weights[$n->id] = $n->weight;
@@ -67,7 +70,7 @@ class VoteGraph
 	/**
 	 * Calculate weights (the actual rating of a User), starting at leaves and working up to the root
 	 */
-	public function calculateWeights()
+	private function calculateWeights()
 	{
 		$this->findCycles(); // make sure cycle data is correct
 		$this->calculateFanIn(); // make sure fan-in data is correct
@@ -94,6 +97,8 @@ class VoteGraph
 			$vote->fanIn--;
 			$fnodes->recoverFromCorruption();
 		}
+
+		$this->weightsValid = true;
 	}
 
 	/**
