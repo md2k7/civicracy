@@ -106,9 +106,14 @@ class User extends CActiveRecord
 		$categories = Category::model()->findAll();
 		$voteCount = array();
 
+		$users = array();
+		$userObjects = User::model()->findAll();
+		foreach($userObjects as $u)
+			$users[] = $u->id;
+
 		foreach($categories as $c) {
 			$votes = Vote::model()->findAllByAttributes(array('category_id' => $c->id));
-			$graph = new VoteGraph($votes);
+			$graph = new VoteGraph($users, $votes);
 			$weights = $graph->getWeights();
 
 			$entry = new VoteCount;
