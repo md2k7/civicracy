@@ -1,0 +1,1 @@
+<p>Ihr Gewicht beschreibt, wie viel Vertrauen Sie genießen. Jeder Wähler hat automatisch eine Stimme pro Kategorie. Ihre Vertrauensstimmen erhöhen sich, wenn andere Personen Ihnen vertrauen und somit ihre Vertrauensstimmen an Sie weitergeben.</p>

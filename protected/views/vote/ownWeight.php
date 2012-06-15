@@ -1,0 +1,1 @@
+<p>Your weight describes the amount of trust you have gained. Each voter automatically has one vote per category. Your weight increases if other people trust you and thereby delegate their voting power to you.</p>
