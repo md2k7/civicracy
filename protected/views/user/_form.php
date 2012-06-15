@@ -5,7 +5,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<?php echo Yii::t('app', '<p class="note">Fields with <span class="required">*</span> are required.</p>'); ?>
+	<?php echo Yii::t('app', 'forms.required'); ?>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -34,7 +34,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Save')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'user.create.button') : Yii::t('app', 'user.save.button')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

@@ -30,11 +30,11 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label' => Yii::t('app', 'Vote'), 'url'=>array('/vote/index'), 'visible'=>(!Yii::app()->user->isGuest && !Yii::app()->user->isAdmin)),
-				array('label' => Yii::t('app', 'Categories'), 'url'=>array('/category/admin'), 'visible'=>(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin)),
-				array('label' => Yii::t('app', 'Users'), 'url'=>array('/user/admin'), 'visible'=>(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin)),
-				array('label' => Yii::t('app', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label' => Yii::t('app', 'Logout ({user})', array('{user}' => Yii::app()->user->name)), 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+				array('label' => Yii::t('app', 'menu.vote'), 'url'=>array('/vote/index'), 'visible'=>(!Yii::app()->user->isGuest && !Yii::app()->user->isAdmin)),
+				array('label' => Yii::t('app', 'menu.categories'), 'url'=>array('/category/admin'), 'visible'=>(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin)),
+				array('label' => Yii::t('app', 'menu.users'), 'url'=>array('/user/admin'), 'visible'=>(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin)),
+				array('label' => Yii::t('app', 'menu.login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				array('label' => Yii::t('app', 'menu.logout', array('{user}' => Yii::app()->user->name)), 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
 	</div><!-- mainmenu -->
@@ -50,9 +50,9 @@
 
 	<div id="footer">
 		<?php echo $this->renderPartial('//site/_version'); ?><br/>
-		<?php /* echo Yii::t('app', 'Copyright &copy; {date} by David Madl.', array('{date}' => date('Y'))); ?><br/><?php */ ?>
+		<?php /* echo Yii::t('app', 'footer.copyright', array('{date}' => date('Y'))); ?><br/><?php */ ?>
 		<?php /* echo Yii::powered(); */ ?>
-		Uses a <a href="http://www.famfamfam.com/lab/icons/silk/">Silk</a> favicon.<br/>
+		<?php echo Yii::t('app', 'footer.silk'); ?><br/>
 	</div><!-- footer -->
 
 </div><!-- page -->

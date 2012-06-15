@@ -28,5 +28,4 @@
 	<li>Anzeigen der Stimmen aller Leute, oder zumindest Top-Ranking (wer wird zum Rat?)</li>
 	<li>change credits (im Moment fehlt dazu ein Konzept)</li>
 	<li>Historisierung der Wahlen (d.h. meine Stimme im Zeitverlauf), zumindest auf der Datenbank</li>
-	<li>i18n auf bereich.name ändern</li>
 </ul>

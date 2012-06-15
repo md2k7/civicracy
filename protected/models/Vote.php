@@ -64,8 +64,8 @@ class Vote extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'reason' => Yii::t('app', 'Reason'),
-			'candidate_id' => Yii::t('app', 'Candidate'),
+			'reason' => Yii::t('app', 'models.vote.reason'),
+			'candidate_id' => Yii::t('app', 'models.vote.candidate'),
 		);
 	}
 
@@ -97,7 +97,7 @@ class Vote extends CActiveRecord
 	public function isValidCategory($attribute, $params)
 	{
 		if(Category::model()->findByPk($this->category_id) === null)
-			$this->addError($attribute, Yii::t('app', 'Incorrect category.'));
+			$this->addError($attribute, Yii::t('app', 'models.vote.categoryIncorrect'));
 	}
 
 	/*
@@ -120,7 +120,7 @@ class Vote extends CActiveRecord
 		$candidate = User::model()->findByPk($this->candidate_id);
 		if($candidate === null)
 		{
-			$this->addError($attribute, Yii::t('app', 'Incorrect candidate.'));
+			$this->addError($attribute, Yii::t('app', 'models.vote.candidateIncorrect'));
 		}
 		else
 		{
@@ -134,7 +134,7 @@ class Vote extends CActiveRecord
 				if($entry->candidate_id == Yii::app()->user->id)
 				{
 					$chain .= Yii::app()->user->realname;
-					$this->addError($attribute, Yii::t('app', 'Cycle found in the chain of votes: {chain}. Please meet and discuss.', array('{chain}' => $chain)));
+					$this->addError($attribute, Yii::t('app', 'models.vote.cycleWarning', array('{chain}' => $chain)));
 					break;
 				}
 				$chain .= $entry->realname . $chainLink;

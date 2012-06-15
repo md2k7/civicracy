@@ -1,11 +1,11 @@
 <?php
 $this->breadcrumbs=array(
-	Yii::t('app', 'Categories') => array('admin'),
-	Yii::t('app', 'Manage'),
+	Yii::t('app', 'menu.categories') => array('admin'),
+	Yii::t('app', 'menu.manage'),
 );
 
 $this->menu=array(
-	array('label' => Yii::t('app', 'Create Category'), 'url'=>array('create')),
+	array('label' => Yii::t('app', 'menu.categories.create'), 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -22,11 +22,11 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t('app', 'Manage Categories'); ?></h1>
+<h1><?php echo Yii::t('app', 'menu.categories.manageAll'); ?></h1>
 
-<?php echo Yii::t('app', '<p>You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b> or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.</p>'); ?>
+<?php echo Yii::t('app', 'forms.compareOperators'); ?>
 
-<?php echo CHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class'=>'search-button')); ?>
+<?php echo CHtml::link(Yii::t('app', 'forms.advancedSearch'), '#', array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,

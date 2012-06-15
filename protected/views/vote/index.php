@@ -1,13 +1,13 @@
 <?php
 
 $this->breadcrumbs=array(
-    Yii::t('app', 'Vote'),
+    Yii::t('app', 'menu.vote'),
 );
 
 ?>
-<h1><?php echo Yii::t('app', 'Hello, {realname}!', array('{realname}' => Yii::app()->user->realname)); ?></h1>
+<h1><?php echo Yii::t('app', 'vote.greeting', array('{realname}' => Yii::app()->user->realname)); ?></h1>
 
-<h2><?php echo Yii::t('app', 'Responsibility'); /* was: Own weight */ ?></h2>
+<h2><?php echo Yii::t('app', 'vote.ownWeight'); ?></h2>
 <?php $this->renderPartial('ownWeight'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
@@ -26,7 +26,7 @@ $this->breadcrumbs=array(
 )); ?>
 
 
-<h2><?php echo Yii::t('app', 'Voted for'); ?></h2>
+<h2><?php echo Yii::t('app', 'vote.votedFor'); ?></h2>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'voted-grid',
@@ -45,7 +45,7 @@ $this->breadcrumbs=array(
 )); ?>
 
 
-<h2><?php echo Yii::t('app', 'Yet to vote for'); ?></h2>
+<h2><?php echo Yii::t('app', 'vote.yetToVote'); ?></h2>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'vote-grid',

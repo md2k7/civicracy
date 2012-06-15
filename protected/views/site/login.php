@@ -1,11 +1,11 @@
 <?php
-$this->pageTitle=Yii::app()->name . ' - ' . Yii::t('app', 'Login');
+$this->pageTitle=Yii::app()->name . ' - ' . Yii::t('app', 'menu.login');
 $this->breadcrumbs=array(
-	Yii::t('app', 'Login'),
+	Yii::t('app', 'menu.login'),
 );
 ?>
 
-<h1><?php echo Yii::t('app', 'Login'); ?></h1>
+<h1><?php echo Yii::t('app', 'menu.login'); ?></h1>
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -16,7 +16,7 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<?php echo Yii::t('app', '<p class="note">Fields with <span class="required">*</span> are required.</p>'); ?>
+	<?php echo Yii::t('app', 'forms.required'); ?>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'username'); ?>
@@ -37,7 +37,7 @@ $this->breadcrumbs=array(
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton(Yii::t('app', 'Login')); ?>
+		<?php echo CHtml::submitButton(Yii::t('app', 'login.button')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

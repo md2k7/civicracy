@@ -126,7 +126,7 @@ class UserController extends Controller
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 		}
 		else
-			throw new CHttpException(400, Yii::t('app', 'Invalid request. Please do not repeat this request again.'));
+			throw new CHttpException(400, Yii::t('app', 'http.400'));
 	}
 
 	/**
@@ -153,7 +153,7 @@ class UserController extends Controller
 	{
 		$model=User::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404, Yii::t('app', 'The requested page does not exist.'));
+			throw new CHttpException(404, Yii::t('app', 'http.404'));
 		return $model;
 	}
 

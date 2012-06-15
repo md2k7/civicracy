@@ -1,11 +1,11 @@
 <?php
-$this->pageTitle=Yii::app()->name . ' - ' . Yii::t('app', 'Error');
+$this->pageTitle=Yii::app()->name . ' - ' . Yii::t('app', 'error');
 $this->breadcrumbs=array(
-	Yii::t('app', 'Error'),
+	Yii::t('app', 'error'),
 );
 ?>
 
-<h2><?php echo Yii::t('app', 'Error') . ' ' . $code; ?></h2>
+<h2><?php echo Yii::t('app', 'error') . ' ' . $code; ?></h2>
 
 <div class="error">
 <?php echo CHtml::encode($message); ?>

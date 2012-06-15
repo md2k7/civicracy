@@ -5,7 +5,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<?php echo Yii::t('app', '<p class="note">Fields with <span class="required">*</span> are required.</p>'); ?>
+	<?php echo Yii::t('app', 'forms.required'); ?>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -40,7 +40,7 @@ $this->widget('ext.combobox.EJuiComboBox', array(
 	<?php echo $form->hiddenField($model,'category_id'); ?>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'Vote') : Yii::t('app', 'Update vote')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'vote.button') : Yii::t('app', 'vote.update.button')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

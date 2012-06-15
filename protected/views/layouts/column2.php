@@ -8,7 +8,7 @@
 	<div id="sidebar">
 	<?php
 		$this->beginWidget('zii.widgets.CPortlet', array(
-			'title'=>Yii::t('app', 'Operations'),
+			'title'=>Yii::t('app', 'sidebar.operations'),
 		));
 		$this->widget('zii.widgets.CMenu', array(
 			'items'=>$this->menu,

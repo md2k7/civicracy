@@ -19,8 +19,8 @@ class VoteCount extends CModel
 	public function attributeLabels()
 	{
 		return array(
-			'categoryName' => Yii::t('app', 'Category'),
-			'voteCount' => Yii::t('app', 'Vote count'),
+			'categoryName' => Yii::t('app', 'models.category'),
+			'voteCount' => Yii::t('app', 'models.voteCount'),
 		);
 	}
 

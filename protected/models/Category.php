@@ -65,7 +65,7 @@ class Category extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'name' => Yii::t('app', 'Category'),
+			'name' => Yii::t('app', 'models.category'),
 		);
 	}
 

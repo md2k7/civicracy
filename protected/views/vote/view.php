@@ -1,16 +1,16 @@
 <?php
 
 $this->breadcrumbs=array(
-    Yii::t('app', 'Vote') => array('/vote'),
-    Yii::t('app', 'View {category} Vote', array('{category}' => $category)),
+    Yii::t('app', 'menu.vote') => array('/vote'),
+    Yii::t('app', 'menu.viewCategoryVote', array('{category}' => $category)),
 );
 
 $this->menu=array(
-	array('label' => Yii::t('app', 'Vote again'), 'url'=>array('update', 'id' => $id)),
+	array('label' => Yii::t('app', 'menu.vote.again'), 'url'=>array('update', 'id' => $id)),
 );
 
 ?>
-<h1><?php echo Yii::t('app', 'History of my vote'); ?></h1>
+<h1><?php echo Yii::t('app', 'vote.history'); ?></h1>
 <p><?php echo Category::model()->getAttributeLabel('name'); ?>: <strong><?php echo $category; ?></strong><br/>
 <?php echo Vote::model()->getAttributeLabel('reason'); ?>: <strong><?php echo $reason; ?></strong></p>
 
