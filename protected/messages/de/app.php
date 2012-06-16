@@ -72,6 +72,7 @@ return array (
   'models.vote.cycleWarning' => 'Eine Schleife wurde in der Stimmenkette gefunden: {chain}. Bitte treffen und diskutieren.',
   'models.vote.reason' => 'Begründung',
   'models.voteCount' => 'Anzahl Stimmen',
+  'registration.subject' => 'Ihre Registrierung bei Civi',
   'search.button' => 'Suchen',
   'sidebar.operations' => 'Aktionen',
   'user.create.button' => 'Erstellen',

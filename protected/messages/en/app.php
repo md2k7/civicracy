@@ -72,6 +72,7 @@ return array (
   'models.vote.cycleWarning' => 'Cycle found in the chain of votes: {chain}. Please meet and discuss.',
   'models.vote.reason' => 'Reason',
   'models.voteCount' => 'Vote count',
+  'registration.subject' => 'Your registration at Civi',
   'search.button' => 'Search',
   'sidebar.operations' => 'Operations',
   'user.create.button' => 'Create',

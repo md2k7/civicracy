@@ -65,8 +65,12 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			if($model->save())
+			$password = $model->createRandomPassword();
+
+			if($model->save()) {
+				$this->sendPasswordEmail($model, $password);
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$model->sanitizePassword(); // don't retransmit even the hashed password to the user
@@ -200,6 +204,17 @@ class UserController extends Controller
 		if($model===null)
 			throw new CHttpException(404, Yii::t('app', 'http.404'));
 		return $model;
+	}
+
+	/**
+	 * Send out a registration e-mail with the password.
+	 */
+	private function sendPasswordEmail($user, $password)
+	{
+		mail($user->email, Yii::t('app', 'registration.subject'), $this->renderPartial('registrationMail', array(
+			'model' => $user,
+			'password' => $password,
+		), true), 'From: ' . Yii::app()->params['registration.adminEmail']);
 	}
 
 	/**

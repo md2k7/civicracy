@@ -22,24 +22,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'password'); ?>
-	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'repeat_password'); ?>
-		<?php echo $form->passwordField($model,'repeat_password',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'repeat_password'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton(Yii::t('app', 'user.save.button')); ?>
+		<?php echo CHtml::submitButton(Yii::t('app', 'user.create.button')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

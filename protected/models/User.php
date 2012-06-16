@@ -46,10 +46,10 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, email, realname', 'required'),
-			array('password, repeat_password', 'required', 'on'=>'insert'),
-			array('repeat_password', 'default'),
-			array('password', 'compare', 'compareAttribute'=>'repeat_password'),
+			array('password, repeat_password', 'default'),
+			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'update,profile'),
 			array('username, password, email, realname', 'length', 'max'=>128),
+			array('username, email, realname', 'length', 'max'=>128),
 			array('username, realname', 'isUniqueAttribute'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -180,10 +180,9 @@ class User extends CActiveRecord
 		$this->repeat_password = '';
 	}
 
-	private function createSalt()
+	private function createSalt($len = 20)
 	{
 		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!$%&/()=[]{}+#-*~.,_';
-		$len = 20;
 		$salt = '';
 
 		for($i = 0; $i < $len; $i++)
@@ -192,6 +191,15 @@ class User extends CActiveRecord
 		//Yii::trace('salt created: ' . $salt);
 
 		return $salt;
+	}
+
+	/**
+	 * Creates a random password.
+	 */
+	public function createRandomPassword()
+	{
+		$this->password = $this->createSalt(12);
+		return $this->password;
 	}
 
 	/*
