@@ -8,8 +8,6 @@ $this->breadcrumbs=array(
 
 <?php
 
-echo $message;
-
-echo $this->renderPartial('profileForm', array('model'=>$model));
+echo $this->renderPartial('profileForm', array('model'=>$model, 'message'=>$message));
 
 ?>

@@ -7,6 +7,7 @@
 
 	<?php echo Yii::t('app', 'forms.required'); ?>
 
+	<?php echo $message; ?>
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
