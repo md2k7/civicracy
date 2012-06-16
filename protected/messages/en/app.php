@@ -78,6 +78,7 @@ return array (
   'user.create.button' => 'Create',
   'user.deleteConfirmation' => 'Are you sure you want to delete this item?',
   'user.profile.saved' => '<div class="successSummary"><p>Profile successfully saved.</p></div>',
+  'user.registration.email' => '<p class="note">Password will be sent via e-mail.</p>',
   'user.save.button' => 'Save',
   'users.updateOne' => 'Update User {user}',
   'vote.button' => 'Vote',
