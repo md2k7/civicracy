@@ -16,6 +16,9 @@
  */
 class User extends CActiveRecord
 {
+	public $repeat_password;
+	public $initialPassword;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -42,7 +45,10 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email, realname', 'required'),
+			array('username, email, realname', 'required'),
+			array('password, repeat_password', 'required', 'on'=>'insert'),
+			array('repeat_password', 'default'),
+			array('password', 'compare', 'compareAttribute'=>'repeat_password'),
 			array('username, password, email, realname', 'length', 'max'=>128),
 			array('username, realname', 'isUniqueAttribute'),
 			// The following rule is used by search().
@@ -72,6 +78,7 @@ class User extends CActiveRecord
 		return array(
 			'username' => Yii::t('app', 'models.username'),
 			'password' => Yii::t('app', 'models.password'),
+			'repeat_password' => Yii::t('app', 'models.repeat_password'),
 			'email' => Yii::t('app', 'models.email'),
 			'realname' => Yii::t('app', 'models.realname'),
 		);
@@ -130,7 +137,7 @@ class User extends CActiveRecord
 
 	public function validatePassword($password)
 	{
-		return $this->hashPassword($password,$this->salt)===$this->password;
+		return $this->hashPassword($password,$this->salt)===$this->initialPassword;
 	}
  
 	public function hashPassword($password,$salt)
@@ -139,28 +146,38 @@ class User extends CActiveRecord
 	}
 
 	/**
-	 * Override save() method of CActiveRecord to generate a fresh salt for new passwords
+	 * Executed after validation, but before saving. Generates a fresh salt for new passwords.
 	 */
-	public function save($runValidation=true, $attributes=NULL)
+	protected function beforeSave()
 	{
-		$newPassword = false;
+		// if the user left the pw field empty, he didn't change his password - keep the old one
+		if(empty($this->password))
+			$this->password = $this->initialPassword;
+		else
+			$this->createPasswordHash();
 
-		if($attributes === NULL || in_array('password', $attributes)) {
-			if($this->password == '') {
-				if(!$this->id) {
-					$this->validate();
-					return false;
-				}
-				// if we have an ID, we are changing a user: keep the old password if the user left the field empty (and don't run the else below)
-				$this->password = User::model()->findByPk($this->id)->password;
-			} else {
-				$this->salt = $this->createSalt();
-				$this->password = md5($this->salt . $this->password);
-				if($attributes !== NULL && !in_array('salt', $attributes))
-					$attributes[] = 'salt';
-			}
-		}
-		return parent::save($runValidation, $attributes);
+		return parent::beforeSave();
+	}
+
+	private function createPasswordHash()	
+	{
+		$this->salt = $this->createSalt();
+		$this->password = md5($this->salt . $this->password);
+	}
+
+	protected function afterFind()
+	{
+		// don't show the password hash to the user
+		$this->initialPassword = $this->password;
+		$this->sanitizePassword();
+
+		return parent::afterFind();
+	}
+
+	public function sanitizePassword()
+	{
+		$this->password = '';
+		$this->repeat_password = '';
 	}
 
 	private function createSalt()
@@ -172,7 +189,7 @@ class User extends CActiveRecord
 		for($i = 0; $i < $len; $i++)
 			$salt .= substr($alphabet, rand(0, strlen($alphabet) - 1), 1);
 
-		Yii::trace('salt created: ' . $salt);
+		//Yii::trace('salt created: ' . $salt);
 
 		return $salt;
 	}

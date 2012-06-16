@@ -22,9 +22,14 @@
 	</div>
 
 	<div class="row">
-		<?php echo $model->id ? $form->label($model,'password') : $form->labelEx($model,'password'); /* if we have an ID, we are changing a user: password is kept if empty */ ?>
+		<?php echo $form->labelEx($model,'password'); ?>
 		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'password'); ?>
+	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'repeat_password'); ?>
+		<?php echo $form->passwordField($model,'repeat_password',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'repeat_password'); ?>
 	</div>
 
 	<div class="row">

@@ -64,6 +64,7 @@ return array (
   'models.email' => 'E-Mail',
   'models.password' => 'Passwort',
   'models.realname' => 'Voller Name',
+  'models.repeat_password' => 'Passwort wiederholen',
   'models.username' => 'Benutzername',
   'models.vote.candidate' => 'Kandidat',
   'models.vote.candidateIncorrect' => 'Falscher Kandidat.',

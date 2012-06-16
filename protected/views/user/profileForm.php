@@ -11,12 +11,12 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'username'); ?>
+		<?php echo $form->label($model,'username'); ?>
 		<p><?php echo $model->username; ?></p>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'realname'); ?>
+		<?php echo $form->label($model,'realname'); ?>
 		<p><?php echo $model->realname; ?></p>
 	</div>
 
@@ -24,6 +24,11 @@
 		<?php echo $form->label($model,'password'); ?>
 		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'password'); ?>
+	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'repeat_password'); ?>
+		<?php echo $form->passwordField($model,'repeat_password',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'repeat_password'); ?>
 	</div>
 
 	<div class="row">
