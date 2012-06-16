@@ -143,16 +143,22 @@ class User extends CActiveRecord
 	 */
 	public function save($runValidation=true, $attributes=NULL)
 	{
+		$newPassword = false;
+
 		if($attributes === NULL || in_array('password', $attributes)) {
 			if($this->password == '') {
-				$this->validate();
-				return false;
+				if(!$this->id) {
+					$this->validate();
+					return false;
+				}
+				// if we have an ID, we are changing a user: keep the old password if the user left the field empty (and don't run the else below)
+				$this->password = User::model()->findByPk($this->id)->password;
+			} else {
+				$this->salt = $this->createSalt();
+				$this->password = md5($this->salt . $this->password);
+				if($attributes !== NULL && !in_array('salt', $attributes))
+					$attributes[] = 'salt';
 			}
-
-			$this->salt = $this->createSalt();
-			$this->password = md5($this->salt . $this->password);
-			if($attributes !== NULL && !in_array('salt', $attributes))
-				$attributes[] = 'salt';
 		}
 		return parent::save($runValidation, $attributes);
 	}

@@ -97,6 +97,8 @@ class UserController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
+		$model->password = ''; // don't retransmit even the hashed password to the user
+
 		$this->render('update',array(
 			'model'=>$model,
 		));
@@ -130,6 +132,8 @@ class UserController extends Controller
 			if($model->save())
 				$message = Yii::t('app', 'user.profile.saved');
 		}
+
+		$model->password = ''; // don't retransmit even the hashed password to the user
 
 		$this->render('profile',array(
 			'model'=>$model,
