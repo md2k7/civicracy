@@ -12,12 +12,12 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'username'); ?>
-		<p><?php echo $model->username; ?></p>
+		<p><?php echo CHtml::escape($model->username); ?></p>
 	</div>
 
 	<div class="row">
 		<?php echo $form->label($model,'realname'); ?>
-		<p><?php echo $model->realname; ?></p>
+		<p><?php echo CHtml::escape($model->realname); ?></p>
 	</div>
 
 	<div class="row">
