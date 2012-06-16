@@ -20,10 +20,9 @@
 <h2>Unvollständige TODO-List</h2>
 
 <ul>
-	<li>Admin: Passwort für Benutzer per E-Mail zurücksetzen</li>
 	<li>"Admin-User erstellen" für Setup</li>
 	<li>Kategorie-Beschreibung</li>
-	<li>CSV import von Benutzern über die Admin-Oberfläche</li>
+	<li>CSV-Import von Benutzern über die Admin-Oberfläche</li>
 	<li>Anzeigen der Stimmen aller Leute, oder zumindest Top-Ranking (wer wird zum Rat?)</li>
 	<li>change credits (im Moment fehlt dazu ein Konzept)</li>
 	<li>Historisierung der Wahlen (d.h. meine Stimme im Zeitverlauf), zumindest auf der Datenbank</li>
