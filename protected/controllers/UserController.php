@@ -211,10 +211,16 @@ class UserController extends Controller
 	 */
 	private function sendPasswordEmail($user, $password)
 	{
-		mail($user->email, Yii::t('app', 'registration.subject'), $this->renderPartial('registrationMail', array(
+		$subject = '=?UTF-8?B?'.base64_encode(Yii::t('app', 'registration.subject')).'?=';
+
+		$headers = 'From: ' . Yii::app()->params['registration.adminEmail'] . '\r\n';
+		$headers .= 'MIME-Version: 1.0\r\n';
+		$headers .= 'Content-type: text/plain; charset=UTF-8\r\n';
+
+		mail($user->email, $subject, $this->renderPartial('registrationMail', array(
 			'model' => $user,
 			'password' => $password,
-		), true), 'From: ' . Yii::app()->params['registration.adminEmail']);
+		), true), $headers);
 	}
 
 	/**

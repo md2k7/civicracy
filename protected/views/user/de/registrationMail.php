@@ -13,6 +13,7 @@ Sie haben sich am <?php echo date('d.m.Y H:i:s'); ?> auf der Civi-Plattform unte
 Hier sind Ihre Zugangsdaten:
 
 Benutzername: <?php echo $model->username; ?>
+
 Passwort: <?php echo $password; ?>
 
 Viel Spaß mit Civi!

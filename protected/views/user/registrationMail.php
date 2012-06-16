@@ -13,6 +13,7 @@ On the <?php echo date('m/d/Y H:i:s'); ?>, you have registered on the Civi platt
 Here are your credentials:
 
 Username: <?php echo $model->username; ?>
+
 Password: <?php echo $password; ?>
 
 Have fun with Civi!
