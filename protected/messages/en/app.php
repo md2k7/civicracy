@@ -46,6 +46,7 @@ return array (
   'menu.login' => 'Login',
   'menu.logout' => 'Logout ({user})',
   'menu.manage' => 'Manage',
+  'menu.profile' => 'Profile',
   'menu.update' => 'Update',
   'menu.users' => 'Users',
   'menu.users.create' => 'Create User',

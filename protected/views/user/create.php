@@ -11,4 +11,4 @@ $this->menu=array(
 
 <h1><?php echo Yii::t('app', 'menu.users.create'); ?></h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('updateForm', array('model'=>$model)); ?>

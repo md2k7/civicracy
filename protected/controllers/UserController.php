@@ -27,8 +27,12 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform the actions
-				'actions'=>array('index','view','create','update','admin','delete'),
+				'actions'=>array('index','view','create','update','admin','profile','delete'),
 				'users'=>array('admin'),
+			),
+			array('allow', // allow all authenticated users to change their profile
+				'actions'=>array('profile'),
+				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -95,6 +99,41 @@ class UserController extends Controller
 
 		$this->render('update',array(
 			'model'=>$model,
+		));
+	}
+
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionProfile()
+	{
+		$message = '';
+		$model=$this->loadModel(Yii::app()->user->id);
+		$username = $model->username;
+		$realname = $model->realname;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['User']))
+		{
+			$model->attributes=$_POST['User'];
+			$model->id = Yii::app()->user->id; // for security, we don't use a hidden field for this
+			$model->username = $username;
+			$model->realname = $realname;
+
+			// for test environment, make sure no-one changes admin or users 1-4
+			$this->restrictUsers($model);
+
+			if($model->save())
+				$message = Yii::t('app', 'user.profile.saved');
+		}
+
+		$this->render('profile',array(
+			'model'=>$model,
+			'message'=>$message,
 		));
 	}
 

@@ -46,6 +46,7 @@ return array (
   'menu.login' => 'Login',
   'menu.logout' => 'Logout ({user})',
   'menu.manage' => 'Verwalten',
+  'menu.profile' => 'Profil',
   'menu.update' => 'Bearbeiten',
   'menu.users' => 'Benutzer',
   'menu.users.create' => 'Benutzer erstellen',
