@@ -75,6 +75,7 @@ return array (
   'sidebar.operations' => 'Operations',
   'user.create.button' => 'Create',
   'user.deleteConfirmation' => 'Are you sure you want to delete this item?',
+  'user.profile.saved' => '<div class="successSummary"><p>Profile successfully saved.</p></div>',
   'user.save.button' => 'Save',
   'users.updateOne' => 'Update User {user}',
   'vote.button' => 'Vote',

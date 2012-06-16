@@ -75,6 +75,7 @@ return array (
   'sidebar.operations' => 'Aktionen',
   'user.create.button' => 'Erstellen',
   'user.deleteConfirmation' => 'Dieses Element löschen?',
+  'user.profile.saved' => '<div class="successSummary"><p>Profil erfolgreich gespeichert.</p></div>',
   'user.save.button' => 'Speichern',
   'users.updateOne' => 'Benutzer {user} bearbeiten',
   'vote.button' => 'Abstimmen',
