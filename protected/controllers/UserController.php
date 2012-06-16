@@ -102,7 +102,7 @@ class UserController extends Controller
 			if($model->reset_password)
 				$password = $model->createRandomPassword();
 			else
-				$model->password = $model->initialPassword; // make sure the admin doesn't play dirty tricks with POST parameters
+				$model->password = ''; // make sure the admin doesn't play dirty tricks with POST parameters
 
 			if($model->save()) {
 				if($model->reset_password)
