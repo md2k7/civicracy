@@ -143,8 +143,12 @@ class User extends CActiveRecord
 	 */
 	public function save($runValidation=true, $attributes=NULL)
 	{
-		if($attributes === NULL || in_array('password', $attributes))
-		{
+		if($attributes === NULL || in_array('password', $attributes)) {
+			if($this->password == '') {
+				$this->validate();
+				return false;
+			}
+
 			$this->salt = $this->createSalt();
 			$this->password = md5($this->salt . $this->password);
 			if($attributes !== NULL && !in_array('salt', $attributes))
