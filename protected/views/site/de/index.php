@@ -15,7 +15,6 @@
 <ul>
 	<li>Kategorie löschen -&gt; constraint exception</li>
 	<li>vermutlich auch: Benutzer löschen -&gt; constraint exception</li>
-	<li>"Doppelt registriert"-Fehler beim Versuch, ein Benutzerprofil zu ändern (sowohl als Admin als auch übers Profil)</li>
 </ul>
 
 <h2>Unvollständige TODO-List</h2>

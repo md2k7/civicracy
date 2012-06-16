@@ -155,12 +155,14 @@ class User extends CActiveRecord
 
 	private function createSalt()
 	{
-		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!§$%&/()=[]{}+#-*~.,_';
+		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!$%&/()=[]{}+#-*~.,_';
 		$len = 20;
 		$salt = '';
 
 		for($i = 0; $i < $len; $i++)
 			$salt .= substr($alphabet, rand(0, strlen($alphabet) - 1), 1);
+
+		Yii::trace('salt created: ' . $salt);
 
 		return $salt;
 	}
@@ -171,7 +173,10 @@ class User extends CActiveRecord
 	 */
 	public function isUniqueAttribute($attribute, $params)
 	{
-		if($this->find($attribute . '=:val', array(':val' => $this->getAttribute($attribute))) !== null)
+		$other = $this->find($attribute . '=:val', array(':val' => $this->getAttribute($attribute)));
+
+		// if there is another user with that attribute, and that user is not us, that's a problem
+		if($other !== null && $other->id !== $this->id)
 			$this->addError($attribute, Yii::t('app', 'models.duplicate', array('{attribute}' => $this->getAttributeLabel($attribute), '{value}' => $this->getAttribute($attribute))));
 	}
 
