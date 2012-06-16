@@ -16,4 +16,5 @@ Username: <?php echo $model->username; ?>
 
 Password: <?php echo $password; ?>
 
+
 Have fun with Civi!

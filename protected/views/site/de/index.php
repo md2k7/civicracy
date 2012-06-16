@@ -20,7 +20,6 @@
 <h2>Unvollständige TODO-List</h2>
 
 <ul>
-	<li>Passwort ändern</li>
 	<li>Admin: Passwort für Benutzer per E-Mail zurücksetzen</li>
 	<li>"Admin-User erstellen" für Setup</li>
 	<li>Kategorie-Beschreibung</li>
