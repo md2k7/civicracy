@@ -213,9 +213,9 @@ class UserController extends Controller
 	{
 		$subject = '=?UTF-8?B?'.base64_encode(Yii::t('app', 'registration.subject')).'?=';
 
-		$headers = 'From: ' . Yii::app()->params['registration.adminEmail'] . '\r\n';
-		$headers .= 'MIME-Version: 1.0\r\n';
-		$headers .= 'Content-type: text/plain; charset=UTF-8\r\n';
+		$headers = 'From: ' . Yii::app()->params['registration.adminEmail'] . "\r\n";
+		$headers .= 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
 
 		mail($user->email, $subject, $this->renderPartial('registrationMail', array(
 			'model' => $user,
