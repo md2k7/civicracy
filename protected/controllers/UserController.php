@@ -106,7 +106,7 @@ class UserController extends Controller
 
 			if($model->save()) {
 				if($model->reset_password)
-					$this->sendPasswordEmail($model, $password);
+					$this->sendPasswordEmail($model, $password, true);
 				$this->redirect(array('view','id'=>$model->id));
 			}
 		}
