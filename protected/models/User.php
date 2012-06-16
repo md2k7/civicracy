@@ -17,7 +17,8 @@
 class User extends CActiveRecord
 {
 	public $repeat_password;
-	public $initialPassword;
+	public $initialPassword; // stores the password hash
+	public $reset_password; // flag for admin if he wants to reset the password
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -47,7 +48,8 @@ class User extends CActiveRecord
 		return array(
 			array('username, email, realname', 'required'),
 			array('password, repeat_password', 'default'),
-			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'update,profile'),
+			array('reset_password', 'default', 'value'=>false),
+			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'profile'),
 			array('username, password, email, realname', 'length', 'max'=>128),
 			array('username, email, realname', 'length', 'max'=>128),
 			array('username, realname', 'isUniqueAttribute'),
@@ -79,6 +81,7 @@ class User extends CActiveRecord
 			'username' => Yii::t('app', 'models.username'),
 			'password' => Yii::t('app', 'models.password'),
 			'repeat_password' => Yii::t('app', 'models.repeat_password'),
+			'reset_password' => Yii::t('app', 'models.reset_password'),
 			'email' => Yii::t('app', 'models.email'),
 			'realname' => Yii::t('app', 'models.realname'),
 		);

@@ -99,8 +99,16 @@ class UserController extends Controller
 			// for test environment, make sure no-one changes admin or users 1-4
 			$this->restrictUsers($model);
 
-			if($model->save())
+			if($model->reset_password)
+				$password = $model->createRandomPassword();
+			else
+				$model->password = $model->initialPassword; // make sure the admin doesn't play dirty tricks with POST parameters
+
+			if($model->save()) {
+				if($model->reset_password)
+					$this->sendPasswordEmail($model, $password);
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$model->sanitizePassword(); // don't retransmit even the hashed password to the user
@@ -209,9 +217,10 @@ class UserController extends Controller
 	/**
 	 * Send out a registration e-mail with the password.
 	 */
-	private function sendPasswordEmail($user, $password)
+	private function sendPasswordEmail($user, $password, $passwordReset=false)
 	{
-		$subject = '=?UTF-8?B?'.base64_encode(Yii::t('app', 'registration.subject')).'?=';
+		$subjectMessageKey = $passwordReset ? 'passwordReset.subject' : 'registration.subject';
+		$subject = '=?UTF-8?B?'.base64_encode(Yii::t('app', $subjectMessageKey)).'?=';
 
 		$headers = 'From: ' . Yii::app()->params['registration.adminEmail'] . "\r\n";
 		$headers .= 'MIME-Version: 1.0' . "\r\n";

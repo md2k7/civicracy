@@ -22,14 +22,9 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'password'); ?>
-	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'repeat_password'); ?>
-		<?php echo $form->passwordField($model,'repeat_password',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'repeat_password'); ?>
+		<?php echo $form->labelEx($model,'reset_password'); ?>
+		<?php echo $form->checkBox($model,'reset_password'); ?>
+		<?php echo $form->error($model,'reset_password'); ?>
 	</div>
 
 	<div class="row">
