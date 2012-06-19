@@ -46,3 +46,5 @@ if(Yii::app()->params['users.testmode']) {
 	<li>change credits (im Moment fehlt dazu ein Konzept)</li>
 	<li>Historisierung der Wahlen (d.h. meine Stimme im Zeitverlauf), zumindest auf der Datenbank</li>
 </ul>
+
+<p>Viel Spaß mit Civi! -- David Madl</p>
