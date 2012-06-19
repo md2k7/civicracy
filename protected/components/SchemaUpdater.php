@@ -21,9 +21,11 @@ class SchemaUpdater
 		$this->basePath = Yii::app()->getBasePath() . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'mysql' . DIRECTORY_SEPARATOR . Yii::app()->params['database.schema'];
 
 		$db = Yii::app()->getDb();
-		$version = $db->createCommand("SELECT value FROM tbl_parameter WHERE name = 'schema_version'")->queryRow();
-		if($version === NULL)
+		try {
+			$version = $db->createCommand("SELECT value FROM tbl_parameter WHERE name = 'schema_version'")->queryRow();
+		} catch(CDbException $e) {
 			$version = 0;
+		}
 		$version = (int) $version;
 		$files = $this->getSchemaFiles();
 		$currentVersion = max(array_keys($files)); // get newest known schema version
@@ -32,7 +34,7 @@ class SchemaUpdater
 			$nextVersion = $version + 1;
 			$lines = @file($this->basePath . DIRECTORY_SEPARATOR . $files[$nextVersion]) or array();
 			foreach($lines as $command)
-				if($command != '' && substr($command, 0, 2) != '--')
+				if(trim($command) != '' && substr($command, 0, 2) != '--')
 					$db->createCommand($command)->execute();
 			$db->createCommand("UPDATE tbl_parameter SET value = '${nextVersion}' WHERE name = 'schema_version'")->execute();
 		}
@@ -47,8 +49,10 @@ class SchemaUpdater
 		$dir = @opendir($this->basePath) or null;
 		$name = @readdir($dir) or false;
 		while($name !== false) {
-			$id = substr($name, 0, strpos($name, '-'));
-			$result[$id] = $name;
+			if(($pos = strpos($name, '-')) !== false) {
+				$id = (int) substr($name, 0, $pos);
+				$result[$id] = $name;
+			}
 			$name = @readdir($dir) or false;
 		}
 		@closedir($dir);
