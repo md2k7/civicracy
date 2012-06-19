@@ -157,6 +157,9 @@ class UserController extends Controller
 
 	private function restrictUsers($model)
 	{
+		if(!Yii::app()->params['users.testmode'])
+			return;
+
 		// for test environment, make sure no-one changes admin or users 1-4
 		$restricted = array('admin', 'user1', 'user2', 'user3', 'user4');
 		if(in_array($model->username, $restricted))
