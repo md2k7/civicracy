@@ -2,7 +2,7 @@
 -- comments may start at beginning of line
 -- no semicolons
 
-USE civi
+--USE civi
 
 --SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --SET time_zone = "+00:00";
