@@ -21,7 +21,8 @@ if(Yii::app()->params['users.testmode']) {
 
 ?>
 <h2>Anmeldung</h2>
-Für einen Testbenutzer bitte eine E-Mail an <a href="http://www.demokratieforschung.at/arbeitskreise/demokratiesimulation/">Reinhard Hainisch</a> senden.
+<p>Für einen Testbenutzer bitte eine E-Mail an <a href="http://www.demokratieforschung.at/arbeitskreise/demokratiesimulation/">Reinhard Hainisch</a> senden.</p>
+
 <?php
 
 }
