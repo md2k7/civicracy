@@ -26,7 +26,7 @@ class SchemaUpdater
 		} catch(CDbException $e) {
 			$version = 0;
 		}
-		$version = (int) $version;
+		$version = (int) $version['value'];
 		$files = $this->getSchemaFiles();
 		$currentVersion = max(array_keys($files)); // get newest known schema version
 
