@@ -45,6 +45,7 @@ if(Yii::app()->params['users.testmode']) {
 	<li>Anzeigen der Stimmen aller Leute, oder zumindest Top-Ranking (wer wird zum Rat?)</li>
 	<li>change credits (im Moment fehlt dazu ein Konzept)</li>
 	<li>Historisierung der Wahlen (d.h. meine Stimme im Zeitverlauf), zumindest auf der Datenbank</li>
+	<li>Admin sollte nicht gelöscht werden können ;-)</li>
 </ul>
 
 <p>Viel Spaß mit Civi! -- David Madl</p>
