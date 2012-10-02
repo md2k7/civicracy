@@ -29,11 +29,16 @@ if(Yii::app()->params['users.testmode']) {
 
 ?>
 
+<p>Willkommen bei Civicracy! Dies ist ein Testsystem.</p>
+
+
+<!--
 <h2>Bekannte Bugs</h2>
 
 <ul>
 	<li>Kategorie löschen -&gt; constraint exception</li>
 	<li>vermutlich auch: Benutzer löschen -&gt; constraint exception</li>
+	<li>user1 -&gt; user3 -&gt; user1 loop: user1 weight falsch</li>
 </ul>
 
 <h2>Unvollständige TODO-List</h2>
@@ -46,6 +51,9 @@ if(Yii::app()->params['users.testmode']) {
 	<li>change credits (im Moment fehlt dazu ein Konzept)</li>
 	<li>Historisierung der Wahlen (d.h. meine Stimme im Zeitverlauf), zumindest auf der Datenbank</li>
 	<li>Admin sollte nicht gelöscht werden können ;-)</li>
+	<li>Stimme ändern: Benutzer, für den vorher abgestimmt wurde, anzeigen (default value)</li>
+	<li>Marketingtext für Startseite</li>
 </ul>
+-->
 
 <p>Viel Spaß mit Civi! -- David Madl</p>
