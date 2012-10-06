@@ -1,1 +1,0 @@
-<p>Your responsibility describes the amount of trust you have gained. Each voter automatically has one vote per category. Your number of votes increase if other people trust you and thereby delegate their voting power to you.</p>
