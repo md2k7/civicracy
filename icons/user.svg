@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="user.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -92,9 +92,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.9195959"
-     inkscape:cx="232.80008"
-     inkscape:cy="915.929"
+     inkscape:zoom="2.8"
+     inkscape:cx="260.28682"
+     inkscape:cy="896.78501"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -122,17 +122,17 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       sodipodi:type="arc"
+       transform="matrix(0.81343284,0,0,-1.0579708,-19.104469,284.56108)"
        style="fill:url(#radialGradient3573);fill-opacity:1"
+       d="m 302.9456,139.80838 c 0,6.06795 -5.44451,17.55381 -18.65989,17.55381 -13.21539,0 -19.09896,-11.82343 -19.53802,-17.55381 l 18.44037,0 0,0 z"
        id="path2985"
-       sodipodi:cx="284.28571"
-       sodipodi:cy="120.3979"
-       sodipodi:rx="23.928572"
-       sodipodi:ry="36.964287"
-       d="m 308.21428,120.3979 a 23.928572,36.964287 0 1 1 -47.85715,0 l 23.92858,0 z"
-       sodipodi:start="0"
-       sodipodi:end="3.1415927"
-       transform="matrix(0.81343284,0,0,-1.0579708,-19.104469,284.56108)" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cscccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1"
+       d="m 121.78571,155.21932 43.57143,0 0,21.07143 -43.57143,0 z"
+       id="rect4400"
+       inkscape:connector-curvature="0" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -147,7 +147,7 @@
        sodipodi:rx="10.714286"
        sodipodi:ry="10.714286"
        d="m 200.35714,71.290756 a 10.714286,10.714286 0 1 1 -21.42857,0 10.714286,10.714286 0 1 1 21.42857,0 z"
-       transform="translate(22.489182,40.493137)" />
+       transform="matrix(0.8,0,0,0.8,60.417752,54.751288)" />
     <path
        sodipodi:type="arc"
        style="fill:url(#radialGradient3565);fill-opacity:1"
@@ -157,6 +157,6 @@
        sodipodi:rx="10.714286"
        sodipodi:ry="10.714286"
        d="m 200.35714,71.290756 a 10.714286,10.714286 0 1 1 -21.42857,0 10.714286,10.714286 0 1 1 21.42857,0 z"
-       transform="translate(22.500007,40.57143)" />
+       transform="matrix(0.83333334,0,0,0.83333334,54.107149,52.453223)" />
   </g>
 </svg>
