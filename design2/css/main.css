@@ -1,6 +1,7 @@
 .hero-unit {
 	background-color: #05a9fe;
 	padding-bottom: 40px;
+	box-shadow: 4px 4px 4px grey;
 }
 
 .register-box {
@@ -12,7 +13,8 @@
 	padding: 15px 15px 0 15px;
 	margin: 10px;
 	float: right;
-	width: 200px;
+	width: 180px;
+	box-shadow: 4px 4px 4px grey;
 }
 
 .register-box > p {
@@ -35,7 +37,17 @@
 .main-title {
 	float: left;
 	margin-right: 10px;
-	padding-top: 50px;
+	padding-top: 40px;
+}
+
+.main-title > h1 {
+	font-size: 70px;
+/*	text-shadow: 2px 2px 2px black;*/
+}
+
+.main-title > p {
+	font-size: 14px;
+	font-weight: bold;
 }
 
 .main-content > ul {
@@ -53,7 +65,7 @@
 	text-align: center;
 }
 
-.main-content > h1 {
+.main-content > h2 {
 	margin-top: 20px;
 }
 
