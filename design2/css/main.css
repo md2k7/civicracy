@@ -1,0 +1,29 @@
+.hero-unit {
+	background-color: #05a9fe;
+}
+
+
+.register-box {
+    background-color: #EEEEEE;
+    border-radius: 3px 3px 3px 3px;
+    line-height: 40px;
+    min-height: 40px;
+    text-align: center;
+	padding: 15px 15px 0 15px;
+	margin: 10px;
+	float: right;
+	width: 200px;
+}
+
+.main-title, .main-logo {
+	float: left;
+}
+
+.main-title {
+	margin-right: 10px;
+	padding-top: 50px;
+}
+
+.main-left {
+	float: left;
+}
