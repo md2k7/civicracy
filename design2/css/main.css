@@ -38,3 +38,18 @@
 	padding-top: 50px;
 }
 
+.main-content > h1 {
+	margin-bottom: 20px;
+}
+
+.main-content > ul > li {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.footer {
+	margin: 40px 0 20px 0;
+	font-size: 12px;
+	text-align: center;
+}
+
