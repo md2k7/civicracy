@@ -2,27 +2,10 @@ body {
 	/* padding-top: 60px; /* for fixed navbar */
 }
 
-.hero-unit {
+div.hero-unit {
 	background-color: #05a9fe;
 	padding-bottom: 40px;
 	box-shadow: 4px 4px 4px grey;
-}
-
-.hero-right > div.register-box {
-    background-color: #eef;
-    border-radius: 3px 3px 3px 3px;
-    line-height: 40px;
-    min-height: 40px;
-    text-align: center;
-	padding: 15px 15px 0 15px;
-	margin: 10px;
-	float: right;
-	width: 180px;
-	box-shadow: 4px 4px 4px grey;
-}
-
-.hero-right > div.register-box > p {
-	line-height: 25px;
 }
 
 div.hero-logo {
@@ -56,22 +39,46 @@ div.hero-title > p {
 	font-weight: bold;
 }
 
-.main-content > ul {
+div.hero-right > div.register-box {
+    background-color: #eef;
+    border-radius: 3px 3px 3px 3px;
+    line-height: 40px;
+    min-height: 40px;
+    text-align: center;
+	padding: 15px 15px 0 15px;
+	margin: 10px;
+	float: right;
+	width: 180px;
+	box-shadow: 4px 4px 4px grey;
+}
+
+div.hero-right > div.register-box > p {
+	line-height: 25px;
+}
+
+div.hero-right > div.hero-description {
+	max-width: 400px;
+}
+
+div.hero-right > div.hero-description > p {
+	line-height: 20px;
+}
+
+div.main-content > ul {
 	margin-top: 20px;
 }
 
-.main-content > ul > li {
-	font-size: 16px;
+div.main-content > ul > li {
+	font-size: 16px; /* TODO: font size only for index page with keywords! */
 	margin-bottom: 10px;
 }
 
-.footer {
+div.footer {
 	margin: 40px 0 20px 0;
 	font-size: 12px;
 	text-align: center;
 }
 
-.main-content > h2 {
+div.main-content > h2 {
 	margin-top: 20px;
 }
-
