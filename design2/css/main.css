@@ -99,3 +99,36 @@ div.responsibility-title {
 	font-weight: bold;
 	font-size: 18px;
 }
+
+div.vp-row {
+	clear: both;
+}
+
+div.vp-left {
+	width: 120px;
+	float: left;
+	margin-right: 10px;
+}
+
+div.vp-left > p {
+	margin: 5px 0px -5px 0px;
+}
+
+div.vp-left > p, div.vp-left > div.vp-delegated {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+div.vp-left > div.vp-delegated {
+	margin-top: -23px;
+	width: 44px;
+	text-align: right;
+}
+
+div.vp-row-arrow > div.vp-left {
+	padding: 10px 0 10px 0;
+}
+
+div.vp-right {
+	padding-top: 15px;
+}
