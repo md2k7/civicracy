@@ -21,3 +21,5 @@ Notizen
 -> Reinhard:
 	Bitte die Verantwortung jener im Stimmverlauf nicht sichtbar machen, das könnte Wahlverhalten beeinflussen! 
 
+-> Forks: Warum nicht erlauben, die Verantwortung aufzuteilen?
+
