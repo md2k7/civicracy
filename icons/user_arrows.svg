@@ -17,8 +17,8 @@
    inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="user_arrows.svg"
    inkscape:export-filename="/home/david/Projects/civicracy/icons/export/user_arrows.png"
-   inkscape:export-xdpi="200"
-   inkscape:export-ydpi="200">
+   inkscape:export-xdpi="141.48328"
+   inkscape:export-ydpi="141.48328">
   <defs
      id="defs4019">
     <radialGradient
@@ -85,8 +85,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="7.9195959"
-     inkscape:cx="205.12283"
-     inkscape:cy="935.11874"
+     inkscape:cx="183.02574"
+     inkscape:cy="930.06798"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -138,29 +138,29 @@
        d="m 200.35714,71.290756 a 10.714286,10.714286 0 1 1 -21.42857,0 10.714286,10.714286 0 1 1 21.42857,0 z"
        transform="matrix(0.83333334,0,0,0.83333334,49.473309,49.623399)" />
     <rect
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.14857674;stroke-opacity:1"
+       style="fill:#b4b4b4;fill-opacity:1;stroke:none"
        id="rect3098-0"
        width="2.9273207"
        height="11.638597"
-       x="174.02066"
-       y="-131.22818"
+       x="173.9431"
+       y="-131.38902"
        transform="matrix(0.32977973,0.94405791,-0.94405791,0.32977973,0,0)" />
     <path
-       style="fill:#000000;fill-opacity:1;stroke:none"
+       style="fill:#b4b4b4;fill-opacity:1;stroke:none"
        d="m 187.57957,120.36342 -3.76017,7.79752 -4.03736,-11.5577 z"
        id="rect3868-8"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
     <rect
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.14857674;stroke-opacity:1"
+       style="fill:#b4b4b4;fill-opacity:1;stroke:none"
        id="rect3098-0-3"
        width="2.9273207"
        height="11.638597"
-       x="37.303925"
-       y="259.71832"
+       x="37.22636"
+       y="259.5575"
        transform="matrix(-0.32977973,0.94405791,0.94405791,0.32977973,0,0)" />
     <path
-       style="fill:#000000;fill-opacity:1;stroke:none"
+       style="fill:#b4b4b4;fill-opacity:1;stroke:none"
        d="m 226.58301,120.22113 3.76017,7.79752 4.03736,-11.5577 z"
        id="rect3868-8-8"
        inkscape:connector-curvature="0"
