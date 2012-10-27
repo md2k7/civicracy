@@ -16,3 +16,5 @@ Notizen
 
 -> Hero-Unit nimmt viel Platz weg im Profil
 
+-> TODO: test without images if CSS is fit for it
+

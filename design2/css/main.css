@@ -80,7 +80,11 @@ div.main-content > h2 {
 	margin-top: 20px;
 }
 
-.main-content:after {
+div.main-content > h4 {
+	margin-top: 30px;
+}
+
+div.main-content:after {
 	content: "";
 	display: table;
 	line-height: 0;
@@ -89,19 +93,19 @@ div.main-content > h2 {
 
 /* profile.html */
 
+div.responsibility {
+	float: right;
+}
+
 div.responsibility-number {
 	width: 65px;
 	text-align: right;
 	font-size: 50px;
-}
-
-div.responsibility-title {
-	font-weight: bold;
-	font-size: 18px;
+	margin-top: 20px;
 }
 
 div.vp-row {
-	clear: both;
+	clear: left;
 }
 
 div.vp-left {
@@ -129,6 +133,16 @@ div.vp-row-arrow > div.vp-left {
 	padding: 10px 0 10px 0;
 }
 
-div.vp-right {
+div.vp-row-arrow > div.vp-left > img {
+	position: relative;
+	left: 51px;
+}
+
+div.vp-row-arrow > div.vp-right {
 	padding-top: 15px;
+}
+
+div.vp-right > h5 {
+	padding-top: 5px;
+	margin-bottom: 0px;
 }
