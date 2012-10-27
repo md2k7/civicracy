@@ -1,0 +1,6 @@
+-> (8) GUI: responsibility, ...
+-> (4) logs
+-> (8) change timing
+-> (4) Slogan - wofür stehe ich?
+-> (4) Benachrichtigung: "du bist im Rat"
+-> (4) wer ist sonst noch im Rat?
