@@ -227,3 +227,23 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+/* BEGIN autocomplete / combobox styling */
+
+p.ui-option-title {
+	font-weight: bold;
+	padding: 0px;
+	margin: 0px;
+}
+
+p.ui-option-title > strong {
+	color: #00f;
+}
+
+p.ui-option-desc {
+	padding: 0px 0px 0px 20px;
+	margin: 0px;
+	max-width: 400px;
+}
+
+/* END autocomplete styling */

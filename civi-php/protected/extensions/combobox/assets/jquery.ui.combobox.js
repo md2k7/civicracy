@@ -13,19 +13,21 @@
 				minLength: 0,
 				source: function(request, response) {
 					var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
-					response(select.children("option").map(function() {
+					response(select.children("option").map(function(idx, opt) {
 						var text = $(this).text();
-						if (this.value && (!request.term || matcher.test(text)))
+						if (this.value && (!request.term || matcher.test(text))) {
+							desc = $(opt).data('desc');
 							return {
-								label: text.replace(
+								label: '<p class="ui-option-title">' + text.replace(
 									new RegExp(
 										"(?![^&;]+;)(?!<[^<>]*)(" +
 										$.ui.autocomplete.escapeRegex(request.term) +
 										")(?![^<>]*>)(?![^&;]+;)", "gi"
-										), "<strong>$1</strong>" ),
+										), "<strong>$1</strong>" ) + '</p>' + (desc ? '<p class="ui-option-desc">' + desc + '</p>' : ''),
 								value: text,
 								option: this
 							};
+						}
 					}));
 				},
 				select: function(event, ui) {
