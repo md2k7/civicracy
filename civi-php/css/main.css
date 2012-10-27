@@ -243,7 +243,11 @@ p.ui-option-title > strong {
 p.ui-option-desc {
 	padding: 0px 0px 0px 20px;
 	margin: 0px;
-	max-width: 400px;
+	/*max-width: 400px;*/
+}
+
+ul.ui-autocomplete {
+	max-width: 70%;
 }
 
 p.ui-option-delimiter {
