@@ -1,3 +1,6 @@
+
+nach Besprechung vom 25.10.2012
+
 -> (8) GUI: responsibility, ...
 -> (4) logs
 -> (8) change timing
@@ -5,6 +8,11 @@
 -> (4) Benachrichtigung: "du bist im Rat"
 -> (4) wer ist sonst noch im Rat?
 
+
+Notizen
+
 -> ist es verwirrend, wenn man mit 0 Wählern ne Verantwortung von 1 hat?
 	evtl. Grafik anpassen, keine Backers
+
+-> Hero-Unit nimmt viel Platz weg im Profil
 
