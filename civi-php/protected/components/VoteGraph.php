@@ -25,7 +25,7 @@ class VoteGraph
 
 			if($src == $dst)
 				$dst = NULL;
-			else if(!in_array($dst, $this->nodes))
+			else if(!array_key_exists($dst, $this->nodes))
 				$this->putNode(new GraphNode($dst));
 
 			$this->putNode(new GraphNode($src, $dst));
