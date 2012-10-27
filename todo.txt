@@ -4,3 +4,7 @@
 -> (4) Slogan - wofür stehe ich?
 -> (4) Benachrichtigung: "du bist im Rat"
 -> (4) wer ist sonst noch im Rat?
+
+-> ist es verwirrend, wenn man mit 0 Wählern ne Verantwortung von 1 hat?
+	evtl. Grafik anpassen, keine Backers
+
