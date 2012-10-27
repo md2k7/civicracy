@@ -76,6 +76,28 @@
        id="radialGradient4015"
        xlink:href="#linearGradient3567"
        inkscape:collect="always" />
+    <radialGradient
+       r="23.928572"
+       fy="152.90723"
+       fx="278.19003"
+       cy="152.90723"
+       cx="278.19003"
+       gradientTransform="matrix(0.01583055,1.1873052,0.81709142,-0.01089442,82.195722,-197.70574)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient4015-5"
+       xlink:href="#linearGradient3567-1"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient3567-1">
+      <stop
+         style="stop-color:#7b797a;stop-opacity:0.39655173;"
+         offset="0"
+         id="stop3569-6" />
+      <stop
+         style="stop-color:#7b797a;stop-opacity:1;"
+         offset="1"
+         id="stop3571-9" />
+    </linearGradient>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -111,6 +133,12 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       d="m 222.67858,133.79076 c 0,-6.41972 -4.42874,-18.57142 -15.17857,-18.57142 -10.74983,0 -15.53572,12.50884 -15.89286,18.57142 l 15,0 0,0 z"
+       id="path2985-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cscccc" />
     <path
        style="fill:url(#radialGradient4015);fill-opacity:1"
        d="m 222.68759,133.81806 c 0,-6.41972 -4.42874,-18.57142 -15.17857,-18.57142 -10.74983,0 -15.53572,12.50884 -15.89286,18.57142 l 15,0 0,0 z"
