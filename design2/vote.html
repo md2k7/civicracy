@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Civicracy - Profil</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/main.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="/david/civi/assets/b2a423a9/jui/css/base/jquery-ui.css" />
+	<script type="text/javascript" src="/david/civi/assets/b2a423a9/jquery.js"></script>
+	<script type="text/javascript" src="/david/civi/assets/d45d8175/jquery.ui.widget.min.js"></script>
+	<script type="text/javascript" src="/david/civi/assets/d45d8175/jquery.ui.combobox.js"></script>
+</head>
+<body>
+	<div class="navbar navbar-inverse">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				<a class="brand" href="#">Civicracy</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="#contact">Contact</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li class="nav-header">Nav header</li>
+								<li><a href="#">Separated link</a></li>
+								<li><a href="#">One more separated link</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="hero-unit">
+			<div class="hero-left">
+				<div class="hero-title">
+					<h1>Civicracy</h1>
+					<p>Demokratisch Entscheidungsträger finden</p>
+				</div>
+				<div class="hero-logo">
+					<img src="/img/civicracy.png" alt="Kreise" />
+				</div>
+			</div>
+			<div class="hero-right hero-title-right">
+				<h2>HTL Rennweg</h2>
+				<h3>Schülerrat</h3>
+				<div class="hero-description">
+					<p>Der Schülerrat wird per Civicracy demokratisch gewählt und ist ein Organ zur Unterstützung des Schulsprechers.</p>
+				</div>
+			</div>
+			<div class="container"></div>
+		</div>
+		<div class="main-content">
+			<div class="responsibility">
+				<h4>Verantwortung</h4>
+				<div class="responsibility-number">1</div>
+				<img src="/img/responsibility.png" alt="Verantwortung" />
+			</div>
+			<h4>Abstimmen</h4>
+			<p>Entscheide, wem Du das Vertrauen schenkst! Die gewählte Person übernimmt deine gesamte Verantwortung (zusätzlich zur Verantwortung, die ihr schon von anderen weitergegeben wird).</p>
+			<form action="#" method="post">
+				<!--<select><option value="1">One</option><option value="2">Two</option></select>-->
+				<div class="">
+					<label for="Vote_candidate_id" class="required">Kandidat <span class="required">*</span></label>
+					<select id="candidate_select">
+						<option value="0"></option>
+						<option value="Benutzer Drei">Benutzer Drei</option>
+						<option value="Benutzer Eins">Benutzer Eins</option>
+						<option value="Benutzer Zwei">Benutzer Zwei</option>
+						<option value="Benutzer Vier">Benutzer Vier</option>
+					</select><input size="45" type="text" name="candidate" id="candidate" />
+				<script>
+					$('#candidate_select > option[value="Benutzer Drei"]').data('desc', 'This is the description text for Benutzer Drei, and what happens if it is very very long and longcat is even longer. Lorem ipsum dolor sit amet, consecteur amet elit, weiß kein Latein mehr.');
+					$('#candidate_select > option[value="Benutzer Eins"]').data('desc', 'This is the description text for Benutzer Eins, and what happens if it is very very long and longcat is even longer. Lorem ipsum dolor sit amet, consecteur amet elit, weiß kein Latein mehr.');
+					$('#candidate_select > option[value="Benutzer Zwei"]').data('desc', 'This is the description text for Benutzer Zwei, and what happens if it is very very long and longcat is even longer. Lorem ipsum dolor sit amet, consecteur amet elit, weiß kein Latein mehr.');
+					$('#candidate_select > option[value="Benutzer Vier"]').data('desc', 'This is the description text for Benutzer Vier, and what happens if it is very very long and longcat is even longer. Lorem ipsum dolor sit amet, consecteur amet elit, weiß kein Latein mehr.');
+				</script>
+				</div>
+			</form>
+		</div>
+		<footer>
+			<hr/>
+			<p>&copy; 2011-2012 Arbeitskreis "Demokratieforschung" der TU Wien.</p>
+		</footer>
+	</div>
+
+<!-- 	<script src="http://code.jquery.com/jquery-latest.js"></script> -->
+	<script src="/js/bootstrap.min.js"></script>
+
+
+	<script type="text/javascript" src="/david/civi/assets/b2a423a9/jui/js/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	jQuery(function($) {
+	jQuery('#candidate').combobox({'allowText':false,'maxSuggestCount':5,'flip':true});
+	});
+	/*]]>*/
+	</script>
+</body>
+</html>
