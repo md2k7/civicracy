@@ -41,6 +41,9 @@ body {
 .main-title {
 	float: left;
 	margin-right: 10px;
+}
+
+.main-title, .title-right {
 	padding-top: 40px;
 }
 
