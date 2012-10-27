@@ -70,7 +70,7 @@ div.main-content > ul > li {
 	margin-bottom: 10px;
 }
 
-div.footer {
+footer {
 	margin: 40px 0 20px 0;
 	font-size: 12px;
 	text-align: center;
@@ -78,6 +78,13 @@ div.footer {
 
 div.main-content > h2 {
 	margin-top: 20px;
+}
+
+.main-content:after {
+	content: "";
+	display: table;
+	line-height: 0;
+	clear: both;
 }
 
 /* profile.html */
