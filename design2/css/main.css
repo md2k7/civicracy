@@ -96,6 +96,7 @@ div.main-content:after {
 
 div.responsibility {
 	float: right;
+	margin-left: 20px;
 }
 
 div.responsibility-number {
@@ -174,3 +175,17 @@ p.ui-option-delimiter {
 }
 
 /* END autocomplete styling */
+
+
+input.btn-civi {
+	padding: 6px 14px;
+}
+
+#candidate {
+	width: 300px;
+}
+/*
+#Vote_reason {
+	width: 50%;
+}
+*/
