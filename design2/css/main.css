@@ -8,7 +8,7 @@ body {
 	box-shadow: 4px 4px 4px grey;
 }
 
-.register-box {
+.hero-right > div.register-box {
     background-color: #eef;
     border-radius: 3px 3px 3px 3px;
     line-height: 40px;
@@ -21,38 +21,37 @@ body {
 	box-shadow: 4px 4px 4px grey;
 }
 
-.register-box > p {
+.hero-right > div.register-box > p {
 	line-height: 25px;
 }
 
-.main-logo {
+div.hero-logo {
 	float: left;
 	margin: 0px 40px 0px 30px;
 }
 
-.main-left {
+div.hero-left {
 	float: left;
 	margin-bottom: 20px;
 }
-.main-right {
+div.hero-right {
 	float: left;
 }
 
-.main-title {
+div.hero-title {
 	float: left;
 	margin-right: 10px;
 }
 
-.main-title, .title-right {
+div.hero-title, div.hero-title-right {
 	padding-top: 40px;
 }
 
-.main-title > h1 {
+div.hero-title > h1 {
 	font-size: 70px;
-/*	text-shadow: 2px 2px 2px black;*/
 }
 
-.main-title > p {
+div.hero-title > p {
 	font-size: 14px;
 	font-weight: bold;
 }
