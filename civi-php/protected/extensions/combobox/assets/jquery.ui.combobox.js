@@ -72,7 +72,8 @@
 						}
 						eval(options.onChange);
 					}
-				}
+				},
+				position: (options.flip ? { my : "left bottom", at: "left top" } : {})
 			})
 			.addClass("ui-widget ui-widget-content ui-corner-left");
 
