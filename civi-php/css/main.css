@@ -246,4 +246,10 @@ p.ui-option-desc {
 	max-width: 400px;
 }
 
+p.ui-option-delimiter {
+	padding: 0px 0px 0px 5px;
+	margin: 0px;
+	font-weight: bold;
+}
+
 /* END autocomplete styling */

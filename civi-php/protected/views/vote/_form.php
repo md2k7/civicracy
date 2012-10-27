@@ -23,6 +23,7 @@ $this->widget('ext.combobox.EJuiComboBox', array(
 	'data' => $candidates,
 	'options' => array(
 		'allowText' => false,
+		'maxSuggestCount' => 5,
 	),
 	// Options passed to the text input
 	'htmlOptions' => array('size' => 45),

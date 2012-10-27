@@ -13,20 +13,33 @@
 				minLength: 0,
 				source: function(request, response) {
 					var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+					var matches = 0;
 					response(select.children("option").map(function(idx, opt) {
 						var text = $(this).text();
 						if (this.value && (!request.term || matcher.test(text))) {
-							desc = $(opt).data('desc');
-							return {
-								label: '<p class="ui-option-title">' + text.replace(
-									new RegExp(
-										"(?![^&;]+;)(?!<[^<>]*)(" +
-										$.ui.autocomplete.escapeRegex(request.term) +
-										")(?![^<>]*>)(?![^&;]+;)", "gi"
-										), "<strong>$1</strong>" ) + '</p>' + (desc ? '<p class="ui-option-desc">' + desc + '</p>' : ''),
-								value: text,
-								option: this
-							};
+							if((!options.maxSuggestCount) || matches < options.maxSuggestCount) {
+								desc = $(opt).data('desc');
+								matches++;
+								return {
+									label: '<p class="ui-option-title">' + text.replace(
+										new RegExp(
+											"(?![^&;]+;)(?!<[^<>]*)(" +
+											$.ui.autocomplete.escapeRegex(request.term) +
+											")(?![^<>]*>)(?![^&;]+;)", "gi"
+											), "<strong>$1</strong>" ) + '</p>' + (desc ? '<p class="ui-option-desc">' + desc + '</p>' : ''),
+									value: text,
+									option: this
+								};
+							} else if(matches < options.maxSuggestCount + 1) {
+								// display the delimiter "..." signaling the presence of more entries...
+								matches++;
+								return {
+									label: '',
+									value: '',
+									delimiter: true,
+									option: this
+								};
+							}
 						}
 					}));
 				},
@@ -66,7 +79,7 @@
 			input.data("autocomplete")._renderItem = function(ul, item) {
 				return $("<li></li>")
 				.data("item.autocomplete", item)
-				.append("<a>" + item.label + "</a>")
+				.append(item.delimiter ? '<p class="ui-option-delimiter">...</p>' : "<a>" + item.label + "</a>")
 				.appendTo(ul);
 			};
 
