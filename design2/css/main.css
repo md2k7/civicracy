@@ -24,9 +24,6 @@ div.hero-right {
 div.hero-title {
 	float: left;
 	margin-right: 10px;
-}
-
-div.hero-title, div.hero-title-right {
 	padding-top: 40px;
 }
 
