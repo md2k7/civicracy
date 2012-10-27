@@ -44,5 +44,16 @@ $this->widget('ext.combobox.EJuiComboBox', array(
 	</div>
 
 <?php $this->endWidget(); ?>
+	<script>
+<?php
+
+foreach($candidates as $can) {
+?>
+		$('#candidate_select > option[value="<?php echo $can; ?>"]').data('desc', 'This is the description text for <?php echo $can; ?>, and what happens if it is very very long and longcat is even longer. Lorem ipsum dolor sit amet, consecteur amet elit, weiß kein Latein mehr.');
+<?php
+}
+
+?>
+	</script>
 
 </div><!-- form -->
