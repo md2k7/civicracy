@@ -15,7 +15,10 @@
    id="svg3030"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="responsibility.svg">
+   sodipodi:docname="responsibility.svg"
+   inkscape:export-filename="/home/david/Projects/civicracy/icons/responsibility.png"
+   inkscape:export-xdpi="200.56"
+   inkscape:export-ydpi="200.56">
   <defs
      id="defs3032">
     <radialGradient
@@ -268,9 +271,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="139.78846"
-     inkscape:cy="908.79299"
+     inkscape:zoom="5.6"
+     inkscape:cx="146.30061"
+     inkscape:cy="905.23165"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
