@@ -16,7 +16,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'category.create.button') : Yii::t('app', 'category.save.button')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'category.create.button') : Yii::t('app', 'category.save.button'), CiviGlobals::$buttonClass); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

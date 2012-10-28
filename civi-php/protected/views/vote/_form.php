@@ -52,7 +52,7 @@ foreach($candidates as $can) {
 	<?php echo $form->hiddenField($model,'category_id'); ?>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'vote.button') : Yii::t('app', 'vote.update.button')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'vote.button') : Yii::t('app', 'vote.update.button'), CiviGlobals::$buttonClass); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

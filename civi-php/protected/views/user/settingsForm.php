@@ -38,7 +38,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton(Yii::t('app', 'user.save.button')); ?>
+		<?php echo CHtml::submitButton(Yii::t('app', 'user.save.button'), CiviGlobals::$buttonClass); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

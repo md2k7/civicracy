@@ -29,7 +29,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton(Yii::t('app', 'user.create.button')); ?>
+		<?php echo CHtml::submitButton(Yii::t('app', 'user.create.button'), CiviGlobals::$buttonClass); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
