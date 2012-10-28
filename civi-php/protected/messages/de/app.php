@@ -63,6 +63,7 @@ return array (
   'models.duplicate' => '{attribute} doppelt: {value} ist bereits registriert.',
   'models.email' => 'E-Mail',
   'models.password' => 'Passwort',
+  'models.slogan' => 'Slogan',
   'models.realname' => 'Voller Name',
   'models.repeat_password' => 'Passwort wiederholen',
   'models.reset_password' => 'Passwort zurücksetzen',

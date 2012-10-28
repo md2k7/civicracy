@@ -63,6 +63,7 @@ return array (
   'models.duplicate' => '{attribute} duplicate: {value} is already registered.',
   'models.email' => 'Email',
   'models.password' => 'Password',
+  'models.slogan' => 'Slogan',
   'models.realname' => 'Full name',
   'models.repeat_password' => 'Repeat Password',
   'models.reset_password' => 'Reset Password',

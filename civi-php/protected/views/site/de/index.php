@@ -52,14 +52,18 @@
 <h2>Unvollständige TODO-List</h2>
 
 <ul>
-	<li>"Admin-User erstellen" für Setup</li>
-	<li>Kategorie-Beschreibung</li>
 	<li>CSV-Import von Benutzern über die Admin-Oberfläche</li>
-	<li>Anzeigen der Stimmen aller Leute, oder zumindest Top-Ranking (wer wird zum Rat?)</li>
-	<li>change credits (im Moment fehlt dazu ein Konzept)</li>
+	<li>Kategorie-Beschreibung</li>
+	<li>change credits</li>
 	<li>Historisierung der Wahlen (d.h. meine Stimme im Zeitverlauf), zumindest auf der Datenbank</li>
+
+	<li>"Admin-User erstellen" für Setup</li>
+	<li>Anzeigen der Stimmen aller Leute, oder zumindest Top-Ranking (wer wird zum Rat?)</li>
+
+	<li>Nice:</li>
+	<li>Login-Controller Forward auf Profil, wenn schon eingeloggt</li>
+	<li>Nach Login Landing auf Profil, nicht auf index</li>
 	<li>Admin sollte nicht gelöscht werden können ;-)</li>
 	<li>Stimme ändern: Benutzer, für den vorher abgestimmt wurde, anzeigen (default value)</li>
-	<li>Marketingtext für Startseite</li>
 </ul>
 -->

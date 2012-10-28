@@ -37,6 +37,12 @@
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'slogan'); ?>
+		<?php echo $form->textField($model,'slogan',array('class'=>'span12')); ?>
+		<?php echo $form->error($model,'slogan'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton(Yii::t('app', 'user.save.button'), CiviGlobals::$buttonClass); ?>
 	</div>

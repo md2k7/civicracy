@@ -10,6 +10,7 @@
  * @property string $salt
  * @property string $email
  * @property string $realname
+ * @property string $slogan
  *
  * The followings are the available model relations:
  * @property Category[] $tblCategories
@@ -48,6 +49,7 @@ class User extends CActiveRecord
 		return array(
 			array('username, email, realname', 'required'),
 			array('password, repeat_password', 'default'),
+			array('slogan', 'default'),
 			array('reset_password', 'default', 'value'=>false),
 			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'settings'),
 			array('username, password, email, realname', 'length', 'max'=>128),
@@ -55,7 +57,7 @@ class User extends CActiveRecord
 			array('username, realname', 'isUniqueAttribute'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('username, realname', 'safe', 'on'=>'search'),
+			array('username, realname, slogan', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -84,6 +86,7 @@ class User extends CActiveRecord
 			'reset_password' => Yii::t('app', 'models.reset_password'),
 			'email' => Yii::t('app', 'models.email'),
 			'realname' => Yii::t('app', 'models.realname'),
+			'slogan' => Yii::t('app', 'models.slogan'),
 		);
 	}
 

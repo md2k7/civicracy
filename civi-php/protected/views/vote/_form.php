@@ -20,7 +20,7 @@
 
 $this->widget('ext.combobox.EJuiComboBox', array(
 	'name' => 'candidate',
-	'data' => $candidates,
+	'data' => $candidates['names'],
 	'options' => array(
 		'allowText' => false,
 		'maxSuggestCount' => 5,
@@ -33,10 +33,13 @@ $this->widget('ext.combobox.EJuiComboBox', array(
 		<script>
 <?php
 
-foreach($candidates as $can) {
+foreach($candidates['names'] as $can) {
+	$slogan = $candidates['slogans'][$can];
+	if($slogan != "") {
 ?>
-			$('#candidate_select > option[value="<?php echo $can; ?>"]').data('desc', 'This is the description text for <?php echo $can; ?>, and what happens if it is very very long and longcat is even longer. Lorem ipsum dolor sit amet, consecteur amet elit, weiß kein Latein mehr.');
+			$('#candidate_select > option[value="<?php echo CHtml::encode($can); ?>"]').data('desc', '<?php echo CHtml::encode($slogan); ?>');
 <?php
+	}
 }
 
 ?>
