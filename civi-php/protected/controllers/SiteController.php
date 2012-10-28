@@ -64,9 +64,12 @@ class SiteController extends Controller
 		if(isset($_POST['LoginForm']))
 		{
 			$model->attributes=$_POST['LoginForm'];
+			$returnUrl = Yii::app()->user->returnUrl;
+			if($returnUrl == "/index.php")
+				$returnUrl = $this->createUrl('/vote/index'); // after login, redirect to vote page
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
+				$this->redirect($returnUrl);
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));
