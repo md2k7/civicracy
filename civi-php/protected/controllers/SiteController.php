@@ -53,6 +53,7 @@ class SiteController extends Controller
 	{
 		$model=new LoginForm;
 		$afterLoginRedirect = $this->createUrl('/vote/index'); // after login, redirect to vote page
+		$afterLoginRedirectAdmin = $this->createUrl('/user/admin');
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
@@ -69,7 +70,7 @@ class SiteController extends Controller
 				$returnUrl = $afterLoginRedirect;
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
-				$this->redirect($returnUrl);
+				$this->redirect(Yii::app()->user->isAdmin ? $afterLoginRedirectAdmin : $returnUrl);
 		} else if(!Yii::app()->user->isGuest) {
 			// if user is already logged in, don't display login page again
 			$this->redirect($afterLoginRedirect);
