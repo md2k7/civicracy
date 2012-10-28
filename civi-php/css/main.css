@@ -70,6 +70,7 @@ footer {
 	margin: 40px 0 20px 0;
 	font-size: 12px;
 	text-align: center;
+	clear: both;
 }
 
 div.main-content > h2 {
@@ -138,7 +139,7 @@ div.vp-right > h5 {
 }
 
 button.ui-button-icon-only {
-	margin-top: -9px;
+	margin-top: -4px;
 }
 
 /* combo autocomplete styling */
