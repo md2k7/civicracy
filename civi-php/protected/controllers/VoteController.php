@@ -40,6 +40,10 @@ class VoteController extends Controller
 
 	public function actionIndex()
 	{
+		// temp: for now, redirect directly to the single active election (currently called category)
+		$categoryId = Category::model()->find()->id;
+		$this->redirect($this->createUrl('/vote/view', array('id'=>$categoryId)));
+
 		// get vote counts for us
 		$ownWeight = User::model()->findByPk(Yii::app()->user->id)->getVoteCount();
 
