@@ -35,7 +35,15 @@ $('.search-form form').submit(function(){
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'user-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>new CActiveDataProvider('User', array(
+		'criteria'=>array(
+			'condition'=>'username!=:username',
+			'params'=>array('username'=>'admin'), // TODO: improve admin check
+		),
+		'pagination'=>array(
+			'pageSize'=>20,
+		)
+	)),
 	'filter'=>$model,
 	'columns'=>array(
 		'username',
