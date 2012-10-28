@@ -106,9 +106,9 @@ class Vote extends CActiveRecord
 			// cycle detection disabled: new algorithm in VoteGraph can handle cycles
 			/*
 			// cycle detection (note: this may be a race condition - we should obtain a DB lock before checking for loops, and release it after saving the vote)
-			$history = $this->loadVoteHistory($this->category_id, $this->candidate_id)->rawData;
+			$path = $this->loadVotePath($this->category_id, $this->candidate_id)->rawData;
 			$chain = $candidate->realname . $chainLink;
-			foreach($history as $entry)
+			foreach($path as $entry)
 			{
 				if($entry->candidate_id == Yii::app()->user->id)
 				{
@@ -123,14 +123,14 @@ class Vote extends CActiveRecord
 	}
 
 	/**
-	 * Recursively load the vote history for a given category ID.
+	 * Recursively load the vote path for a given category ID.
 	 * @param integer $categoryId
-	 * @param integer $startUserId if given, start at this user, instead of generating the history for the current user
-	 * @return CArrayDataProvider providing the vote history
+	 * @param integer $startUserId if given, start at this user, instead of generating the path for the current user
+	 * @return CArrayDataProvider providing the vote path
 	 */
-	public function loadVoteHistory($categoryId, $startUserId=null)
+	public function loadVotePath($categoryId, $startUserId=null)
 	{
-		$history = array();
+		$path = array();
 		$voterId = $startUserId !== null ? $startUserId : Yii::app()->user->id;
 		$run = true;
 		$voters = array(Yii::app()->user->id); // cycle prevention in software (prevents hangups if the DB contains cycles)
@@ -142,12 +142,12 @@ class Vote extends CActiveRecord
 			if($vote !== null && $voterId != $vote->candidate_id && !in_array($vote->candidate_id, $voters))
 			{
 				$voterId = $vote->candidate_id;
-				$entry = new VoteHistory;
+				$entry = new VotePath;
 				$entry->candidate_id = $vote->candidate_id;
 				$otherVote = User::model()->findByPk($vote->candidate_id)->loadVoteByCategoryId($categoryId);
 				$entry->reason = ($otherVote !== null) ? $otherVote->reason : '';
 				$entry->realname = $vote->candidate->realname;
-				$history[] = $entry;
+				$path[] = $entry;
 				$voters[] = $voterId;
 			}
 			else
@@ -156,8 +156,8 @@ class Vote extends CActiveRecord
 			}
 		}
 
-		return new CArrayDataProvider($history, array(
-			'id' => 'vote_history',
+		return new CArrayDataProvider($path, array(
+			'id' => 'vote_path',
 			'keyField' => 'realname',
 		));
 	}

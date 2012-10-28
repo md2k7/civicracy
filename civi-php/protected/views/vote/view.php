@@ -10,13 +10,13 @@ $this->menu=array(
 );
 
 ?>
-<h1><?php echo Yii::t('app', 'vote.history'); ?></h1>
+<h1><?php echo Yii::t('app', 'vote.path'); ?></h1>
 <p><?php echo Category::model()->getAttributeLabel('name'); ?>: <strong><?php echo $category; ?></strong><br/>
 <?php echo Vote::model()->getAttributeLabel('reason'); ?>: <strong><?php echo $reason; ?></strong></p>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'vote-history-grid',
-	'dataProvider'=>$voteHistory,
+	'id'=>'vote-path-grid',
+	'dataProvider'=>$votePath,
 	'columns'=>array(
 		array(
 			'header' => User::model()->getAttributeLabel('realname'),

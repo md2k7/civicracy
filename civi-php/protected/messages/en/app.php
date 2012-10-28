@@ -85,7 +85,7 @@ return array (
   'users.updateOne' => 'Update User {user}',
   'vote.button' => 'Vote',
   'vote.greeting' => 'Hello, {realname}!',
-  'vote.history' => 'History of my vote',
+  'vote.path' => 'Path of my vote',
   'vote.ownWeight' => 'Responsibility',
   'vote.update.button' => 'Update vote',
   'vote.votedFor' => 'Voted for',

@@ -137,13 +137,13 @@ class VoteController extends Controller
 	}
 
 	/**
-	 * View the vote history for a given category.
+	 * View the vote path for a given category.
 	 * @param integer category ID
 	 */
 	public function actionView($id)
 	{
 		$this->render('view', array(
-			'voteHistory' => Vote::model()->loadVoteHistory($id),
+			'votePath' => Vote::model()->loadVotePath($id),
 			'category' => Category::model()->findByPk($id)->name,
 			'reason' => User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id)->reason,
 			'id' => $id,

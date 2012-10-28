@@ -85,7 +85,7 @@ return array (
   'users.updateOne' => 'Benutzer {user} bearbeiten',
   'vote.button' => 'Abstimmen',
   'vote.greeting' => 'Hallo, {realname}!',
-  'vote.history' => 'Verlauf meiner Stimme',
+  'vote.path' => 'Verlauf meiner Stimme',
   'vote.ownWeight' => 'Verantwortung',
   'vote.update.button' => 'Stimme bearbeiten',
   'vote.votedFor' => 'Vergebene Stimmen',

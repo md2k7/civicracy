@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Simple model class for voter history.
+ * Simple model class for displaying a single path of vote delegation.
  */
-class VoteHistory extends CModel
+class VotePath extends CModel
 {
 	public $realname;
 	public $reason;
