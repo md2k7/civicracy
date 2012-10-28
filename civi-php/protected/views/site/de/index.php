@@ -62,8 +62,6 @@
 
 	<li>Nice:</li>
 	<li>Kategorie umbenennen in Wahl (election) - auf DB, GUI, im Code...</li>
-	<li>Login-Controller Forward auf Profil, wenn schon eingeloggt</li>
-	<li>Nach Login Landing auf Profil, nicht auf index</li>
 	<li>Admin sollte nicht gelöscht werden können ;-)</li>
 	<li>Stimme ändern: Benutzer, für den vorher abgestimmt wurde, anzeigen (default value)</li>
 	<li>Fix double inclusion of jQuery in http://localhost/david/civi/index.php?r=category/admin</li>
