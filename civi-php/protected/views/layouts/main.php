@@ -34,7 +34,7 @@
 				array('label' => Yii::t('app', 'menu.categories'), 'url'=>array('/category/admin'), 'visible'=>(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin)),
 				array('label' => Yii::t('app', 'menu.users'), 'url'=>array('/user/admin'), 'visible'=>(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin)),
 				array('label' => Yii::t('app', 'menu.login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label' => Yii::t('app', 'menu.profile'), 'url'=>array('/user/profile'), 'visible'=>!Yii::app()->user->isGuest),
+				array('label' => Yii::t('app', 'menu.settings'), 'url'=>array('/user/settings'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label' => Yii::t('app', 'menu.logout', array('{user}' => Yii::app()->user->name)), 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
