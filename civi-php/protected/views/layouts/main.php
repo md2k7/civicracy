@@ -8,6 +8,8 @@
 	<link href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" rel="stylesheet" />
 
 	<link rel="icon" href="<?php echo Yii::app()->request->baseUrl; ?>/img/favicon.ico" type="image/x-icon" />
+
+	<?php Yii::app()->clientScript->registerCoreScript('jquery'); /* register jQuery every time, for top navbar */ ?>
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-static-top">
