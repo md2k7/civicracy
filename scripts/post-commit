@@ -10,7 +10,7 @@
 echo David: testing mode - updating git repo in /http
 cd /http/civi-repo
 git checkout master
-git pull /home/david/Projects/civicracy master
+git pull -r /home/david/Projects/civicracy master
 git checkout confidential
 git pull -r /home/david/Projects/civicracy master
 git pull -r /home/david/Projects/civicracy confidential
