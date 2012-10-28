@@ -117,11 +117,11 @@ class VoteController extends Controller
 					$historyModel = new VoteHistory;
 					$historyModel->attributes = $model->attributes;
 					$historyModel->voter_id = $model->voter_id; // set safe attribute separately
+					$historyModel->id = null;
 					if($historyModel->save()) {
-						$this->redirect(array('view','id'=>$id));
 						$transaction->commit();
+						$this->redirect(array('view','id'=>$id)); // doesn't return
 					} else {
-						Yii::error($historyModel->getErrors(), 'votecontroller');
 						$transaction->rollBack();
 					}
 				} else {
