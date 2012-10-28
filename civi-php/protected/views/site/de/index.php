@@ -40,30 +40,3 @@
 			<h2>Wie?</h2>
 			<p>Einfach ausprobieren und ein <a class="btn btn-primary" href="<?php echo $this->createUrl('/site/login'); /* TODO */ ?>">Civi erstellen</a>!</p>
 		</div>
-<!--
-<h2>Bekannte Bugs</h2>
-
-<ul>
-	<li>Kategorie löschen -&gt; falsche Anfrage HTTP 400 (GET instead of POST)</li>
-	<li>Kategorie löschen -&gt; constraint exception</li>
-	<li>vermutlich auch: Benutzer löschen -&gt; constraint exception</li>
-	<li>user1 -&gt; user3 -&gt; user1 loop: user1 weight falsch (hopefully fixed?)</li>
-</ul>
-
-<h2>Unvollständige TODO-List</h2>
-
-<ul>
-	<li>CSV-Import von Benutzern über die Admin-Oberfläche</li>
-	<li>change credits</li>
-	<li>Historisierung der Wahlen (d.h. meine Stimme im Zeitverlauf), zumindest auf der Datenbank</li>
-
-	<li>"Admin-User erstellen" für Setup</li>
-	<li>Anzeigen der Stimmen aller Leute, oder zumindest Top-Ranking (wer wird zum Rat?)</li>
-
-	<li>Nice:</li>
-	<li>Kategorie umbenennen in Wahl (election) - auf DB, GUI, im Code...</li>
-	<li>Admin sollte nicht gelöscht werden können ;-)</li>
-	<li>Stimme ändern: Benutzer, für den vorher abgestimmt wurde, anzeigen (default value)</li>
-	<li>Fix double inclusion of jQuery in http://localhost/david/civi/index.php?r=category/admin</li>
-</ul>
--->
