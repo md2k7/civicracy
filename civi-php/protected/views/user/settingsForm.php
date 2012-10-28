@@ -22,6 +22,7 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'password'); ?>
+		<p><?php echo Yii::t('app', 'models.password.description'); ?></p>
 		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'password'); ?>
 	</div>
@@ -39,6 +40,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'slogan'); ?>
+		<p><?php echo Yii::t('app', 'models.slogan.description'); ?></p>
 		<?php echo $form->textField($model,'slogan',array('class'=>'span12')); ?>
 		<?php echo $form->error($model,'slogan'); ?>
 	</div>

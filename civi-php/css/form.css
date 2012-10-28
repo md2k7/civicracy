@@ -57,6 +57,7 @@ div.form label
 {
 	font-weight: bold;
 	display: block;
+	margin: 0px;
 }
 
 div.form label.inline {
@@ -66,7 +67,12 @@ div.form label.inline {
 
 div.form .row
 {
-	margin: 5px 0;
+	margin: 10px 0;
+}
+
+div.form .row p
+{
+	margin: 0px;
 }
 
 div.form .hint
