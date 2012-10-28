@@ -49,7 +49,7 @@ foreach($candidates['names'] as $can) {
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'reason'); ?>
-		<?php echo $form->textField($model,'reason',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->textField($model,'reason',array('size'=>60,'class'=>'span12')); ?>
 		<?php echo $form->error($model,'reason'); ?>
 	</div>
 	<?php echo $form->hiddenField($model,'category_id'); ?>
