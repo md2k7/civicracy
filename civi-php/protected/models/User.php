@@ -49,7 +49,7 @@ class User extends CActiveRecord
 			array('username, email, realname', 'required'),
 			array('password, repeat_password', 'default'),
 			array('reset_password', 'default', 'value'=>false),
-			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'profile'),
+			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'settings'),
 			array('username, password, email, realname', 'length', 'max'=>128),
 			array('username, email, realname', 'length', 'max'=>128),
 			array('username, realname', 'isUniqueAttribute'),
