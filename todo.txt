@@ -18,8 +18,5 @@ Notizen
 
 -> TODO: test without images if CSS is fit for it
 
--> Reinhard:
-	Bitte die Verantwortung jener im Stimmverlauf nicht sichtbar machen, das könnte Wahlverhalten beeinflussen! 
-
 -> Forks: Warum nicht erlauben, die Verantwortung aufzuteilen?
 
