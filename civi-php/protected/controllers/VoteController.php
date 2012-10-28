@@ -121,6 +121,7 @@ class VoteController extends Controller
 						$this->redirect(array('view','id'=>$id));
 						$transaction->commit();
 					} else {
+						Yii::error($historyModel->getErrors(), 'app');
 						$transaction->rollBack();
 					}
 				} else {
