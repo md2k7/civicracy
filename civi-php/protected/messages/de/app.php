@@ -77,6 +77,7 @@ return array (
   'registration.subject' => 'Ihre Registrierung bei Civi',
   'search.button' => 'Suchen',
   'sidebar.operations' => 'Aktionen',
+  'site.motto' => 'Demokratisch Entscheidungsträger finden',
   'user.create.button' => 'Erstellen',
   'user.deleteConfirmation' => 'Dieses Element löschen?',
   'user.settings.saved' => '<div class="successSummary"><p>Einstellungen erfolgreich gespeichert.</p></div>',

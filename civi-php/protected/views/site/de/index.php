@@ -1,37 +1,45 @@
-<?php $this->pageTitle=Yii::app()->name; ?>
+<?php $this->pageTitle=Yii::app()->name . ' - ' . Yii::t('app', 'site.motto'); ?>
 
-<h1>Willkommen bei <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
-<p><?php echo $this->renderPartial('_version'); ?></p>
+		<div class="hero-unit">
+			<div class="hero-left">
+				<div class="hero-title">
+					<h1><?php echo CHtml::encode(Yii::app()->name); ?></h1>
+					<p><?php echo Yii::t('app', 'site.motto'); ?></p>
+				</div>
+				<div class="hero-logo">
+					<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/civicracy.png" alt="Civicracy Logo" />
+				</div>
+			</div>
+			<div class="hero-right">
+				<div class="register-box">
+					<p><a class="btn btn-primary btn-large" href="<?php echo $this->createUrl('/site/login'); /* TODO */ ?>">Civi erstellen</a></p><p>Eigenen Bereich zum Abstimmen anlegen.</p>
+				</div>
+				<div class="register-box">
+					<p><a class="btn btn-primary btn-large" href="<?php echo $this->createUrl('/site/login'); ?>">Login</a></p><p>Ergebnisse betrachten und abstimmen.</p>
+				</div>
+			</div>
+			<div class="container"></div>
+		</div>
+		<div class="main-content">
+			<h2>Was ist ein Civi?</h2>
+			<p>Ein Civi ist eine <strong>elektronische Wahl</strong> nach dem <em>Civicracy</em>-Prinzip auf dieser Website.</p>
+			<h2>Civicracy in Kürze</h2>
+			<ul>
+			<li><strong>Jeder ist wählbar.</strong><br/>Man wählt einfach jemanden, den man kennt und dem man vertraut, die richtigen Entscheidungen zu treffen.</li>
+			<li><strong>Mehrere Sieger.</strong><br/>Es gibt nicht nur einen Wahlsieger – die besten Köpfe bilden ein Gremium, das gemeinsam entscheidet.</li>
+			<li><strong>Wahl ist immer.</strong><br/>Stell' dir vor, es ist immer Wahl! Entscheidungsträger können jederzeit zur Verantwortung gezogen werden. Entscheidungen werden immer von denen getroffen, die das meiste Vertrauen haben.</li>
+			<li><strong>Vertrauen wird weitergegeben.</strong><br/>Jede Stimme zählt: Meine Verantwortung ist nicht verloren, selbst wenn ich nicht als Entscheidungsträger in ein Gremium berufen werde. Ich entscheide, wem ich meine gesamte Verantwortung weitergebe.</li>
+			<li><strong>Politik kann jeder.</strong><br/>Wer mehr von der Sache versteht, dem vertraut man auch mehr, die richtigen Entscheidungen zu treffen.</li>
+			<li><strong>Keine Wahlpflicht.</strong><br/>Man muss nicht immer wählen – es reicht, wenn man ein einziges Mal sein Vertrauen jemandem gibt, der am politischen Geschehen interessiert ist, um seine Stimme dauerhaft einzubringen.</li>
+			<li><strong>Expertenmeinungen zählen.</strong><br/>Selbst wenn sich Experten mit hohem Vertrauen nicht an der politischen Diskussion beteiligen wollen, können sie ihr gesammeltes Vertrauen an die richtigen Personen weitergeben.</li>
+			</ul>
 
-<?php
+			<h2>Für wen?</h2>
+			<p>Für alle! Civicracy richtet sich aber in erster Linie an Organisationen (wie Schulen oder Vereine), die eine höhere Beteiligung der Menschen an der Entscheidungsfindung erreichen wollen.</p>
 
-if(Yii::app()->params['users.testmode']) {
-
-?>
-<h2>Test-Benutzer</h2>
-<ul>
-	<li>Admin: admin/admin (als Admin darf man nicht abstimmen)</li>
-	<li>weitere User (im Moment 1-4): user1/user1, user2/user2, usw.</li>
-</ul>
-<p>Anmeldung mit diesen Benutzern ist jederzeit möglich. <i>Diese Benutzer können im Testsystem nicht geändert oder gelöscht werden.</i></p>
-
-<?php
-
-} else {
-
-?>
-<h2>Anmeldung</h2>
-<p>Für einen Testbenutzer bitte eine E-Mail an <a href="http://www.demokratieforschung.at/arbeitskreise/demokratiesimulation/">Reinhard Hainisch</a> senden.</p>
-
-<?php
-
-}
-
-?>
-
-<p>Willkommen bei Civicracy! Dies ist ein Testsystem.</p>
-
-
+			<h2>Wie?</h2>
+			<p>Einfach ausprobieren und ein <a class="btn btn-primary" href="<?php echo $this->createUrl('/site/login'); /* TODO */ ?>">Civi erstellen</a>!</p>
+		</div>
 <!--
 <h2>Bekannte Bugs</h2>
 
@@ -55,5 +63,3 @@ if(Yii::app()->params['users.testmode']) {
 	<li>Marketingtext für Startseite</li>
 </ul>
 -->
-
-<p>Viel Spaß mit Civi! -- David Madl</p>
