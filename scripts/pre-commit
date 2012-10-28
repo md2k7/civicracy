@@ -7,6 +7,6 @@
 now=`date "+%d.%m.%Y %H:%M:%S"`
 version=`awk 'BEGIN {FS="[ .]"} /^Civi/ {print $3 "." $4 "." ($5 + 1)}' civi-php/protected/views/site/_version.php`
 
-echo "Civi Version $version vom $now" > civi-php/protected/views/site/_version.php
+echo "Civicracy Version $version vom $now" > civi-php/protected/views/site/_version.php
 echo "<?php /* NOTE: this file is auto-generated. The digits a and b of the a.b.c version number are kept, c is incremented. */ ?>" >> civi-php/protected/views/site/_version.php
 git add civi-php/protected/views/site/_version.php
