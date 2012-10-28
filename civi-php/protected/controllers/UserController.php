@@ -27,11 +27,11 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform the actions
-				'actions'=>array('index','view','create','update','admin','profile','delete'),
+				'actions'=>array('index','view','create','update','admin','settings','delete'),
 				'users'=>array('admin'),
 			),
-			array('allow', // allow all authenticated users to change their profile
-				'actions'=>array('profile'),
+			array('allow', // allow all authenticated users to change their settings
+				'actions'=>array('settings'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -144,12 +144,12 @@ class UserController extends Controller
 			$this->restrictUsers($model);
 
 			if($model->save())
-				$message = Yii::t('app', 'user.profile.saved');
+				$message = Yii::t('app', 'user.settings.saved');
 		}
 
 		$model->sanitizePassword(); // don't retransmit even the hashed password to the user
 
-		$this->render('profile',array(
+		$this->render('settings',array(
 			'model'=>$model,
 			'message'=>$message,
 		));
