@@ -4,6 +4,12 @@
 #
 # This file belongs in .git/hooks
 
+gitbranch=`git branch | sed -n 's/^*.\(.*\)$/\1/p'`
+if [ "$gitbranch" != "master" ]; then
+	echo Not on branch master, not auto-incrementing minor version number
+	exit 0
+fi
+
 now=`date "+%d.%m.%Y %H:%M:%S"`
 version=`awk 'BEGIN {FS="[ .]"} /^Civi/ {print $3 "." $4 "." ($5 + 1)}' civi-php/protected/views/site/_version.php`
 
