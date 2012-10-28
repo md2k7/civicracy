@@ -116,6 +116,7 @@ class VoteController extends Controller
 				if($model->save()) {
 					$historyModel = new VoteHistory;
 					$historyModel->attributes = $model->attributes;
+					$historyModel->voter_id = $model->voter_id; // set safe attribute separately
 					if($historyModel->save()) {
 						$this->redirect(array('view','id'=>$id));
 						$transaction->commit();
