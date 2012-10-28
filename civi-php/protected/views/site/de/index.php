@@ -44,6 +44,7 @@
 <h2>Bekannte Bugs</h2>
 
 <ul>
+	<li>Kategorie löschen -&gt; falsche Anfrage HTTP 400 (GET instead of POST)</li>
 	<li>Kategorie löschen -&gt; constraint exception</li>
 	<li>vermutlich auch: Benutzer löschen -&gt; constraint exception</li>
 	<li>user1 -&gt; user3 -&gt; user1 loop: user1 weight falsch (hopefully fixed?)</li>
