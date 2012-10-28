@@ -56,8 +56,12 @@ div.form fieldset
 div.form label
 {
 	font-weight: bold;
-	font-size: 0.9em;
 	display: block;
+}
+
+div.form label.inline {
+	display: inline;
+	margin-left: 8px;
 }
 
 div.form .row

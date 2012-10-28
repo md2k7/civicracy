@@ -32,12 +32,12 @@ $this->breadcrumbs=array(
 
 	<div class="row rememberMe">
 		<?php echo $form->checkBox($model,'rememberMe'); ?>
-		<?php echo $form->label($model,'rememberMe'); ?>
+		<?php echo $form->label($model,'rememberMe', array('class' => 'inline')); ?>
 		<?php echo $form->error($model,'rememberMe'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton(Yii::t('app', 'login.button')); ?>
+		<?php echo CHtml::submitButton(Yii::t('app', 'login.button'), CiviGlobals::$buttonClass); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
