@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'tbl_category':
  * @property integer $id
  * @property string $name
+ * @property string $description
  *
  * The followings are the available model relations:
  * @property User[] $tblUsers
@@ -39,10 +40,11 @@ class Category extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name', 'required'),
+			array('description', 'default'),
 			array('name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('name', 'safe', 'on'=>'search'),
+			array('name, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +68,7 @@ class Category extends CActiveRecord
 	{
 		return array(
 			'name' => Yii::t('app', 'models.category'),
+			'description' => Yii::t('app', 'models.description'),
 		);
 	}
 

@@ -39,6 +39,7 @@ $('.search-form form').submit(function(){
 	'filter'=>$model,
 	'columns'=>array(
 		'name',
+		'description',
 		array(
 			'class'=>'CButtonColumn',
 		),

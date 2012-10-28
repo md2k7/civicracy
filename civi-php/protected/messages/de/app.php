@@ -60,6 +60,7 @@ return array (
   'menu.vote' => 'Abstimmen',
   'menu.vote.again' => 'Neu abstimmen',
   'models.category' => 'Kategorie',
+  'models.description' => 'Beschreibung',
   'models.duplicate' => '{attribute} doppelt: {value} ist bereits registriert.',
   'models.email' => 'E-Mail',
   'models.password' => 'Passwort',

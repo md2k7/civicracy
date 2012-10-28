@@ -18,5 +18,6 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'name',
+		'description',
 	),
 )); ?>

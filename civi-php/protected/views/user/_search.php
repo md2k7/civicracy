@@ -16,7 +16,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton(Yii::t('app', 'search.button')); ?>
+		<?php echo CHtml::submitButton(Yii::t('app', 'search.button'), CiviGlobals::$buttonClass); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

@@ -46,7 +46,7 @@
 <ul>
 	<li>Kategorie löschen -&gt; constraint exception</li>
 	<li>vermutlich auch: Benutzer löschen -&gt; constraint exception</li>
-	<li>user1 -&gt; user3 -&gt; user1 loop: user1 weight falsch</li>
+	<li>user1 -&gt; user3 -&gt; user1 loop: user1 weight falsch (hopefully fixed?)</li>
 </ul>
 
 <h2>Unvollständige TODO-List</h2>
@@ -61,9 +61,11 @@
 	<li>Anzeigen der Stimmen aller Leute, oder zumindest Top-Ranking (wer wird zum Rat?)</li>
 
 	<li>Nice:</li>
+	<li>Kategorie umbenennen in Wahl (election) - auf DB, GUI, im Code...</li>
 	<li>Login-Controller Forward auf Profil, wenn schon eingeloggt</li>
 	<li>Nach Login Landing auf Profil, nicht auf index</li>
 	<li>Admin sollte nicht gelöscht werden können ;-)</li>
 	<li>Stimme ändern: Benutzer, für den vorher abgestimmt wurde, anzeigen (default value)</li>
+	<li>Fix double inclusion of jQuery in http://localhost/david/civi/index.php?r=category/admin</li>
 </ul>
 -->

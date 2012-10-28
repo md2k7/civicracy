@@ -38,12 +38,14 @@
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
+<?php if(!Yii::app()->user->isAdmin): ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'slogan'); ?>
 		<p><?php echo Yii::t('app', 'models.slogan.description'); ?></p>
 		<?php echo $form->textField($model,'slogan',array('class'=>'span12')); ?>
 		<?php echo $form->error($model,'slogan'); ?>
 	</div>
+<?php endif; ?>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton(Yii::t('app', 'user.save.button'), CiviGlobals::$buttonClass); ?>
