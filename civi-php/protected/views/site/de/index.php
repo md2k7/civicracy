@@ -54,7 +54,6 @@
 
 <ul>
 	<li>CSV-Import von Benutzern über die Admin-Oberfläche</li>
-	<li>Kategorie-Beschreibung</li>
 	<li>change credits</li>
 	<li>Historisierung der Wahlen (d.h. meine Stimme im Zeitverlauf), zumindest auf der Datenbank</li>
 

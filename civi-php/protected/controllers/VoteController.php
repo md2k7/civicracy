@@ -112,8 +112,19 @@ class VoteController extends Controller
 			$model->setCandidate($_POST['candidate']);
 			if($model->validate())
 			{
-				if($model->save())
-					$this->redirect(array('view','id'=>$id));
+				$transaction = Yii::app()->db->beginTransaction();
+				if($model->save()) {
+					$historyModel = new VoteHistory;
+					$historyModel->attributes = $model->attributes;
+					if($historyModel->save()) {
+						$this->redirect(array('view','id'=>$id));
+						$transaction->commit();
+					} else {
+						$transaction->rollBack();
+					}
+				} else {
+					$transaction->rollBack();
+				}
 			}
 		}
 
