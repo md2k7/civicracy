@@ -12,5 +12,5 @@ cd /http/civi-repo
 git checkout master
 git pull /home/david/Projects/civicracy master
 git checkout confidential
-git pull /home/david/Projects/civicracy master
+git pull -r /home/david/Projects/civicracy master
 git pull /home/david/Projects/civicracy confidential
