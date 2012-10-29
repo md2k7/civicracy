@@ -17,7 +17,7 @@ $this->menu=array(
 					<p>Demokratisch Entscheidungsträger finden</p>
 				</div>
 				<div class="hero-logo">
-					<img src="/img/civicracy.png" alt="Kreise" />
+					<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/civicracy.png" alt="Kreise" />
 				</div>
 			</div>
 			<div class="hero-right hero-title-right">
