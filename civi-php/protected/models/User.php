@@ -123,20 +123,41 @@ class User extends CActiveRecord
 			$users[] = $u->id;
 
 		foreach($categories as $c) {
-			$votes = Vote::model()->findAllByAttributes(array('category_id' => $c->id));
-			$graph = new VoteGraph($users, $votes);
-			$weights = $graph->getWeights();
-
-			$entry = new VoteCount;
-			$entry->categoryName = $c->name;
-			$entry->voteCount = $weights[$this->id];
-			$voteCount[] = $entry;
+			$voteCount[] = $this->getVoteCountInCategoryInternal($c, $users);
 		}
 
 		return new CArrayDataProvider($voteCount, array(
 			'id' => 'vote_count',
 			'keyField' => 'categoryName',
 		));
+	}
+
+	/**
+	 * @return VoteCount our weight in a specific category queried
+	 */
+	public function getVoteCountInCategory($categoryId) {
+		$users = array();
+		$userObjects = User::model()->findAll();
+		foreach($userObjects as $u)
+			$users[] = $u->id;
+
+		return $this->getVoteCountInCategoryInternal(Category::model()->findByPk($categoryId), $users);
+	}
+
+	/**
+	 * @param $users array user id array
+	 * @return VoteCount our weight in a specific category queried
+	 */
+	public function getVoteCountInCategoryInternal($category, $users) {
+		$votes = Vote::model()->findAllByAttributes(array('category_id' => $category->id));
+		$graph = new VoteGraph($users, $votes);
+		$weights = $graph->getWeights();
+
+		$entry = new VoteCount;
+		$entry->categoryName = $category->name;
+		$entry->voteCount = $weights[$this->id];
+
+		return $entry;
 	}
 
 	public function validatePassword($password)

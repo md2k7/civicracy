@@ -136,7 +136,8 @@ class VoteController extends Controller
 
 		$this->render('update', array(
 			'model' => $model,
-			'categoryModel' => $categoryModel,
+			'category' => Category::model()->findByPk($id),
+			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
 			'candidates' => $this->loadCandidates(),
 		));
 	}
@@ -164,7 +165,8 @@ class VoteController extends Controller
 	{
 		$this->render('view', array(
 			'votePath' => Vote::model()->loadVotePath($id),
-			'category' => Category::model()->findByPk($id)->name,
+			'category' => Category::model()->findByPk($id),
+			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
 			'reason' => User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id)->reason,
 			'id' => $id,
 		));

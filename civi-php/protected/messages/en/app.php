@@ -90,6 +90,7 @@ return array (
   'users.updateOne' => 'Update User {user}',
   'vote.button' => 'Vote',
   'vote.greeting' => 'Hello, {realname}!',
+  'vote.noslogan' => '<em>no slogan</em>',
   'vote.path' => 'Path of my vote',
   'vote.ownWeight' => 'Responsibility',
   'vote.update.button' => 'Update vote',

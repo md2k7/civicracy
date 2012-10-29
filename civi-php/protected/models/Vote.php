@@ -101,32 +101,13 @@ class Vote extends CActiveRecord
 		{
 			$this->addError($attribute, Yii::t('app', 'models.vote.candidateIncorrect'));
 		}
-		else
-		{
-			// cycle detection disabled: new algorithm in VoteGraph can handle cycles
-			/*
-			// cycle detection (note: this may be a race condition - we should obtain a DB lock before checking for loops, and release it after saving the vote)
-			$path = $this->loadVotePath($this->category_id, $this->candidate_id)->rawData;
-			$chain = $candidate->realname . $chainLink;
-			foreach($path as $entry)
-			{
-				if($entry->candidate_id == Yii::app()->user->id)
-				{
-					$chain .= Yii::app()->user->realname;
-					$this->addError($attribute, Yii::t('app', 'models.vote.cycleWarning', array('{chain}' => $chain)));
-					break;
-				}
-				$chain .= $entry->realname . $chainLink;
-			}
-			*/
-		}
 	}
 
 	/**
 	 * Recursively load the vote path for a given category ID.
 	 * @param integer $categoryId
 	 * @param integer $startUserId if given, start at this user, instead of generating the path for the current user
-	 * @return CArrayDataProvider providing the vote path
+	 * @return array vote path
 	 */
 	public function loadVotePath($categoryId, $startUserId=null)
 	{
@@ -134,6 +115,15 @@ class Vote extends CActiveRecord
 		$voterId = $startUserId !== null ? $startUserId : Yii::app()->user->id;
 		$run = true;
 		$voters = array(Yii::app()->user->id); // cycle prevention in software (prevents hangups if the DB contains cycles)
+
+		// add ourselves to vote path
+		$vote = Vote::model()->with('candidate')->find('voter_id=:voter_id AND category_id=:category_id', array(':voter_id' => $voterId, ':category_id' => $categoryId));
+		$myself = new VotePath;
+		$myself->candidate_id = $voterId;
+		$myself->reason = $vote->reason;
+		$myself->realname = Yii::app()->user->realname;
+		$myself->slogan = User::model()->findByPk(Yii::app()->user->id)->slogan;
+		$path[] = $myself;
 
 		while($run)
 		{
@@ -144,9 +134,10 @@ class Vote extends CActiveRecord
 				$voterId = $vote->candidate_id;
 				$entry = new VotePath;
 				$entry->candidate_id = $vote->candidate_id;
-				$otherVote = User::model()->findByPk($vote->candidate_id)->loadVoteByCategoryId($categoryId);
+				$otherVote = $vote->candidate->loadVoteByCategoryId($categoryId);
 				$entry->reason = ($otherVote !== null) ? $otherVote->reason : '';
 				$entry->realname = $vote->candidate->realname;
+				$entry->slogan = $vote->candidate->slogan;
 				$path[] = $entry;
 				$voters[] = $voterId;
 			}
@@ -156,9 +147,6 @@ class Vote extends CActiveRecord
 			}
 		}
 
-		return new CArrayDataProvider($path, array(
-			'id' => 'vote_path',
-			'keyField' => 'realname',
-		));
+		return $path;
 	}
 }

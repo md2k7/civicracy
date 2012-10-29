@@ -10,8 +10,8 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($categoryModel,'name'); ?>
-		<p><?php echo $categoryModel->name; ?></p>
+		<?php echo $form->labelEx($category,'name'); ?>
+		<p><?php echo $category->name; ?></p>
 	</div>
 
 	<div class="row">
