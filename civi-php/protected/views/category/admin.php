@@ -21,7 +21,7 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
+		<div class="main-content">
 <h1><?php echo Yii::t('app', 'menu.categories.manageAll'); ?></h1>
 
 <?php echo Yii::t('app', 'forms.compareOperators'); ?>
@@ -45,3 +45,4 @@ $('.search-form form').submit(function(){
 		),
 	),
 )); ?>
+		</div>

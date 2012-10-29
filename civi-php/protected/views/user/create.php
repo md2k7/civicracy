@@ -1,3 +1,4 @@
+		<div class="main-content">
 <?php
 $this->breadcrumbs=array(
 	Yii::t('app', 'menu.users') => array('admin'),
@@ -12,3 +13,4 @@ $this->menu=array(
 <h1><?php echo Yii::t('app', 'menu.users.create'); ?></h1>
 
 <?php echo $this->renderPartial('createForm', array('model'=>$model)); ?>
+		</div>

@@ -1,3 +1,4 @@
+		<div class="main-content">
 <?php
 $this->breadcrumbs=array(
 	Yii::t('app', 'menu.users') => array('admin'),
@@ -22,3 +23,4 @@ $this->menu=array(
 		'email',
 	),
 )); ?>
+		</div>

@@ -4,7 +4,7 @@ $this->breadcrumbs=array(
 	Yii::t('app', 'menu.login'),
 );
 ?>
-
+		<div class="main-content">
 <h1><?php echo Yii::t('app', 'menu.login'); ?></h1>
 
 <div class="form">
@@ -42,3 +42,4 @@ $this->breadcrumbs=array(
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
+		</div>
