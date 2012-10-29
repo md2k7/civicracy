@@ -120,7 +120,7 @@ class Vote extends CActiveRecord
 		$vote = Vote::model()->with('candidate')->find('voter_id=:voter_id AND category_id=:category_id', array(':voter_id' => $voterId, ':category_id' => $categoryId));
 		$myself = new VotePath;
 		$myself->candidate_id = $voterId;
-		$myself->reason = $vote->reason;
+		$myself->reason = ($vote !== null) ? $vote->reason : '';
 		$myself->realname = Yii::app()->user->realname;
 		$myself->slogan = User::model()->findByPk(Yii::app()->user->id)->slogan;
 		$path[] = $myself;

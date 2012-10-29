@@ -26,7 +26,13 @@ $this->breadcrumbs=array(
 			<div class="container"></div>
 		</div>
 		<div class="main-content">
+			<div class="responsibility">
+				<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
+				<div class="responsibility-number"><?php echo $weight; ?></div>
+				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
+			</div>
 			<h4><?php echo Yii::t('app', 'menu.categoryVote', array('{category}' => $category->name)); ?></h4>
+			<?php echo Yii::t('app', 'vote.explainVoting'); ?>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model, 'category'=>$category, 'candidates'=>$candidates)); ?>
 		</div>

@@ -9,10 +9,12 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
+<?php /* ?>
 	<div class="row">
 		<?php echo $form->labelEx($category,'name'); ?>
 		<p><?php echo $category->name; ?></p>
 	</div>
+<?php */ ?>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'candidate_id'); ?>

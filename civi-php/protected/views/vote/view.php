@@ -36,7 +36,7 @@ $this->menu=array(
 				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
 			</div>
 			<h4><?php echo Yii::t('app', 'vote.path'); ?></h4>
-			<div>
+			<div class="container">
 <?php foreach($votePath as $vote) { ?>
 				<div class="vp-row">
 					<div class="vp-left">
@@ -55,5 +55,7 @@ $this->menu=array(
 					<div class="vp-right"><?php echo $vote->reason; ?></div>
 				</div>
 <?php } } ?>
+				<p>&nbsp;</p>
 			</div>
+			<p><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
 		</div>

@@ -89,6 +89,7 @@ return array (
   'user.save.button' => 'Speichern',
   'users.updateOne' => 'Benutzer {user} bearbeiten',
   'vote.button' => 'Abstimmen',
+  'vote.explainVoting' => '<p>Entscheide, wem Du das Vertrauen schenkst! Die gewählte Person übernimmt deine gesamte Verantwortung (zusätzlich zur Verantwortung, die ihr schon von anderen weitergegeben wird).</p>',
   'vote.greeting' => 'Hallo, {realname}!',
   'vote.noslogan' => '<em>kein Slogan</em>',
   'vote.path' => 'Verlauf meiner Stimme',

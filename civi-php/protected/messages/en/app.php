@@ -89,6 +89,7 @@ return array (
   'user.save.button' => 'Save',
   'users.updateOne' => 'Update User {user}',
   'vote.button' => 'Vote',
+  'vote.explainVoting' => '<p>Decide whom you trust! The person you vote for will get your whole responsibility (in addition to the responsibility he/she is already getting from others).</p>',
   'vote.greeting' => 'Hello, {realname}!',
   'vote.noslogan' => '<em>no slogan</em>',
   'vote.path' => 'Path of my vote',

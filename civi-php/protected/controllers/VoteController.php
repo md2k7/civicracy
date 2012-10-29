@@ -163,11 +163,14 @@ class VoteController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
+		$reason = ($vote !== null) ? $vote->reason : '';
 		$this->render('view', array(
 			'votePath' => Vote::model()->loadVotePath($id),
 			'category' => Category::model()->findByPk($id),
 			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
-			'reason' => User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id)->reason,
+			'reason' => $reason,
+			'voted' => ($vote !== null),
 			'id' => $id,
 		));
 	}
