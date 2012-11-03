@@ -8,6 +8,7 @@
  * @property integer $voter_id
  * @property integer $candidate_id
  * @property string $reason
+ * @property timestamp $timestamp
  */
 class Vote extends CActiveRecord
 {
@@ -41,6 +42,7 @@ class Vote extends CActiveRecord
 			array('category_id, candidate_id', 'numerical', 'integerOnly'=>true),
 			array('category_id', 'isValidCategory'),
 			array('candidate_id', 'isValidCandidate'),
+			array('timestamp', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false, 'on' => 'insert, update'),
 		);
 	}
 

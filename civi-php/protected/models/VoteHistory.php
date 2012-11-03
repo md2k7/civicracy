@@ -10,6 +10,7 @@
  * @property integer   $voter_id
  * @property integer   $candidate_id
  * @property string    $reason
+ * @property timestamp $timestamp
  */
 class VoteHistory extends Vote
 {
@@ -19,5 +20,15 @@ class VoteHistory extends Vote
 	public function tableName()
 	{
 		return 'tbl_vote_history';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		return CMap::mergeArray(parent::rules(), array(
+			array('timestamp', 'safe'),
+		));
 	}
 }
