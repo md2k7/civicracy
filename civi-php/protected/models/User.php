@@ -214,8 +214,6 @@ class User extends CActiveRecord
 		for($i = 0; $i < $len; $i++)
 			$salt .= substr($alphabet, rand(0, strlen($alphabet) - 1), 1);
 
-		//Yii::trace('salt created: ' . $salt);
-
 		return $salt;
 	}
 
@@ -237,7 +235,10 @@ class User extends CActiveRecord
 		return $this->save();
 	}
 
-	/*
+	/**
+	 * Check if a specified attribute is unique (not present in the database yet), and add a model error otherwise.
+	 * Used in rules() method.
+	 *
 	 * @param string $attribute the name of the attribute to be validated
 	 * @param array $params options specified in the validation rule
 	 */

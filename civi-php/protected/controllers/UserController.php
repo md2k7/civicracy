@@ -135,6 +135,7 @@ class UserController extends Controller
 
 		if(isset($_POST['User']))
 		{
+			$model->scenario = 'settings';
 			$model->attributes=$_POST['User'];
 			$model->id = Yii::app()->user->id; // for security, we don't use a hidden field for this
 			$model->username = $username;
