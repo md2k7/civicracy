@@ -26,6 +26,7 @@ $this->widget('ext.combobox.EJuiComboBox', array(
 	'options' => array(
 		'allowText' => false,
 		'maxSuggestCount' => 5,
+		'flip' => true,
 	),
 	// Options passed to the text input
 	'htmlOptions' => array('size' => 45),

@@ -93,6 +93,7 @@ div.main-content:after {
 div.responsibility {
 	float: right;
 	margin-left: 20px;
+	margin-bottom: 20px;
 }
 
 div.responsibility-number {
@@ -185,4 +186,8 @@ div.alert p {
 
 div.alert ul {
 	margin-bottom: 0px;
+}
+
+div.alert {
+	clear: both;
 }
