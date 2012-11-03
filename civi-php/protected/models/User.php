@@ -11,6 +11,7 @@
  * @property string $email
  * @property string $realname
  * @property string $slogan
+ * @property integer $active
  *
  * The followings are the available model relations:
  * @property Category[] $tblCategories

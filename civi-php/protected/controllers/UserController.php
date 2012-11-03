@@ -67,7 +67,7 @@ class UserController extends Controller
 			$model->attributes=$_POST['User'];
 			$password = $model->createRandomPassword();
 
-			if($model->save()) {
+			if($this->saveUserAndHistory($model)) {
 				$this->sendPasswordEmail($model, $password);
 				$this->redirect(array('view','id'=>$model->id));
 			}
@@ -104,7 +104,7 @@ class UserController extends Controller
 			else
 				$model->password = ''; // make sure the admin doesn't play dirty tricks with POST parameters
 
-			if($model->save()) {
+			if($this->saveUserAndHistory($model)) {
 				if($model->reset_password)
 					$this->sendPasswordEmail($model, $password, true);
 				$this->redirect(array('view','id'=>$model->id));
@@ -143,7 +143,7 @@ class UserController extends Controller
 			// for test environment, make sure no-one changes admin or users 1-4
 			$this->restrictUsers($model);
 
-			if($model->save())
+			if($this->saveUserAndHistory($model))
 				$message = Yii::t('app', 'user.settings.saved');
 		}
 
@@ -218,6 +218,34 @@ class UserController extends Controller
 	}
 
 	/**
+	 * Save a User model while keeping history in UserHistory.
+	 */
+	private function saveUserAndHistory($model)
+	{
+		$transaction = Yii::app()->db->beginTransaction();
+		if($model->save()) {
+			$historyModel = new UserHistory;
+			$historyModel->attributes = $model->attributes;
+			// copy safe attributes separately
+			$historyModel->salt = $model->salt;
+			$historyModel->active = $model->active;
+			$historyModel->user_id = $model->id;
+			if($historyModel->save()) {
+				$transaction->commit();
+				return true;
+			} else {
+				//Yii::log('historyModel errors: ' . CVarDumper::dumpAsString($historyModel->getErrors()), 'warning', 'UserController');
+				$transaction->rollBack();
+				return false;
+			}
+		} else {
+			//Yii::log('model errors: ' . CVarDumper::dumpAsString($model->getErrors()), 'warning', 'UserController');
+			$transaction->rollBack();
+			return false;
+		}
+	}
+
+	/**
 	 * Send out a registration e-mail with the password.
 	 */
 	private function sendPasswordEmail($user, $password, $passwordReset=false)
@@ -229,10 +257,15 @@ class UserController extends Controller
 		$headers .= 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
 
-		mail($user->email, $subject, $this->renderPartial('registrationMail', array(
-			'model' => $user,
-			'password' => $password,
-		), true), $headers);
+		if(Yii::app()->params['users.logpassword']) {
+			// log password for testing, instead of sending e-mail
+			Yii::log('user: ' . $user->username . ', password: ' . $password, 'info', 'UserController');
+		} else {
+			mail($user->email, $subject, $this->renderPartial('registrationMail', array(
+				'model' => $user,
+				'password' => $password,
+			), true), $headers);
+		}
 	}
 
 	/**

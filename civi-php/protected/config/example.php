@@ -87,6 +87,7 @@ return array(
 		'registration.url'=>'http://localhost/david/civi',
 		'database.schema'=>'test',
 		'users.testmode'=>false, // whether to block user1-4 and admin
+		'users.logpassword'=>false, // whether to log user passwords with 'info' level (for testing), instead of sending e-mail
 	),
 
 	// i18n
