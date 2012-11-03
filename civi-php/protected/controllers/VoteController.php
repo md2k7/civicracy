@@ -41,7 +41,7 @@ class VoteController extends Controller
 	public function actionIndex()
 	{
 		// temp: for now, redirect directly to the single active election (currently called category)
-		$categoryId = Category::model()->find()->id;
+		$categoryId = Category::model()->find('active = :active', array('active' => 1))->id;
 		$this->redirect($this->createUrl('/vote/view', array('id'=>$categoryId)));
 
 		// get vote counts for us
@@ -88,6 +88,7 @@ class VoteController extends Controller
 			if($vote === null)
 				throw new CHttpException(404, Yii::t('app', 'http.404'));
 			$vote->delete();
+			// TODO: use VoteHistory
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))

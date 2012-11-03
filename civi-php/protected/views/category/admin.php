@@ -35,7 +35,15 @@ $('.search-form form').submit(function(){
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'category-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>new CActiveDataProvider('Category', array(
+		'criteria'=>array(
+			'condition'=>'active = :active',
+			'params'=>array('active'=>1),
+		),
+		'pagination'=>array(
+			'pageSize'=>20,
+		)
+	)),
 	'filter'=>$model,
 	'columns'=>array(
 		'name',
