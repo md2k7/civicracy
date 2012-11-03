@@ -84,7 +84,7 @@ return array (
   'site.motto' => 'Find policymakers democratically',
   'user.create.button' => 'Create',
   'user.deleteConfirmation' => 'Are you sure you want to delete this user?',
-  'user.settings.saved' => '<div class="successSummary"><p>Settings successfully saved.</p></div>',
+  'user.settings.saved' => '<div class="alert alert-success"><p>Settings successfully saved.</p></div>',
   'user.registration.email' => '<p class="note">Password will be sent via e-mail.</p>',
   'user.save.button' => 'Save',
   'users.updateOne' => 'Update User {user}',

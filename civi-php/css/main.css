@@ -178,3 +178,11 @@ input.btn-civi {
 #candidate {
 	width: 300px;
 }
+
+div.alert p {
+	margin: 0px;
+}
+
+div.alert ul {
+	margin-bottom: 0px;
+}

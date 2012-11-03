@@ -8,7 +8,7 @@
 	<?php echo Yii::t('app', 'forms.required'); ?>
 
 	<?php echo $message; ?>
-	<?php echo $form->errorSummary($model); ?>
+	<?php echo $form->errorSummary($model, NULL, NULL, CiviGlobals::$infoboxClass); ?>
 
 	<div class="row">
 		<?php echo $form->label($model,'username'); ?>
