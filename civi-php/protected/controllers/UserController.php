@@ -187,7 +187,7 @@ class UserController extends Controller
 				// create event log entry
 				$logEntry = new Log;
 				$logEntry->category = Log::USER_CONTROLLER;
-				$logEntry->log = 'Admin triggered actionDelete(' . $user->id . ')';
+				$logEntry->log = 'Admin triggered actionDelete(' . $user->id . ') on user ' . $user->username;
 				$logEntry->save();
 
 				// mark user as deleted
