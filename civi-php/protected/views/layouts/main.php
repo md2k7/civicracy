@@ -21,7 +21,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="<?php echo $this->createUrl(Yii::app()->user->isGuest ? '/site/index' : '/vote/index'); ?>"><?php echo CHtml::encode(Yii::app()->name); ?></a>
+				<a class="brand" href="<?php echo $this->createUrl(Yii::app()->user->isGuest ? '/site/index' : (Yii::app()->user->isAdmin ? '/user/admin' : '/vote/index')); ?>"><?php echo CHtml::encode(Yii::app()->name); ?></a>
 				<div class="nav-collapse collapse">
 <?php $this->widget('zii.widgets.CMenu',array(
 	'encodeLabel'=>false,
