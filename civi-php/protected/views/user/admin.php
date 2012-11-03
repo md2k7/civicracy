@@ -37,8 +37,8 @@ $('.search-form form').submit(function(){
 	'id'=>'user-grid',
 	'dataProvider'=>new CActiveDataProvider('User', array(
 		'criteria'=>array(
-			'condition'=>'username!=:username',
-			'params'=>array('username'=>'admin'), // TODO: improve admin check
+			'condition'=>'username != :username AND active = :active',
+			'params'=>array('username'=>'admin', 'active'=>1), // TODO: improve admin check
 		),
 		'pagination'=>array(
 			'pageSize'=>20,
@@ -51,6 +51,7 @@ $('.search-form form').submit(function(){
 		'email',
 		array(
 			'class'=>'CButtonColumn',
+			'deleteConfirmation'=>Yii::t('app', 'user.deleteConfirmation'),
 		),
 	),
 )); ?>

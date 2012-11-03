@@ -228,6 +228,15 @@ class User extends CActiveRecord
 		return $this->password;
 	}
 
+	/**
+	 * Override the default delete() method to provide deletion via active flag.
+	 */
+	public function delete()
+	{
+		$this->active = 0;
+		return $this->save();
+	}
+
 	/*
 	 * @param string $attribute the name of the attribute to be validated
 	 * @param array $params options specified in the validation rule

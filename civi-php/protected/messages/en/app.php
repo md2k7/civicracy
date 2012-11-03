@@ -83,7 +83,7 @@ return array (
   'sidebar.operations' => 'Operations',
   'site.motto' => 'Find policymakers democratically',
   'user.create.button' => 'Create',
-  'user.deleteConfirmation' => 'Are you sure you want to delete this item?',
+  'user.deleteConfirmation' => 'Are you sure you want to delete this user?',
   'user.settings.saved' => '<div class="successSummary"><p>Settings successfully saved.</p></div>',
   'user.registration.email' => '<p class="note">Password will be sent via e-mail.</p>',
   'user.save.button' => 'Save',

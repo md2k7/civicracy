@@ -83,7 +83,7 @@ return array (
   'sidebar.operations' => 'Aktionen',
   'site.motto' => 'Demokratisch Entscheidungsträger finden',
   'user.create.button' => 'Erstellen',
-  'user.deleteConfirmation' => 'Dieses Element löschen?',
+  'user.deleteConfirmation' => 'Diese Person wirklich löschen?',
   'user.settings.saved' => '<div class="successSummary"><p>Einstellungen erfolgreich gespeichert.</p></div>',
   'user.registration.email' => '<p class="note">Das Passwort wird per E-Mail zugeschickt.</p>',
   'user.save.button' => 'Speichern',

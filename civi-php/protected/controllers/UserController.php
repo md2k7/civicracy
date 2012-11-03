@@ -173,13 +173,16 @@ class UserController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+		// we only allow deletion via POST request
 		if(Yii::app()->request->isPostRequest)
 		{
 			// for test environment, make sure no-one changes admin or users 1-4
 			$this->restrictUsers($this->loadModel($id));
 
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+			// mark user as deleted
+			$user = $this->loadModel($id);
+			$user->active = 0;
+			$this->saveUserAndHistory($user);
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
