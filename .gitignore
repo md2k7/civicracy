@@ -9,3 +9,4 @@
 /civi-php/deploy
 *.swp
 *.kate-swp
+/yii-*
