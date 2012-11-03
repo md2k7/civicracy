@@ -179,10 +179,31 @@ class UserController extends Controller
 			// for test environment, make sure no-one changes admin or users 1-4
 			$this->restrictUsers($this->loadModel($id));
 
-			// mark user as deleted
-			$user = $this->loadModel($id);
-			$user->active = 0;
-			$this->saveUserAndHistory($user);
+			$transaction = Yii::app()->db->beginTransaction();
+
+			try {
+				$user = $this->loadModel($id);
+
+				// create event log entry
+				$logEntry = new Log;
+				$logEntry->category = Log::USER_CONTROLLER;
+				$logEntry->log = 'Admin triggered actionDelete(' . $user->id . ')';
+				$logEntry->save();
+
+				// mark user as deleted
+				$user->active = 0;
+				if(!$this->saveUserAndHistory($user))
+					throw new Exception(CVarDumper::dumpAsString($user->getErrors()));
+
+				// remove all votes of/for this user
+				Vote::model()->removeUserVotes($user->id);
+
+				$transaction->commit();
+			} catch(Exception $e) {
+				$transaction->rollBack();
+				$e->getMessage();
+				Yii::log($e->getMessage(), 'error', 'UserController');
+			}
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -222,10 +243,19 @@ class UserController extends Controller
 
 	/**
 	 * Save a User model while keeping history in UserHistory.
+	 * Uses a transaction, but also supports embedded use in running transactions
+	 * (in embedded use, this does not commit or roll back, use the return value)
 	 */
 	private function saveUserAndHistory($model)
 	{
-		$transaction = Yii::app()->db->beginTransaction();
+		$myTransaction = false;
+		$transaction = Yii::app()->db->getCurrentTransaction();
+		if($transaction === null) {
+			// no current running transaction, create our own one
+			$myTransaction = true;
+			$transaction = Yii::app()->db->beginTransaction();
+		}
+
 		if($model->save()) {
 			$historyModel = new UserHistory;
 			$historyModel->attributes = $model->attributes;
@@ -234,16 +264,19 @@ class UserController extends Controller
 			$historyModel->active = $model->active;
 			$historyModel->user_id = $model->id;
 			if($historyModel->save()) {
-				$transaction->commit();
+				if($myTransaction)
+					$transaction->commit();
 				return true;
 			} else {
 				//Yii::log('historyModel errors: ' . CVarDumper::dumpAsString($historyModel->getErrors()), 'warning', 'UserController');
-				$transaction->rollBack();
+				if($myTransaction)
+					$transaction->rollBack();
 				return false;
 			}
 		} else {
 			//Yii::log('model errors: ' . CVarDumper::dumpAsString($model->getErrors()), 'warning', 'UserController');
-			$transaction->rollBack();
+			if($myTransaction)
+				$transaction->rollBack();
 			return false;
 		}
 	}
