@@ -123,6 +123,7 @@ class VoteController extends Controller
 					$historyModel->attributes = $model->attributes;
 					$historyModel->voter_id = $model->voter_id; // set safe attribute separately
 					$historyModel->id = null;
+					$historyModel->timestamp = null;
 					if($historyModel->save()) {
 						$transaction->commit();
 						$this->redirect(array('view','id'=>$id)); // doesn't return
@@ -166,6 +167,10 @@ class VoteController extends Controller
 	{
 		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
 		$reason = ($vote !== null) ? $vote->reason : '';
+
+		$votedTime = ($vote !== null ? strtotime($vote->timestamp) : 0);
+		$nextVoteTime = ($vote !== null ? ($votedTime + Vote::model()->calculateSustainTime(Yii::app()->user->id, $id)) : 0);
+
 		$this->render('view', array(
 			'votePath' => Vote::model()->loadVotePath($id),
 			'category' => Category::model()->findByPk($id),
@@ -173,6 +178,11 @@ class VoteController extends Controller
 			'reason' => $reason,
 			'voted' => ($vote !== null),
 			'id' => $id,
+
+			// for testing
+			'votedTime' => $votedTime,
+			'nextVoteTime' => $nextVoteTime,
+			'deltaT' => ($vote !== null ? Vote::model()->calculateSustainTime(Yii::app()->user->id, $id) : 0),
 		));
 	}
 }

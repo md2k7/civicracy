@@ -58,4 +58,77 @@ $this->menu=array(
 				<p>&nbsp;</p>
 			</div>
 			<p><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
+			<h4>Zeit bis zur erneuten Stimmabgabe (DRAFT - work in progress)</h4>
+			<p>delta T = <?php echo $deltaT; ?></p>
+			<p>Sie haben am <?php echo date(Yii::t('app', 'timestamp.format'), $votedTime); ?> abgestimmt. Sie können Ihre Stimme voraussichtlich ab <?php echo date(Yii::t('app', 'timestamp.format'), $nextVoteTime); ?> wieder ändern.</p>
+			<div class="progress">
+				<div id="elapsed" class="bar bar-success" style="width: 0%;"></div><div id="remaining" class="bar" style="width: 0%;"></div>
+			</div>
 		</div>
+<script type="text/javascript">
+(function ($) {
+	$.fn.countdown = function () {
+		var from = new Date(<?php echo date('Y, ', $votedTime) . (((int)date('m', $votedTime))-1) . date(', j, G, ', $votedTime) . ((int)date('i', $votedTime)) . ', ' . ((int)date('s', $votedTime)); ?>);
+		var target = new Date(<?php echo date('Y, ', $nextVoteTime) . (((int)date('m', $nextVoteTime))-1) . date(', j, G, ', $nextVoteTime) . ((int)date('i', $nextVoteTime)) . ', ' . ((int)date('s', $nextVoteTime)); ?>);
+		var days = '<?php echo Yii::t('app', 'vote.days'); ?>';
+		var remaining = '<?php echo Yii::t('app', 'vote.remaining'); ?>';
+
+		function pad(num, size) {
+			var s = num + '';
+			while(s.length < size)
+				s = '0' + s;
+			return s;
+		}
+
+		function refreshCountdown() {
+			curDate = new Date();
+			diff = Math.floor((target - curDate) / 1000);
+			if(diff < 0) {
+				$('#remaining').html('');
+				$('#elapsed').html('00:00:00');
+				$('#elapsed').css('width', '100%');
+				$('#remaining').css('width', '0%');
+			} else {
+				delta = '';
+
+				// seconds
+				delta = pad(diff % 60, 2) + delta;
+				diff = Math.floor(diff / 60);
+
+				// minutes
+				delta = pad(diff % 60, 2) + ':' + delta;
+				diff = Math.floor(diff / 60);
+
+				// hours
+				delta = pad(diff % 24, 2) + ':' + delta;
+				diff = Math.floor(diff / 24);
+
+				if(diff > 0) {
+					// days
+					delta = diff + ' ' + days + ', ' + delta;
+				}
+
+				dur = target - from;
+				cur = target - curDate;
+				perc = (cur * 100) / dur;
+				$('#elapsed').css('width', (100 - perc).toFixed(2) + '%');
+				$('#remaining').css('width', perc.toFixed(2) + '%');
+
+				if(perc > 50) {
+					$('#elapsed').html('');
+					$('#remaining').html(delta + ' ' + remaining);
+				} else {
+					$('#elapsed').html(delta + ' ' + remaining);
+					$('#remaining').html('');
+				}
+			}
+		}
+
+		setInterval(refreshCountdown, 1000);
+	};
+})(jQuery);
+
+$(document).ready(function() {
+	$(".progress").countdown();
+});
+</script>

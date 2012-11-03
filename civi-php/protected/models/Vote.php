@@ -173,4 +173,22 @@ class Vote extends CActiveRecord
 		if(!Vote::model()->deleteAll('voter_id = :user_id OR candidate_id = :user_id', array('user_id' => $userId)))
 			throw new Exception('removal of votes of/for user ' . $userId . ' failed');
 	}
+
+	/**
+	 * Calculate and return t_sustain, the min. time in seconds between cast votes for a given user and category.
+	 * Users with more responsibility (votes) have a longer t_sustain and can change their minds less often.
+	 */
+	public function calculateSustainTime($userId, $categoryId)
+	{
+		$user = User::model()->findByPk($userId);
+		$R = $user->getVoteCountInCategory($categoryId)->voteCount;
+
+		$params = CiviGlobals::getSustainTimeParameters();
+		$R_max = $params['R_max'];
+		$T_max = $params['T_max'];
+
+		$t_sustain = ($R / $R_max) * $T_max + 1;
+
+		return $t_sustain;
+	}
 }
