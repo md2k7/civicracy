@@ -7,6 +7,8 @@
 /civi-php/protected/runtime
 /civi-php/assets
 /civi-php/deploy
+# logs copied by deploy script
+/civi-php/logs
 *.swp
 *.kate-swp
 /yii-*
