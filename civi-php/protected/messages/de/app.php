@@ -104,4 +104,5 @@ return array (
   'vote.update.button' => 'Stimme bearbeiten',
   'vote.votedFor' => 'Vergebene Stimmen',
   'vote.yetToVote' => 'Stimme zu vergeben',
+  'vote.changeslogan.button' => 'Slogan Ändern',
 );
