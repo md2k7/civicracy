@@ -44,7 +44,16 @@ $this->menu=array(
 					</div>
 					<div class="vp-right">
 						<h5><?php echo $vote->realname; ?></h5>
-						<p><?php echo $vote->slogan == '' ? Yii::t('app', 'vote.noslogan') : $vote->slogan; ?></p>
+						<p>
+					       <?php 
+					        echo $vote->slogan == '' ? Yii::t('app', 'vote.noslogan') : $vote->slogan; 
+					        echo " "; 
+					        if ($vote->candidate_id == Yii::app()->user->id) 
+					        { 
+					         echo "<a class='label label-info' href=".$this->createUrl('user/settings', array('id' => $id)).">".Yii::t('app','vote.changeslogan.button')."</a>"; 
+					        }
+					       ?> 
+					    </p>
 					</div>
 				</div>
 <?php if($vote !== end($votePath)) { ?>
