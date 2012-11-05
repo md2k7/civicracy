@@ -8,6 +8,7 @@ return array(
     'elements' => array(
         'csvfile' => array(
             'type' => 'file',
+        	'label'=> Yii::t('app', 'user.csvselectfile.label'),
         ),
     ),
  
