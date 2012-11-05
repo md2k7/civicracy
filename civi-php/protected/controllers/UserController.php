@@ -82,7 +82,7 @@ class UserController extends Controller
 
 	/**
 	 * Imports and Creates new User-models.
-	 * At current stage: saves the csv file in folder civi-php/csvfiles, extracts an array with user data
+	 * At current stage: saves the csv file in folder civi-php/csvfiles
 	 */
 	public function actionImport()
 	{
