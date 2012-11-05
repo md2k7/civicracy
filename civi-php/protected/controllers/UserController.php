@@ -27,7 +27,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform the actions
-				'actions'=>array('index','view','create','update','admin','settings','delete'),
+				'actions'=>array('index','view','create','update','admin','settings','delete', 'import'),
 				'users'=>array('admin'),
 			),
 			array('allow', // allow all authenticated users to change their settings
@@ -80,6 +80,36 @@ class UserController extends Controller
 		));
 	}
 
+	/**
+	 * Imports and Creates new User-models.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionImport()
+	{
+		$model=new User;
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+		/*
+			if(isset($_POST['User']))
+			{
+		$model->attributes=$_POST['User'];
+		$password = $model->createRandomPassword();
+	
+		if($model->save()) {
+		$this->sendPasswordEmail($model, $password);
+		$this->redirect(array('view','id'=>$model->id));
+		}
+		}
+	
+		$model->sanitizePassword(); // don't retransmit even the hashed password to the user
+		*/
+		$model->sanitizePassword();
+		$this->render('import',array(
+				'model'=>$model,
+		));
+		 
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

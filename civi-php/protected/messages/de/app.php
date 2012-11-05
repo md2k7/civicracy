@@ -43,6 +43,7 @@ return array (
   'menu.category' => 'Kategorie {category}',
   'menu.categoryVote' => '{category}-Stimme',
   'menu.create' => 'Erstellen',
+  'menu.users.import' => 'Benutzer importieren',
   'menu.login' => 'Login',
   'menu.logout' => 'Logout ({user})',
   'menu.manage' => 'Verwalten',
