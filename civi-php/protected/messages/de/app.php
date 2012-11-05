@@ -85,6 +85,7 @@ return array (
   'site.motto' => 'Demokratisch Entscheidungsträger finden',
   'timestamp.format' => 'd.m.Y H:i:s',
   'user.create.button' => 'Erstellen',
+  'user.import.button' => 'Importieren',
   'user.deleteConfirmation' => 'Diese Person wirklich löschen?',
   'user.settings.saved' => '<div class="alert alert-success"><p>Einstellungen erfolgreich gespeichert.</p></div>',
   'user.registration.email' => '<p class="note">Das Passwort wird per E-Mail zugeschickt.</p>',
