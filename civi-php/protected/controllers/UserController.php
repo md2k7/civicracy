@@ -94,10 +94,23 @@ class UserController extends Controller
 			$savepath=Yii::getPathOfAlias('webroot').'/csvfiles/current.csv';
 			$model->csvfile->saveAs($savepath);
 			$new_users=$model->extractUsers($savepath);
+			// Einfügen der User in die Datenbank
+			foreach($new_users as $key => $value)
+			{
+				$newU[$key] = new User;
+				$newU[$key]->attributes = $value;
+				$password = $newU[$key]->createRandomPassword();
+				if($this->saveUserAndHistory($newU[$key]))
+				{
+					$this->sendPasswordEmail($newU[$key], $password);
+					$csvusers[] = $newU[$key]->getPrimaryKey();
+				}
+			}
+			var_dump($csvusers);
+			
 		}
 		$this->render('import', array('form' => $form));
-		 
-	}
+	}	
 	
 	/**
 	 * Updates a particular model.

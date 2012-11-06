@@ -30,7 +30,7 @@ class CsvFile extends CFormModel {
 				else
 				{
     				// column "realname"
-    				$output[$row]['name']=$data[0];
+    				$output[$row]['realname']=$data[0];
     				// column "email"
     				$output[$row]['email']=$data[1];				
     				//column "username"
