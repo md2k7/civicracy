@@ -50,7 +50,7 @@ class UserController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-
+	
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -103,12 +103,13 @@ class UserController extends Controller
 				if($this->saveUserAndHistory($newU[$key]))
 				{
 					$this->sendPasswordEmail($newU[$key], $password);
-					$csvusers[] = $newU[$key]->getPrimaryKey();
 				}
 			}
-			var_dump($csvusers);
+			$this->render('showImported', array('newU'=>$newU));
+			//$this->redirect(array('showImported','users'=>$newU));
 			
 		}
+		else
 		$this->render('import', array('form' => $form));
 	}	
 	
