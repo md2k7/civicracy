@@ -45,6 +45,7 @@ class Category extends CActiveRecord
 			array('description', 'default'),
 			array('name', 'length', 'max'=>255),
 			array('boardsize', 'required'),
+			array('boardsize', 'numerical'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('name, description', 'safe', 'on'=>'search'),
