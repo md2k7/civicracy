@@ -160,6 +160,34 @@ class User extends CActiveRecord
 
 		return $entry;
 	}
+	
+	/**
+	 * @param $categoryID ID of category
+	 * @return $weights all user weights
+	 */
+	public function getVoteCountInCategoryTotal($categoryID, $boardsize) {
+		$userObjects = User::model()->findAll();
+		$category = Category::model()->findByPk($categoryID);
+		foreach($userObjects as $u)
+			$users[] = $u->id;
+		$votes = Vote::model()->findAllByAttributes(array('category_id' => $category->id));
+		$graph = new VoteGraph($users, $votes);
+		$weights = $graph->getWeights();
+		$ranking=array();
+		$realname=array();
+		$email=array();
+		$weighttable=array();
+		foreach($weights as $id => $weight)	
+		{
+			$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
+			$ranking[$id]['email'] = User::model()->findByPk($id)->email;
+			$ranking[$id]['weight'] = $weight;
+			$weighttable[$id]=$weight;
+		}
+		array_multisort($weighttable, SORT_DESC, $ranking);
+		array_splice($ranking, $boardsize);
+		return $ranking;
+	}
 
 	public function validatePassword($password)
 	{
