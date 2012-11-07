@@ -68,6 +68,7 @@ return array (
   'menu.viewCategoryVote' => '{category}-Stimme anzeigen',
   'menu.vote' => 'Abstimmen',
   'menu.vote.again' => 'Neu abstimmen',
+  'models.boardsize' => 'Ratsgröße',
   'models.category' => 'Kategorie',
   'models.description' => 'Beschreibung',
   'models.duplicate' => '{attribute} doppelt: {value} ist bereits registriert.',

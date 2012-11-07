@@ -19,6 +19,7 @@ $this->menu=array(
 	'attributes'=>array(
 		'name',
 		'description',
+		'boardsize',
 	),
 )); ?>
 		</div>
