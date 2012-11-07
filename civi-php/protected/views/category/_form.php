@@ -20,6 +20,13 @@
 		<?php echo $form->textField($model,'description',array('class'=>'span12')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
+	
+		<div class="row">
+		<?php echo $form->label($model,'boardsize'); ?>
+		<?php echo $form->textField($model,'boardsize',array('class'=>'span12')); ?>
+		<?php echo $form->error($model,'boardsize'); ?>
+	</div>
+	
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'category.create.button') : Yii::t('app', 'category.save.button'), CiviGlobals::$buttonClass); ?>
