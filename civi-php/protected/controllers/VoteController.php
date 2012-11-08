@@ -180,7 +180,7 @@ class VoteController extends Controller
 			'id' => $id,
 
 			// for testing
-			'ranking' => User::model()->getVoteCountInCategoryTotal($id, Category::model()->findByPk($id)->boardsize),
+			'ranking' => User::model()->getVoteCountInCategoryTotal($id),
 			'votedTime' => $votedTime,
 			'nextVoteTime' => $nextVoteTime,
 			'deltaT' => ($vote !== null ? Vote::model()->calculateSustainTime(Yii::app()->user->id, $id) : 0),
