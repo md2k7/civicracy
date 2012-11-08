@@ -44,6 +44,8 @@ class CategoryController extends Controller
 	{
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+			'ranking' => User::model()->getVoteCountInCategoryTotal($id, Category::model()->findByPk($id)->boardsize),
+			'voteparticipation' => Vote::model()->getVoteParticipation($id),
 		));
 	}
 
