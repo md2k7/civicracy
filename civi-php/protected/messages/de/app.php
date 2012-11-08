@@ -106,6 +106,7 @@ return array (
   'voteresult.weightAbs' => 'Absolut',
   'voteresult.weightPer' => 'Prozentuell',
   'vote.noslogan' => '<em>kein Slogan</em>',
+  'vote.participation' => 'Wahlbeteiligung',
   'vote.ownWeight' => 'Verantwortung',
   'vote.path' => 'Verlauf meiner Stimme',
   'vote.update.button' => 'Stimme bearbeiten',
