@@ -182,6 +182,7 @@ class User extends CActiveRecord
 			$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
 			$ranking[$id]['email'] = User::model()->findByPk($id)->email;
 			$ranking[$id]['weight'] = $weight;
+			$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
 			$weighttable[$id]=$weight;
 		}
 		array_multisort($weighttable, SORT_DESC, $ranking);

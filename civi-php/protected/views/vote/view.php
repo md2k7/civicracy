@@ -67,19 +67,28 @@ $this->menu=array(
 						} } ?>
 				</div>
 				<div class="span4" align="center">
-					<h4> <?php echo Yii::t('app', 'vote.currentlyresult'); ?> <br> </h4>
-					<br />			
+					
+					<?php $boardsize = count($ranking)?>	
+					
+					<h4><?php echo Yii::t('app', 'vote.currentlyresult').$boardsize; ?></h4>
+				
+					<?php 
+						$pievalues=$ranking[0]['weight'];
+						for($i=1; $i<$boardsize; $i++)
+							$pievalues.='*'.$ranking[$i]['weight'];
+					?>
+					
+					<br>
+						
 					<table class="table table-striped">
 		 				<tr>
-		 					<th><?php echo Yii::t('app', 'voteresult.rank'); ?></th>
 			 				<th><?php echo Yii::t('app', 'voteresult.name'); ?></th>
-			 				<th><?php echo Yii::t('app', 'voteresult.weightAbs'); ?></th>
-			 				<th><?php echo Yii::t('app', 'voteresult.weightPer'); ?></th>
+			 				<th><?php echo Yii::t('app', 'voteresult.slogan'); ?></th>
 			 			</tr>
 		 				
 		 				<?php 
-							for($i=0; $i<count($ranking); $i++)
-								echo '<tr><td>'.($i+1).'</td> <td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['weight'].'</td> <td>'.'</td> </tr>';
+							for($i=0; $i<$boardsize; $i++)
+								echo '<tr><td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['slogan'].'</td> </tr>';
 						?>
 					</table> 
 				</div>
@@ -92,15 +101,7 @@ $this->menu=array(
 					<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
   				</div>
 			</div>
-		
-		
-			
-			
-			
-			<div class="container">
-				
-				<p>&nbsp;</p>
-			</div>
+
 			<p><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
 			<h4>Zeit bis zur erneuten Stimmabgabe (DRAFT - work in progress)</h4>
 			<p>delta T = <?php echo $deltaT; ?></p>
