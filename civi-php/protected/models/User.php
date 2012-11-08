@@ -165,9 +165,10 @@ class User extends CActiveRecord
 	 * @param $categoryID ID of category
 	 * @return $weights all user weights
 	 */
-	public function getVoteCountInCategoryTotal($categoryID, $boardsize) {
+	public function getVoteCountInCategoryTotal($categoryID) {
 		$userObjects = User::model()->findAll();
 		$category = Category::model()->findByPk($categoryID);
+		$boardsize = $category->boardsize;
 		foreach($userObjects as $u)
 			$users[] = $u->id;
 		$votes = Vote::model()->findAllByAttributes(array('category_id' => $category->id));

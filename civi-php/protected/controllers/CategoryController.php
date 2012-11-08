@@ -44,7 +44,7 @@ class CategoryController extends Controller
 	{
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
-			'ranking' => User::model()->getVoteCountInCategoryTotal($id, Category::model()->findByPk($id)->boardsize),
+			'ranking' => User::model()->getVoteCountInCategoryTotal($id),
 			'voteparticipation' => Vote::model()->getVoteParticipation($id),
 		));
 	}
@@ -70,6 +70,19 @@ class CategoryController extends Controller
 		$this->render('create',array(
 			'model'=>$model,
 		));
+	}
+	/**
+	 * Enables to Send Email from Webserver to either all Users (has to be updated for Users of just one Category
+	 * or all members of the board of a specific categories (has to be updated aswell, currently just one board/category possible
+	 * 
+	 */
+	public function contact($categoryId, $target)
+	{
+		// Formular für gewählte Benutzergruppe anzeigen!
+		if(!isset($_POST['Email']))
+		{
+			
+		}
 	}
 
 	/**
