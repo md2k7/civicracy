@@ -23,17 +23,18 @@ $this->menu=array(
 	),
 )); ?>
 		</div>
-		
+		<?php $boardsize = count($ranking); ?>
 		<div class="main-content" align="center">
-			<p><h4><?php echo Yii::t('app', 'vote.currentlyresult'); ?></h4></p>
+			<p><h4><?php echo Yii::t('app', 'vote.currentlyresult').' '.$boardsize; ?></h4></p>
 		</div>
-		
 		<div class="row">
-			<?php $boardsize = count($ranking); ?>
+			
 		
 			<div class="span4">
-				<?php 
-					$pievalues=$ranking[0]['weight'];
+				 
+				<p><h4><?php echo Yii::t('app', 'vote.participation').' '.$voteparticipation.'%'; ?></h4></p>
+				<?php
+				$pievalues=$ranking[0]['weight'];
 					for($i=1; $i<$boardsize; $i++)
 						$pievalues.='*'.$ranking[$i]['weight'];
 				?>
