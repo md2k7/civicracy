@@ -24,25 +24,50 @@ $this->menu=array(
 )); ?>
 		</div>
 		<?php $boardsize = count($ranking); ?>
-		<div class="main-content" align="center">
-			<p><h4><?php echo Yii::t('app', 'vote.currentlyresult').' '.$boardsize; ?></h4></p>
-		</div>
-		<div class="row">
-			
+
+		<br>
+		<br>
 		
-			<div class="span4">
-				 
-				<p><h4><?php echo Yii::t('app', 'vote.participation').' '.$voteparticipation.'%'; ?></h4></p>
+		<div class="row">		
+			<div class="span4" align="center">
+				<h4><?php echo Yii::t('app', 'vote.participation')?></h4>
+				<div 
+				<?php 
+					if($voteparticipation > 60)
+						echo ' class="progress progress-success"';
+					elseif($voteparticipation > 30)
+						echo ' class="progress progress-warning"';
+					else
+						echo ' class="progress progress-danger"';
+				?>
+				>
+					<?php  
+					
+						if($voteparticipation >= 10)
+							echo '<div class="bar" style="width: '.$voteparticipation.'%;"> '.$voteparticipation.' % </div>';
+						else
+							echo $voteparticipation.' % <div class="bar" style="width: '.$voteparticipation.'%;"> </div>';
+					?>
+  					
+				</div>
+				
 				<?php
 				$pievalues=$ranking[0]['weight'];
 					for($i=1; $i<$boardsize; $i++)
 						$pievalues.='*'.$ranking[$i]['weight'];
 				?>
-			
+				<br>
+				<h4><?php echo Yii::t('app', 'vote.currentlyresult')?></h4>
 				<img src= "<?php echo Yii::app()->request->baseUrl; ?> /img/piechart.php?data= <?php echo $pievalues; ?>">
+				
+				<br><br>
+				
+				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact'); ?>"><?php echo Yii::t('app', 'category.top').' '.$boardsize.' '.Yii::t('app', 'category.send'); ?></a>
+				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update'); ?>"><?php echo '&nbsp;&nbsp;'.Yii::t('app', 'category.all').' '.Yii::t('app', 'category.send').'&nbsp;&nbsp;'; ?></a>
 			</div>
 		
-			<div class="span8">
+			<div class="span8" align="center">
+				<h4><?php echo Yii::t('app', 'vote.currentlyresult')?></h4>
 				<table class="table table-striped">
 		 				<tr>
 		 					<th><?php echo Yii::t('app', 'voteresult.rank'); ?></th>
@@ -59,3 +84,4 @@ $this->menu=array(
 					</table> 
 			</div>
 		</div>
+		
