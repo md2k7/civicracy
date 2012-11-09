@@ -62,10 +62,15 @@ class CategoryController extends Controller
 
 		if(isset($_POST['Category']))
 		{
+			// If a wholenumber percent number is entered for boardsize it's getting converted to a 0.xx number
+			if(preg_match('/^[0-9]{1,2}\%$/', $_POST['Category']['boardsize']))
+			{
+				$_POST['Category']['boardsize']=(substr($_POST['Category']['boardsize'], 0, strpos($_POST['Category']['boardsize'],'%'))/100);
+			}
 			$model->attributes=$_POST['Category'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
-		}
+			}
 
 		$this->render('create',array(
 			'model'=>$model,
@@ -116,6 +121,11 @@ class CategoryController extends Controller
 
 		if(isset($_POST['Category']))
 		{
+			// If a wholenumber percent number is entered for boardsize it's getting converted to a 0.xx number
+			if(preg_match('/^[0-9]{1,2}\%$/', $_POST['Category']['boardsize']))
+			{
+				$_POST['Category']['boardsize']=(substr($_POST['Category']['boardsize'], 0, strpos($_POST['Category']['boardsize'],'%'))/100);
+			}
 			$model->attributes=$_POST['Category'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));

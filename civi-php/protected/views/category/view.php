@@ -50,7 +50,7 @@ $this->menu=array(
 					?>
   					
 				</div>
-				
+				<?php if(!$ranking===false) { ?>
 				<?php
 				$pievalues=$ranking[0]['weight'];
 					for($i=1; $i<$boardsize; $i++)
@@ -63,13 +63,15 @@ $this->menu=array(
 				<br><br>
 				
 				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact'); ?>"><?php echo Yii::t('app', 'category.top').' '.$boardsize.' '.Yii::t('app', 'category.send'); ?></a>
-				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update'); ?>"><?php echo '&nbsp;&nbsp;'.Yii::t('app', 'category.all').' '.Yii::t('app', 'category.send').'&nbsp;&nbsp;'; ?></a>
+				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact'); ?>"><?php echo '&nbsp;&nbsp;'.Yii::t('app', 'category.all').' '.Yii::t('app', 'category.send').'&nbsp;&nbsp;'; ?></a>
 			</div>
 		
 			<div class="span8" align="center">
 				<h4><?php echo Yii::t('app', 'vote.currentlyresult')?></h4>
+				
 				<table class="table table-striped">
 		 				<tr>
+		 					<th> </th>
 		 					<th><?php echo Yii::t('app', 'voteresult.rank'); ?></th>
 			 				<th><?php echo Yii::t('app', 'voteresult.name'); ?></th>
 			 				<th><?php echo Yii::t('app', 'voteresult.weightAbs'); ?></th>
@@ -77,11 +79,17 @@ $this->menu=array(
 			 				<th><?php echo Yii::t('app', 'voteresult.slogan'); ?></th>
 			 			</tr>
 		 				
+		 				
+		 				
 		 				<?php 
 							for($i=0; $i<$boardsize; $i++)
-								echo '<tr> <td>'.($i+1).'</td> <td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['weight'].'</td> <td> </td> <td>'.$ranking[$i]['slogan'].'</td> </tr>';
+							{
+								
+								echo '<tr> <td> <img src= "'.Yii::app()->request->baseUrl.' /img/rectangle.php?data='.($i).'"> </td> <td>'.($i+1).'</td> <td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['weight'].'</td> <td> </td> <td>'.$ranking[$i]['slogan'].'</td> </tr>';
+							}
 						?>
 					</table> 
 			</div>
+			<?php }?>
 		</div>
 		
