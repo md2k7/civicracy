@@ -86,7 +86,6 @@ class UserController extends Controller
 	 */
 	public function actionImport()
 	{
-		
 		$model = new CsvFile();
 		$form = new CForm('application.views.user.importForm', $model);
 		if ($form->submitted('submit') && $form->validate()) {
@@ -94,7 +93,7 @@ class UserController extends Controller
 			$savepath=Yii::getPathOfAlias('webroot').'/csvfiles/current.csv';
 			$model->csvfile->saveAs($savepath);
 			$new_users=$model->extractUsers($savepath);
-			// Einfügen der User in die Datenbank
+			// insert users into DB
 			foreach($new_users as $key => $value)
 			{
 				$newU[$key] = new User;
@@ -110,7 +109,7 @@ class UserController extends Controller
 			
 		}
 		else
-		$this->render('import', array('form' => $form));
+			$this->render('import', array('form' => $form));
 	}	
 	
 	/**
@@ -197,7 +196,7 @@ class UserController extends Controller
 		// for test environment, make sure no-one changes admin or users 1-4
 		$restricted = array('admin', 'user1', 'user2', 'user3', 'user4');
 		if(in_array($model->username, $restricted))
-			throw new CHttpException(403, 'Bitte vorhandene Test-Benutzer nicht Ã¤ndern! Bitte einen neuen Benutzer anlegen, um die Benutzerverwaltung zu testen.');
+			throw new CHttpException(403, 'Bitte vorhandene Test-Benutzer nicht ändern! Bitte einen neuen Benutzer anlegen, um die Benutzerverwaltung zu testen.');
 	}
 
 	/**
