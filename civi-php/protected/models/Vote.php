@@ -151,7 +151,19 @@ class Vote extends CActiveRecord
 
 		return $path;
 	}
-
+	/**
+	 * Count and return percentage of Vote participation by Users
+	 * 
+	 * For future versions with more Categories a selector in which categories a user is permitted to vote has to be added!!
+	 * @param int $categoryId
+	 */
+	public function getVoteParticipation($categoryId)
+	{
+		// For current Version all Users (including 'admin') are counted as potential Voters - has to be adapted for more Categories		
+		$allUsers=User::model()->findAll();
+		$votesInCat=Vote::model()->findAll('category_id = :category_id', array('category_id'=>$categoryId));
+		return round(((100*count($votesInCat))/(count($allUsers))));
+	}
 	/**
 	 * Log and actually remove votes of/for the specified user. Use only in a try/catch block in a transactional context!
 	 */

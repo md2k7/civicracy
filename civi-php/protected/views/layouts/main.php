@@ -34,6 +34,7 @@
 		array('label' => CHtml::encode(Yii::t('app', 'menu.users')) . ' <b class="caret"></b>', 'url'=>'#', 'visible'=>(!Yii::app()->user->isGuest && Yii::app()->user->isAdmin), 'itemOptions'=>array('class'=>'dropdown'), 'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>'dropdown'), 'submenuOptions'=>array('class'=>'dropdown-menu'), 'items'=>array(
 			array('label' => CHtml::encode(Yii::t('app', 'menu.users.manageAll')), 'active'=>false, 'url'=>array('/user/admin')),
 			array('label' => CHtml::encode(Yii::t('app', 'menu.users.create')), 'active'=>false, 'url'=>array('/user/create')),
+			array('label' => CHtml::encode(Yii::t('app', 'menu.users.import')), 'active'=>false, 'url'=>array('/user/import')),
 		)),
 		array('label' => CHtml::encode(Yii::t('app', 'menu.login')), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 		array('label' => CHtml::encode(Yii::t('app', 'menu.settings')), 'url'=>array('/user/settings'), 'visible'=>!Yii::app()->user->isGuest),

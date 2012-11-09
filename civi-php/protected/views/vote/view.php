@@ -30,33 +30,78 @@ $this->menu=array(
 			<div class="container"></div>
 		</div>
 		<div class="main-content">
-			<div class="responsibility">
-				<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
-				<div class="responsibility-number"><?php echo $weight; ?></div>
-				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
-			</div>
-			<h4><?php echo Yii::t('app', 'vote.path'); ?></h4>
-			<div class="container">
-<?php foreach($votePath as $vote) { ?>
-				<div class="vp-row">
-					<div class="vp-left">
-						<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/user_arrows.png" alt="User" />
-					</div>
-					<div class="vp-right">
-						<h5><?php echo $vote->realname; ?></h5>
-						<p><?php echo $vote->slogan == '' ? Yii::t('app', 'vote.noslogan') : $vote->slogan; ?></p>
-					</div>
+		
+			<div class="row">
+				<div class="span5">
+					<h4><?php echo Yii::t('app', 'vote.path'); ?></h4>
+					<?php 
+						foreach($votePath as $vote) 
+						{ ?>
+							<div class="vp-row">
+								<div class="vp-left">
+									<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/user_arrows.png" alt="User" />
+								</div>
+								<div class="vp-right">
+									<h5><?php echo $vote->realname; ?></h5>
+									<p>
+								       <?php 
+								        echo $vote->slogan == '' ? Yii::t('app', 'vote.noslogan') : $vote->slogan; 
+								        echo " "; 
+								        if ($vote->candidate_id == Yii::app()->user->id) 
+								        { 
+								         echo "<a class='label label-info' href=".$this->createUrl('user/settings', array('id' => $id)).">".Yii::t('app','vote.changeslogan.button')."</a>"; 
+								        }
+								       ?> 
+								    </p>
+								</div>
+							</div>
+							<?php if($vote !== end($votePath)) 
+							{ ?>
+								<div class="vp-row vp-row-arrow">
+									<div class="vp-left">
+										<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/arrow.png" alt="delegiert" />
+									</div>
+									<div class="vp-right"><?php echo $vote->reason; ?></div>
+								</div>
+							<?php 
+						} } ?>
 				</div>
-<?php if($vote !== end($votePath)) { ?>
-				<div class="vp-row vp-row-arrow">
-					<div class="vp-left">
-						<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/arrow.png" alt="delegiert" />
-					</div>
-					<div class="vp-right"><?php echo $vote->reason; ?></div>
+				<div class="span4" align="center">
+					
+					<?php $boardsize = count($ranking)?>	
+					
+					<h4><?php echo Yii::t('app', 'vote.currentlyresult').$boardsize; ?></h4>
+				
+					<?php 
+						$pievalues=$ranking[0]['weight'];
+						for($i=1; $i<$boardsize; $i++)
+							$pievalues.='*'.$ranking[$i]['weight'];
+					?>
+					
+					<br>
+						
+					<table class="table table-striped">
+		 				<tr>
+			 				<th><?php echo Yii::t('app', 'voteresult.name'); ?></th>
+			 				<th><?php echo Yii::t('app', 'voteresult.slogan'); ?></th>
+			 			</tr>
+		 				
+		 				<?php 
+							for($i=0; $i<$boardsize; $i++)
+								echo '<tr><td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['slogan'].'</td> </tr>';
+						?>
+					</table> 
 				</div>
-<?php } } ?>
-				<p>&nbsp;</p>
+				<div class="span1" align="center">
+				
+				</div>
+  				<div class="span2">
+  					<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
+					<div class="responsibility-number"><?php echo $weight; ?></div>
+					<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
+  				</div>
 			</div>
+
 			<p><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
 			<h4>Zeit bis zur erneuten Stimmabgabe (DRAFT - work in progress)</h4>
 			<p>delta T = <?php echo $deltaT; ?></p>

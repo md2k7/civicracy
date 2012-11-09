@@ -180,9 +180,14 @@ class VoteController extends Controller
 			'id' => $id,
 
 			// for testing
+			'ranking' => User::model()->getVoteCountInCategoryTotal($id),
 			'votedTime' => $votedTime,
 			'nextVoteTime' => $nextVoteTime,
 			'deltaT' => ($vote !== null ? Vote::model()->calculateSustainTime(Yii::app()->user->id, $id) : 0),
-		));
+			/*'numberofcandidates' => 3,
+			'names' => array("hans", "georg", "franz"),
+			'weightAbs' => array(5, 10, 5),
+			'weightPer' => array(25, 50, 25),*/				
+				));
 	}
 }

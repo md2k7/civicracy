@@ -19,6 +19,43 @@ $this->menu=array(
 	'attributes'=>array(
 		'name',
 		'description',
+		'boardsize',
 	),
 )); ?>
+		</div>
+		<?php $boardsize = count($ranking); ?>
+		<div class="main-content" align="center">
+			<p><h4><?php echo Yii::t('app', 'vote.currentlyresult').' '.$boardsize; ?></h4></p>
+		</div>
+		<div class="row">
+			
+		
+			<div class="span4">
+				 
+				<p><h4><?php echo Yii::t('app', 'vote.participation').' '.$voteparticipation.'%'; ?></h4></p>
+				<?php
+				$pievalues=$ranking[0]['weight'];
+					for($i=1; $i<$boardsize; $i++)
+						$pievalues.='*'.$ranking[$i]['weight'];
+				?>
+			
+				<img src= "<?php echo Yii::app()->request->baseUrl; ?> /img/piechart.php?data= <?php echo $pievalues; ?>">
+			</div>
+		
+			<div class="span8">
+				<table class="table table-striped">
+		 				<tr>
+		 					<th><?php echo Yii::t('app', 'voteresult.rank'); ?></th>
+			 				<th><?php echo Yii::t('app', 'voteresult.name'); ?></th>
+			 				<th><?php echo Yii::t('app', 'voteresult.weightAbs'); ?></th>
+			 				<th><?php echo Yii::t('app', 'voteresult.weightPer'); ?></th>
+			 				<th><?php echo Yii::t('app', 'voteresult.slogan'); ?></th>
+			 			</tr>
+		 				
+		 				<?php 
+							for($i=0; $i<$boardsize; $i++)
+								echo '<tr> <td>'.($i+1).'</td> <td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['weight'].'</td> <td> </td> <td>'.$ranking[$i]['slogan'].'</td> </tr>';
+						?>
+					</table> 
+			</div>
 		</div>

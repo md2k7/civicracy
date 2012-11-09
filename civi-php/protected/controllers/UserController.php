@@ -27,7 +27,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform the actions
-				'actions'=>array('index','view','create','update','admin','settings','delete'),
+				'actions'=>array('index','view','create','update','admin','settings','delete', 'import'),
 				'users'=>array('admin'),
 			),
 			array('allow', // allow all authenticated users to change their settings
@@ -50,7 +50,7 @@ class UserController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-
+	
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -80,6 +80,39 @@ class UserController extends Controller
 		));
 	}
 
+	/**
+	 * Imports and Creates new User-models.
+	 * At current stage: saves the csv file in folder civi-php/csvfiles
+	 */
+	public function actionImport()
+	{
+		
+		$model = new CsvFile();
+		$form = new CForm('application.views.user.importForm', $model);
+		if ($form->submitted('submit') && $form->validate()) {
+			$form->model->csvfile = CUploadedFile::getInstance($form->model, 'csvfile');
+			$savepath=Yii::getPathOfAlias('webroot').'/csvfiles/current.csv';
+			$model->csvfile->saveAs($savepath);
+			$new_users=$model->extractUsers($savepath);
+			// Einfügen der User in die Datenbank
+			foreach($new_users as $key => $value)
+			{
+				$newU[$key] = new User;
+				$newU[$key]->attributes = $value;
+				$password = $newU[$key]->createRandomPassword();
+				if($this->saveUserAndHistory($newU[$key]))
+				{
+					$this->sendPasswordEmail($newU[$key], $password);
+				}
+			}
+			$this->render('showImported', array('newU'=>$newU));
+			//$this->redirect(array('showImported','users'=>$newU));
+			
+		}
+		else
+		$this->render('import', array('form' => $form));
+	}	
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -164,7 +197,7 @@ class UserController extends Controller
 		// for test environment, make sure no-one changes admin or users 1-4
 		$restricted = array('admin', 'user1', 'user2', 'user3', 'user4');
 		if(in_array($model->username, $restricted))
-			throw new CHttpException(403, 'Bitte vorhandene Test-Benutzer nicht ändern! Bitte einen neuen Benutzer anlegen, um die Benutzerverwaltung zu testen.');
+			throw new CHttpException(403, 'Bitte vorhandene Test-Benutzer nicht Ã¤ndern! Bitte einen neuen Benutzer anlegen, um die Benutzerverwaltung zu testen.');
 	}
 
 	/**

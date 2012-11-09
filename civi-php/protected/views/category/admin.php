@@ -48,6 +48,7 @@ $('.search-form form').submit(function(){
 	'columns'=>array(
 		'name',
 		'description',
+		'boardsize',
 		array(
 			'class'=>'CButtonColumn',
 		),
