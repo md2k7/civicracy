@@ -62,8 +62,8 @@ $this->menu=array(
 				
 				<br><br>
 				
-				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact'); ?>"><?php echo Yii::t('app', 'category.top').' '.$boardsize.' '.Yii::t('app', 'category.send'); ?></a>
-				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact'); ?>"><?php echo '&nbsp;&nbsp;'.Yii::t('app', 'category.all').' '.Yii::t('app', 'category.send').'&nbsp;&nbsp;'; ?></a>
+				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact').'&categoryId='.$model->id.'&target=board'; ?>"><?php echo Yii::t('app', 'category.top').' '.$boardsize.' '.Yii::t('app', 'category.send'); ?></a>
+				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact').'&categoryId='.$model->id.'&target=all'; ?>"><?php echo '&nbsp;&nbsp;'.Yii::t('app', 'category.all').' '.Yii::t('app', 'category.send').'&nbsp;&nbsp;'; ?></a>
 			</div>
 		
 			<div class="span8" align="center">
