@@ -22,8 +22,6 @@ return array (
   'category.create.button' => 'Erstellen',
   'category.save.button' => 'Speichern',
   'error' => 'Fehler',
-  'footer.copyright' => 'Copyright &copy; {date} by David Madl.',
-  'footer.silk' => 'Benutzt ein <a href="http://www.famfamfam.com/lab/icons/silk/">Silk</a> Favicon.',
   'forms.advancedSearch' => 'Erweiterte Suche',
   'forms.compareOperators' => '<p>Optional kann ein Vergleichsoperator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b> or <b>=</b>) am Anfang jedes Suchwertes benutzt werden, um einen bestimmten Vergleich durchzuführen.</p>',
   'forms.displayImported' => '<p>Folgende Benutzer wurden erfolgreich importiert: </p>',
