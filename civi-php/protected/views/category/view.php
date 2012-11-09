@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label' => Yii::t('app', 'menu.categories.create'), 'url'=>array('create')),
 	array('label' => Yii::t('app', 'menu.categories.update'), 'url'=>array('update', 'id'=>$model->id)),
-	array('label' => Yii::t('app', 'menu.categories.delete'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'))),
+	array('label' => Yii::t('app', 'menu.categories.delete'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm' => Yii::t('zii', 'Are you sure you want to delete this item?'))),
 	array('label' => Yii::t('app', 'menu.categories.manageAll'), 'url'=>array('admin')),
 );
 ?>
