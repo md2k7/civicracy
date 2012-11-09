@@ -3,4 +3,4 @@
 -- no semicolons
 
 ALTER TABLE `tbl_category` ADD `boardsize` TINYINT NOT NULL AFTER `description`
-UPDATE `civi`.`tbl_category` SET `boardsize` = '10'
+UPDATE `tbl_category` SET `boardsize` = '10'
