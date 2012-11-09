@@ -7,9 +7,9 @@ class GraphNodeHeap extends SplHeap
 {
 	public function compare($a, $b)
 	{
-		if($a === $b)
+		if($a->fanIn === $b->fanIn)
 			return 0;
 		else
-			return $a < $b ? 1 : -1;
+			return $a->fanIn < $b->fanIn ? 1 : -1;
 	}
 }
