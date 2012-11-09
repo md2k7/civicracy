@@ -82,31 +82,20 @@ class UserController extends Controller
 
 	/**
 	 * Imports and Creates new User-models.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * At current stage: saves the csv file in folder civi-php/csvfiles, extracts an array with user data
 	 */
 	public function actionImport()
 	{
-		$model=new User;
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-		/*
-			if(isset($_POST['User']))
-			{
-		$model->attributes=$_POST['User'];
-		$password = $model->createRandomPassword();
-	
-		if($model->save()) {
-		$this->sendPasswordEmail($model, $password);
-		$this->redirect(array('view','id'=>$model->id));
+		
+		$model = new CsvFile();
+		$form = new CForm('application.views.user.importForm', $model);
+		if ($form->submitted('submit') && $form->validate()) {
+			$form->model->csvfile = CUploadedFile::getInstance($form->model, 'csvfile');
+			$savepath=Yii::getPathOfAlias('webroot').'/csvfiles/current.csv';
+			$model->csvfile->saveAs($savepath);
+			$new_users=$model->extractUsers($savepath);
 		}
-		}
-	
-		$model->sanitizePassword(); // don't retransmit even the hashed password to the user
-		*/
-		$model->sanitizePassword();
-		$this->render('import',array(
-				'model'=>$model,
-		));
+		$this->render('import', array('form' => $form));
 		 
 	}
 	
