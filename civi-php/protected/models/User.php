@@ -163,7 +163,7 @@ class User extends CActiveRecord
 	
 	/**
 	 * @param $categoryID ID of category
-	 * @return $weights all user weights
+	 * @return $ranking array Array of all users in Board
 	 */
 	public function getVoteCountInCategoryTotal($categoryID) {
 		$userObjects = User::model()->findAll();
