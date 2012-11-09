@@ -113,5 +113,5 @@ return array (
   'vote.votedFor' => 'Vergebene Stimmen',
   'vote.yetToVote' => 'Stimme zu vergeben',
   'voteresult.slogan' => 'Slogan',
-  'vote.changeslogan.button' => 'Slogan Ändern',
+  'vote.changeslogan.button' => 'Slogan ändern',
 );
