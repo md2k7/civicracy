@@ -27,7 +27,7 @@ class CategoryController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform the actions
-				'actions'=>array('index','view','create','update','admin','delete'),
+				'actions'=>array('index','view','create','update','admin','delete','contact'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -76,14 +76,31 @@ class CategoryController extends Controller
 	 * or all members of the board of a specific categories (has to be updated aswell, currently just one board/category possible
 	 * 
 	 */
-	public function contact($categoryId, $target)
-	{
-		// Formular für gewählte Benutzergruppe anzeigen!
-		if(!isset($_POST['Email']))
-		{
-			
-		}
-	}
+	public function actionContact($categoryId, $target)
+	 {
+	 	 // Formular für gewählte Benutzergruppe anzeigen!
+		  	if(!isset($_POST['Email']))
+		  	{
+		   		$email='';
+		   	if($target=='all')
+		   	{
+		    	$users=User::model()->findAll();
+		    	foreach($users as $row)
+		    	{
+		     		$email.=$row->email.',';
+		    	}
+		    	$this->render('createEmail',array('email' => $email));
+		   	}elseif($target=='board')
+		   	{
+		    	$users=User::model()->getVoteCountInCategoryTotal($categoryId);
+		    	foreach($users as $row)
+		    	{
+		     		$email.=$row['email'].',';
+		    	}
+		    	$this->render('createEmail',array('email' => $email));
+	   		}
+	  }
+	 }
 
 	/**
 	 * Updates a particular model.
