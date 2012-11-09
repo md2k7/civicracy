@@ -98,7 +98,16 @@ class VoteGraph
 			else
 				$vote->weight += $node->weight;
 			$vote->fanIn--;
-			$fnodes->recoverFromCorruption();
+
+			//$fnodes->recoverFromCorruption();
+
+			/* work around broken recoverFromCorruption(): this method is supposed to fix the heap, but it doesn't reorder correctly,
+			 * so to make it work for now, let's rebuild the heap from scratch...
+			 */
+			$fixedHeap = new GraphNodeHeap();
+			foreach($fnodes as $e)
+				$fixedHeap->insert($e);
+			$fnodes = $fixedHeap;
 		}
 
 		$this->weightsValid = true;
