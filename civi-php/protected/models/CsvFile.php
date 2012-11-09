@@ -16,23 +16,24 @@ class CsvFile extends CFormModel {
     public function extractUsers($location)
     {
     	
-    	if (($handle = fopen($location, "r")) !== FALSE) 		//Schauen, ob File existiert
+    	if (($handle = fopen($location, "r")) !== FALSE) 		// check if file exists
     	{
-    		$row = 1;
-    		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) 	//Bis zum EOF lesen
+    		$row = 0;
+    		while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) 	// read till EOF
     		{
-    			$num = count($data);		//Wieviele Spalten sind in dieser Zeile
-    			/*if($num < 2)
-    				$output .= "Zu wenige elemente in der Zeile ".$row;		//Hier Fehlerbehandlung
-    			elseif($num >3)
-    				$output .= "Zu viele elemente in der Zeile ".$row;		//Hier Fehlerbehandlung
-    			else
-    			{*/
-    				//Element in Spalte "realname" eintragen
+    			$num = count($data);		// number of columns in this row
+
+				if($num < 2 || $num > 3)
+				{
+					throw new CException(Yii::t('app', 'Wrong number of columns (must be 2 or 3) in row {row}', array('row' => ($row + 1))));
+				}
+				else
+				{
+    				// column "realname"
     				$output[$row]['name']=$data[0];
-    				//Element in Spalte "email" eintragen
+    				// column "email"
     				$output[$row]['email']=$data[1];				
-    				//Element in Spalte "username" eintragen
+    				//column "username"
     				if ($num == 2)
     				{
     					$output[$row]['username'] = str_replace(' ', '',$data[0]);
@@ -44,15 +45,14 @@ class CsvFile extends CFormModel {
     					else
     						$output[$row]['username'] = $data[2];
     				}
-    									
-    			//}
+    			}
     			$row++;
     		}
     		fclose($handle);
     	}
     	else
     	{
-    		echo "CSV kann nicht gefunden werden"; 			//anpassen!!
+			throw new CException("can't find CSV file to import from");
     	}
     	return $output;
     }
