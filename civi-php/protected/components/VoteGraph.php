@@ -86,6 +86,9 @@ class VoteGraph
 		while($fnodes->valid()) {
 			$node = $fnodes->extract(); // fetch a leaf from the heap
 
+			// make sure we are a leaf
+			assert($node->fanIn == 0);
+
 			if($node->vote === NULL)
 				continue;
 
