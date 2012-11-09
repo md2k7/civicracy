@@ -19,13 +19,6 @@
  * @version $Id: $
  */
 return array (
-  'Are you sure you want to delete this item?' => '',
-  'footer.copyright' => '@@Copyright &copy; {date} by David Madl.@@',
-  'footer.silk' => '@@Benutzt ein <a href="http://www.famfamfam.com/lab/icons/silk/">Silk</a> Favicon.@@',
-  'menu.categories.manageOne' => '@@Kategorie verwalten@@',
-  'models.vote.cycleWarning' => '@@Eine Schleife wurde in der Stimmenkette gefunden: {chain}. Bitte treffen und diskutieren.@@',
-  'passwordReset.subject' => '@@Ihr Passwort bei Civi@@',
-  'registration.subject' => '@@Ihre Registrierung bei Civi@@',
   'category.create.button' => 'Erstellen',
   'category.save.button' => 'Speichern',
   'category.all' => 'Alle',
