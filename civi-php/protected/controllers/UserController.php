@@ -226,7 +226,7 @@ class UserController extends Controller
 				// mark user as deleted
 				$user->active = 0;
 				if(!$this->saveUserAndHistory($user))
-					throw new Exception(CVarDumper::dumpAsString($user->getErrors()));
+					throw new CException(CVarDumper::dumpAsString($user->getErrors()));
 
 				// remove all votes of/for this user
 				Vote::model()->removeUserVotes($user->id);
@@ -276,42 +276,17 @@ class UserController extends Controller
 
 	/**
 	 * Save a User model while keeping history in UserHistory.
-	 * Uses a transaction, but also supports embedded use in running transactions
-	 * (in embedded use, this does not commit or roll back, use the return value)
 	 */
 	private function saveUserAndHistory($model)
 	{
-		$myTransaction = false;
-		$transaction = Yii::app()->db->getCurrentTransaction();
-		if($transaction === null) {
-			// no current running transaction, create our own one
-			$myTransaction = true;
-			$transaction = Yii::app()->db->beginTransaction();
-		}
+		$historyModel = new UserHistory;
+		$historyModel->attributes = $model->attributes;
 
-		if($model->save()) {
-			$historyModel = new UserHistory;
-			$historyModel->attributes = $model->attributes;
-			// copy safe attributes separately
-			$historyModel->salt = $model->salt;
-			$historyModel->active = $model->active;
-			$historyModel->user_id = $model->id;
-			if($historyModel->save()) {
-				if($myTransaction)
-					$transaction->commit();
-				return true;
-			} else {
-				//Yii::log('historyModel errors: ' . CVarDumper::dumpAsString($historyModel->getErrors()), 'warning', 'UserController');
-				if($myTransaction)
-					$transaction->rollBack();
-				return false;
-			}
-		} else {
-			//Yii::log('model errors: ' . CVarDumper::dumpAsString($model->getErrors()), 'warning', 'UserController');
-			if($myTransaction)
-				$transaction->rollBack();
-			return false;
-		}
+		// copy safe attributes separately
+		$historyModel->salt = $model->salt;
+		$historyModel->active = $model->active;
+
+		return $this->saveModelAndHistory($model, $historyModel, 'user_id');
 	}
 
 	/**

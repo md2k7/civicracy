@@ -11,6 +11,7 @@
  * @property integer   $candidate_id
  * @property string    $reason
  * @property timestamp $timestamp
+ * @property integer   $active
  */
 class VoteHistory extends Vote
 {

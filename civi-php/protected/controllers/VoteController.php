@@ -87,8 +87,9 @@ class VoteController extends Controller
 			$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
 			if($vote === null)
 				throw new CHttpException(404, Yii::t('app', 'http.404'));
-			$vote->delete();
-			// TODO: use VoteHistory
+
+			// delete: save with active=0
+			$this->saveVoteAndHistory($vote, 0);
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -115,25 +116,9 @@ class VoteController extends Controller
 			$model->attributes=$_POST['Vote'];
 			$model->voter_id = Yii::app()->user->id; // for security, we don't use a hidden field for this
 			$model->setCandidate($_POST['candidate']);
-			if($model->validate())
-			{
-				$transaction = Yii::app()->db->beginTransaction();
-				if($model->save()) {
-					$historyModel = new VoteHistory;
-					$historyModel->attributes = $model->attributes;
-					$historyModel->voter_id = $model->voter_id; // set safe attribute separately
-					$historyModel->id = null;
-					$historyModel->timestamp = null;
-					if($historyModel->save()) {
-						$transaction->commit();
-						$this->redirect(array('view','id'=>$id)); // doesn't return
-					} else {
-						$transaction->rollBack();
-					}
-				} else {
-					$transaction->rollBack();
-				}
-			}
+
+			if($this->saveVoteAndHistory($model))
+				$this->redirect(array('view','id'=>$id)); // doesn't return
 		}
 
 		$this->render('update', array(
@@ -142,6 +127,40 @@ class VoteController extends Controller
 			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
 			'candidates' => $this->loadCandidates(),
 		));
+	}
+
+	/**
+	 * Save a Vote model while keeping history in VoteHistory.
+	 */
+	private function saveVoteAndHistory($model, $active=1)
+	{
+		$historyModel = new VoteHistory;
+		$historyModel->attributes = $model->attributes;
+
+		// copy safe attributes separately
+		$historyModel->voter_id = $model->voter_id;
+		$historyModel->id = null;
+		$historyModel->timestamp = null; // will get default CURRENT_TIMESTAMP from DB
+		$historyModel->active = $active;
+
+		// use a transaction: maybe we will delete the model
+		$transaction = Yii::app()->db->beginTransaction();
+		if($this->saveModelAndHistory($model, $historyModel)) {
+			if($active === 0) {
+				if($model->delete()) {
+					// to delete, and succeeded -> all is well
+					$transaction->commit();
+					return true;
+				}
+			} else {
+				// not to delete -> all is well
+				$transaction->commit();
+				return true;
+			}
+		}
+		// save or delete failed -> roll back
+		$transaction->rollBack();
+		return false;
 	}
 
 	/**
