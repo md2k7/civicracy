@@ -1,19 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "tbl_log".
+ * This is the model class for table "tbl_login_history".
  *
- * The followings are the available columns in table 'tbl_log':
+ * The followings are the available columns in table 'tbl_login_history':
  * @property integer   $id
  * @property timestamp $timestamp
- * @property string    $category
- * @property string    $log
+ * @property integer   $user_id
+ * @property enum      $action
  */
-class Log extends CActiveRecord
+class LoginHistory extends CActiveRecord
 {
-	// log categories
-	const USER_CONTROLLER = "USER_CONTROLLER";
-	const SITE_CONTROLLER = "SITE_CONTROLLER";
+	// enum values for $action
+	const ACTION_LOGIN = "LOGIN";
+	const ACTION_LOGOUT = "LOGOUT";
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -30,6 +30,6 @@ class Log extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_log';
+		return 'tbl_login_history';
 	}
 }
