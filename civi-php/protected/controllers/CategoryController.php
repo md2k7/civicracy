@@ -119,28 +119,12 @@ class CategoryController extends Controller
 		// we only allow deletion via POST request
 		if(Yii::app()->request->isPostRequest)
 		{
-			$transaction = Yii::app()->db->beginTransaction();
+			$category = $this->loadModel($id);
 
-			try {
-				$category = $this->loadModel($id);
-
-				// create event log entry
-				$logEntry = new Log;
-				$logEntry->category = Log::USER_CONTROLLER;
-				$logEntry->log = 'Admin triggered actionDelete(' . $category->id . ') on category ' . $category->name;
-				$logEntry->save();
-
-				// mark category as deleted
-				$category->active = 0;
-				if(!$this->saveCategoryAndHistory($category))
-					throw new CException(CVarDumper::dumpAsString($category->getErrors()));
-
-				$transaction->commit();
-			} catch(Exception $e) {
-				$transaction->rollBack();
-				$e->getMessage();
-				Yii::log($e->getMessage(), 'error', 'CategoryController');
-			}
+			// mark category as deleted
+			$category->active = 0;
+			if(!$this->saveCategoryAndHistory($category))
+				return;
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))

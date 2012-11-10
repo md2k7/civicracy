@@ -78,4 +78,20 @@ class Controller extends CController
 			$transaction->commit();
 		return true;
 	}
+
+	/**
+	 * Create a new log entry (Log entity) in the DB.
+	 *
+	 * @param $category category constant from the Log class
+	 * @param $message log message
+	 *
+	 * @return whether the DB operation was successful
+	 */
+	public function createLogEntry($category, $message)
+	{
+		$logEntry = new Log;
+		$logEntry->category = $category;
+		$logEntry->log = $message;
+		return $logEntry->save();
+	}
 }

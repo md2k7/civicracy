@@ -11,7 +11,7 @@
  */
 class Log extends CActiveRecord
 {
-	// categories
+	// log categories
 	const USER_CONTROLLER = "USER_CONTROLLER";
 
 	/**
