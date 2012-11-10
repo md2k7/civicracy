@@ -68,7 +68,7 @@ class CategoryController extends Controller
 				$_POST['Category']['boardsize']=(substr($_POST['Category']['boardsize'], 0, strpos($_POST['Category']['boardsize'],'%'))/100);
 			}
 			$model->attributes=$_POST['Category'];
-			if($model->save())
+			if($this->saveCategoryAndHistory($model))
 				$this->redirect(array('view','id'=>$model->id));
 			}
 
@@ -127,7 +127,7 @@ class CategoryController extends Controller
 				$_POST['Category']['boardsize']=(substr($_POST['Category']['boardsize'], 0, strpos($_POST['Category']['boardsize'],'%'))/100);
 			}
 			$model->attributes=$_POST['Category'];
-			if($model->save())
+			if($this->saveCategoryAndHistory($model))
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
@@ -159,7 +159,8 @@ class CategoryController extends Controller
 
 				// mark category as deleted
 				$category->active = 0;
-				$category->save();
+				if(!$this->saveCategoryAndHistory($category))
+					throw new CException(CVarDumper::dumpAsString($category->getErrors()));
 
 				$transaction->commit();
 			} catch(Exception $e) {
@@ -202,6 +203,20 @@ class CategoryController extends Controller
 		if($model===null)
 			throw new CHttpException(404, Yii::t('app', 'http.404'));
 		return $model;
+	}
+
+	/**
+	 * Save a Category model while keeping history in CategoryHistory.
+	 */
+	private function saveCategoryAndHistory($model)
+	{
+		$historyModel = new CategoryHistory;
+		$historyModel->attributes = $model->attributes;
+
+		// copy safe attributes separately
+		$historyModel->active = $model->active;
+
+		return $this->saveModelAndHistory($model, $historyModel, 'category_id');
 	}
 
 	/**

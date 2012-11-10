@@ -7,8 +7,8 @@
  * @property integer $id
  * @property string $name
  * @property string $description
- * @property integer $active
  * @property integer $boardsize
+ * @property integer $active
  *
  * The followings are the available model relations:
  * @property User[] $tblUsers
