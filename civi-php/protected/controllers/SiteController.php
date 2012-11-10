@@ -69,8 +69,15 @@ class SiteController extends Controller
 			if($returnUrl == $this->createUrl('/'))
 				$returnUrl = $afterLoginRedirect;
 			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
+			if($model->validate() && $model->login()) {
+				// log login event
+				$history = new LoginHistory;
+				$history->user_id = Yii::app()->user->id;
+				$history->action = LoginHistory::ACTION_LOGIN;
+				$history->save();
+
 				$this->redirect(Yii::app()->user->isAdmin ? $afterLoginRedirectAdmin : $returnUrl);
+			}
 		} else if(!Yii::app()->user->isGuest) {
 			// if user is already logged in, don't display login page again
 			$this->redirect($afterLoginRedirect);
@@ -84,6 +91,12 @@ class SiteController extends Controller
 	 */
 	public function actionLogout()
 	{
+		// log logout event
+		$history = new LoginHistory;
+		$history->user_id = Yii::app()->user->id;
+		$history->action = LoginHistory::ACTION_LOGOUT;
+		$history->save();
+
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
