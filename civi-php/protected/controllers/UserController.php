@@ -104,6 +104,9 @@ class UserController extends Controller
 					$this->sendPasswordEmail($newU[$key], $password);
 				}
 			}
+
+			$this->createLogEntry(Log::USER_CONTROLLER, 'Admin completed CSV user import');
+
 			$this->render('showImported', array('newU'=>$newU));
 			//$this->redirect(array('showImported','users'=>$newU));
 			
@@ -216,12 +219,6 @@ class UserController extends Controller
 
 			try {
 				$user = $this->loadModel($id);
-
-				// create event log entry
-				$logEntry = new Log;
-				$logEntry->category = Log::USER_CONTROLLER;
-				$logEntry->log = 'Admin triggered actionDelete(' . $user->id . ') on user ' . $user->username;
-				$logEntry->save();
 
 				// mark user as deleted
 				$user->active = 0;
