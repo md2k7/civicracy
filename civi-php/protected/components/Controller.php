@@ -31,4 +31,51 @@ class Controller extends CController
 		parent::__construct($id, $module);
 		new SchemaUpdater; // setup DB schema if needed
 	}
+
+	/**
+	 * Save a model while keeping history.
+	 *
+	 * Uses a transaction, but also supports embedded use in running transactions
+	 * (in embedded use, this does not commit or roll back, use the return value)
+	 *
+	 * @param $model model instance to be saved
+	 * @param $historyModel copy of the model, instance of a "History"-suffixed class
+	 * @param $historyModelIdAttr optional attribute name of History class to be set to the model ID
+	 *
+	 * @return whether save() was successful
+	 */
+	public function saveModelAndHistory($model, $historyModel, $historyModelIdAttr=null)
+	{
+		$myTransaction = false;
+		$transaction = Yii::app()->db->getCurrentTransaction();
+		if($transaction === null) {
+			// no current running transaction, create our own one
+			$myTransaction = true;
+			$transaction = Yii::app()->db->beginTransaction();
+		}
+
+		if(!$model->save()) {
+			if($myTransaction)
+				$transaction->rollBack();
+			return false;
+		}
+
+		if($historyModelIdAttr !== null)
+			$historyModel->setAttribute($historyModelIdAttr, $model->id);
+
+		if(!$historyModel->save()) {
+			// log error: the history model should never fail to validate, as the original model has already validated successfully before
+			Yii::log('historyModel ' . CVarDumper::dumpAsString($historyModel) . ' errors: ' . CVarDumper::dumpAsString($historyModel->getErrors()), 'error', 'Controller');
+
+			// if we can't save the historyModel, roll back the complete transaction (don't save the original model data)
+			if($myTransaction)
+				$transaction->rollBack();
+			return false;
+		}
+
+		// everything OK
+		if($myTransaction)
+			$transaction->commit();
+		return true;
+	}
 }
