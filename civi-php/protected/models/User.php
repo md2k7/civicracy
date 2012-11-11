@@ -175,29 +175,58 @@ class User extends CActiveRecord
 		$graph = new VoteGraph($users, $votes);
 		if(count($votes))
 		{
-			// Getting Boardmembers for percentage-defined boardsize
+			// Getting Boardmembers for percentage-defined boardsize		
+			$weights = $graph->getWeights();
+			$ranking=array();
+			$realname=array();
+			$email=array();
+			$weighttable=array();
+			$numberofusers = count($userObjects);
+			
 			if($boardsize<1)
 			{
+				$minimumweight = $numberofusers * $boardsize;
+				foreach($weights as $id => $weight)
+				{
+					if($weight > $minimumweight)
+					{
+						$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
+						$ranking[$id]['email'] = User::model()->findByPk($id)->email;
+						$ranking[$id]['weight'] = $weight;
+						$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
+						$ranking[$id]['percentUsers'] = round($weight / $numberofusers, 3)*100;
+						$ranking[$id]['percentBoard'] = 0;
+						$weighttable[$id]=$weight;
+					}
+				}
+				array_multisort($weighttable, SORT_DESC, $ranking);
 				
 			}
 			// Getting Boardmembers for a number-defined boardsize
-			else {
-				$weights = $graph->getWeights();
-				$ranking=array();
-				$realname=array();
-				$email=array();
-				$weighttable=array();
+			else 
+			{
 				foreach($weights as $id => $weight)	
 				{
 					$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
 					$ranking[$id]['email'] = User::model()->findByPk($id)->email;
 					$ranking[$id]['weight'] = $weight;
 					$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
+					$ranking[$id]['percentUsers'] = round($weight / $numberofusers, 3)*100;
+					$ranking[$id]['percentBoard'] = 0;
 					$weighttable[$id]=$weight;
 				}
 				array_multisort($weighttable, SORT_DESC, $ranking);
 				array_splice($ranking, $boardsize);
 			}
+			
+			$allWeights = 0;
+			foreach($ranking as $id)
+			{
+				$allWeights += $id['weight'];	
+			}
+			
+			for($n=0; $n<count($ranking); $n++)
+				$ranking[$n]['percentBoard'] = round($ranking[$n]['weight'] / $allWeights, 3)*100;
 		}else 
 			$ranking=false;
 		return $ranking;
