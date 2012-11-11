@@ -32,7 +32,7 @@ class ContactEmail extends CFormModel
 		return array(
 				'email_adds'=>Yii::t('app', 'email.adds'),
 				'email_text'=>Yii::t('app', 'email.text'),
-				'email_text'=>Yii::t('app', 'email.topic'),
+				'email_topic'=>Yii::t('app', 'email.topic'),
 		);
 	}
 	
@@ -55,8 +55,7 @@ class ContactEmail extends CFormModel
 			foreach($email_adds_arr as $user)
 			{
 				Yii::log('User-Email: ' . $user . ' wurde ausgeschickt durch Admin', 'info', 'ContactEMail');
-				mail($user, $this->email_topic, $this->email_text.'\n-------
-Visit the on the Civi plattform at '.Yii::app()->params['registration.url'], $headers);
+				mail($user, $this->email_topic, $this->email_text."\n\n".'-------'."\n".'Visit the Civi plattform at '.Yii::app()->params['registration.url'], $headers);
 			}			
 			$sent=true;
 			return $sent;
