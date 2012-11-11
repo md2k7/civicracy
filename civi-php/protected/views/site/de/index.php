@@ -11,9 +11,11 @@
 				</div>
 			</div>
 			<div class="hero-right">
+<?php /* ?>
 				<div class="register-box">
-					<p><a class="btn btn-primary btn-large" href="<?php echo $this->createUrl('/site/login'); /* TODO */ ?>">Civi erstellen</a></p><p>Eigenen Bereich zum Abstimmen anlegen.</p>
+					<p><a class="btn btn-primary btn-large" href="<?php echo $this->createUrl('/site/login'); ?>">Civi erstellen</a></p><p>Eigenen Bereich zum Abstimmen anlegen.</p>
 				</div>
+<?php */ ?>
 				<div class="register-box">
 					<p><a class="btn btn-primary btn-large" href="<?php echo $this->createUrl('/site/login'); ?>">Login</a></p><p>Ergebnisse betrachten und abstimmen.</p>
 				</div>
