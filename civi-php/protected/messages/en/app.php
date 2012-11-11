@@ -29,6 +29,7 @@ return array (
   'forms.compareOperators' => '<p>You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b> or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.</p>',
   'forms.required' => '<p class="note">Fields with <span class="required">*</span> are required.</p>',
   'http.400' => 'Invalid request. Please do not repeat this request again.',
+  'http.403' => 'Forbidden. Please do not repeat this request again.',
   'http.404' => 'The requested page does not exist.',
   'login.button' => 'Login',
   'login.incorrect' => 'Incorrect username or password.',
