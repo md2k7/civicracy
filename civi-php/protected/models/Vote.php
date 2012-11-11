@@ -228,10 +228,11 @@ class Vote extends CActiveRecord
 	{
 		$user = User::model()->findByPk($userId);
 		$R = $user->getVoteCountInCategory($categoryId)->voteCount;
+		$category = Category::model()->findByPk($categoryId);
 
 		$params = CiviGlobals::getSustainTimeParameters();
-		$R_max = $params['R_max'];
-		$T_max = $params['T_max'];
+		$R_max = $category->rmax * User::model()->count('username != :username', array('username' => 'admin')); // TODO: another adminity test...
+		$T_max = $category->tmax * (60 * 60 * 24);
 
 		$t_sustain = ($R / $R_max) * $T_max + 1;
 

@@ -53,8 +53,11 @@ $('.search-form form').submit(function(){
 			'value'=>'CHtml::link($data->name,Yii::app()->createUrl("category/view",array("id"=>"$data->id")))',
 
 			),
+		'institution',
 		'description',
 		'boardsize',
+		'rmax',
+		'tmax',
 		array(
 			'class'=>'CButtonColumn',
 		),

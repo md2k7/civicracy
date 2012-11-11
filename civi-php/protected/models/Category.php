@@ -7,7 +7,10 @@
  * @property integer $id
  * @property string $name
  * @property string $description
- * @property integer $boardsize
+ * @property string $institution
+ * @property float $boardsize
+ * @property float $rmax
+ * @property float $tmax
  * @property integer $active
  *
  * The followings are the available model relations:
@@ -42,13 +45,14 @@ class Category extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name', 'required'),
+			array('institution', 'default'),
 			array('description', 'default'),
-			array('name', 'length', 'max'=>255),
-			array('boardsize', 'required'),
-			array('boardsize', 'numerical'),
+			array('name, institution', 'length', 'max'=>255),
+			array('boardsize, rmax, tmax', 'required'),
+			array('boardsize, rmax, tmax', 'numerical'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('name, description', 'safe', 'on'=>'search'),
+			array('name, description, institution, boardsize, rmax, tmax', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,7 +77,10 @@ class Category extends CActiveRecord
 		return array(
 			'name' => Yii::t('app', 'models.category'),
 			'description' => Yii::t('app', 'models.description'),
+			'institution' => Yii::t('app', 'models.institution'),
 			'boardsize' => Yii::t('app', 'models.boardsize'),
+			'rmax' => Yii::t('app', 'models.rmax'),
+			'tmax' => Yii::t('app', 'models.tmax'),
 		);
 	}
 

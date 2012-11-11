@@ -21,7 +21,7 @@ $this->menu=array(
 				</div>
 			</div>
 			<div class="hero-right hero-title-right">
-				<h2>HTL Rennweg</h2>
+				<h2><?php echo CHtml::encode($category->institution); ?></h2>
 				<h3><?php echo CHtml::encode($category->name); ?></h3>
 				<div class="hero-description">
 					<p><?php echo CHtml::encode($category->description); ?></p>

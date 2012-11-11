@@ -9,7 +9,10 @@
  * @property integer $category_id
  * @property string $name
  * @property string $description
- * @property integer $boardsize
+ * @property string $institution
+ * @property float $boardsize
+ * @property float $rmax
+ * @property float $tmax
  * @property integer $active
  *
  * The followings are the available model relations:

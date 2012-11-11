@@ -10,6 +10,12 @@
 	<?php echo $form->errorSummary($model, NULL, NULL, CiviGlobals::$infoboxClass); ?>
 
 	<div class="row">
+		<?php echo $form->label($model,'institution'); ?>
+		<?php echo $form->textField($model,'institution',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'institution'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'name'); ?>
 		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'name'); ?>
@@ -20,13 +26,24 @@
 		<?php echo $form->textField($model,'description',array('class'=>'span12')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
-	
-		<div class="row">
+
+	<div class="row">
 		<?php echo $form->label($model,'boardsize'); ?>
-		<?php echo $form->textField($model,'boardsize',array('class'=>'span12')); ?>
+		<?php echo $form->textField($model,'boardsize',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'boardsize'); ?>
 	</div>
-	
+
+	<div class="row">
+		<?php echo $form->label($model,'rmax'); ?>
+		<?php echo $form->textField($model,'rmax',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'rmax'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'tmax'); ?>
+		<?php echo $form->textField($model,'tmax',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'tmax'); ?>
+	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'category.create.button') : Yii::t('app', 'category.save.button'), CiviGlobals::$buttonClass); ?>

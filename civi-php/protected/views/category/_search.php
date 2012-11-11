@@ -15,6 +15,11 @@
 		<?php echo $form->textField($model,'description',array('size'=>60)); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'institution'); ?>
+		<?php echo $form->textField($model,'institution',array('size'=>60)); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton(Yii::t('app', 'search.button'), CiviGlobals::$buttonClass); ?>
 	</div>

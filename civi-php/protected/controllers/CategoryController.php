@@ -57,16 +57,20 @@ class CategoryController extends Controller
 	{
 		$model=new Category;
 
+		// propose sane defaults
+		$sustainParams = CiviGlobals::getSustainTimeParameters();
+		$model->rmax = $sustainParams['R_max'];
+		$model->tmax = $sustainParams['T_max'];
+		$model->boardsize = CiviGlobals::$defaultBoardSize;
+
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Category']))
 		{
-			// If a wholenumber percent number is entered for boardsize it's getting converted to a 0.xx number
-			if(preg_match('/^[0-9]{1,2}\%$/', $_POST['Category']['boardsize']))
-			{
-				$_POST['Category']['boardsize']=(substr($_POST['Category']['boardsize'], 0, strpos($_POST['Category']['boardsize'],'%'))/100);
-			}
+			// If a wholenumber percent number is entered it's getting converted to a 0.xx number
+			$_POST['Category'] = $this->decodePercentArray($_POST['Category'], array('boardsize', 'rmax'));
+			
 			$model->attributes=$_POST['Category'];
 			if($this->saveCategoryAndHistory($model))
 				$this->redirect(array('view','id'=>$model->id));
@@ -122,10 +126,8 @@ class CategoryController extends Controller
 		if(isset($_POST['Category']))
 		{
 			// If a wholenumber percent number is entered for boardsize it's getting converted to a 0.xx number
-			if(preg_match('/^[0-9]{1,2}\%$/', $_POST['Category']['boardsize']))
-			{
-				$_POST['Category']['boardsize']=(substr($_POST['Category']['boardsize'], 0, strpos($_POST['Category']['boardsize'],'%'))/100);
-			}
+			$_POST['Category'] = $this->decodePercentArray($_POST['Category'], array('boardsize', 'rmax'));
+
 			$model->attributes=$_POST['Category'];
 			if($this->saveCategoryAndHistory($model))
 				$this->redirect(array('view','id'=>$model->id));

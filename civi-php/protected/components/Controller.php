@@ -94,4 +94,27 @@ class Controller extends CController
 		$logEntry->log = $message;
 		return $logEntry->save();
 	}
+
+	/**
+	 * Parse a percentage string. Returns the number if not percentage string (contains no '%' sign)
+	 */
+	public function decodePercent($percentStr)
+	{
+		if(preg_match('/^[0-9]{1,2}\%$/', $percentStr))
+			$percentStr = (substr($percentStr, 0, strpos($percentStr,'%'))/100);
+		return $percentStr;
+	}
+
+	/**
+	 * Parse percentage strings of an array. Keeps the number if not percentage string (contains no '%' sign)
+	 *
+	 * @param array $percentArray associative array of stuff
+	 * @param array $entries entries (keys) to be 'unpercented'
+	 */
+	public function decodePercentArray($percentArray, $entries)
+	{
+		foreach($entries as $key)
+			$percentArray[$key] = $this->decodePercent($percentArray[$key]);
+		return $percentArray;
+	}
 }
