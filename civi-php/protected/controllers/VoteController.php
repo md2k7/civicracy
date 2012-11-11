@@ -128,6 +128,7 @@ class VoteController extends Controller
 					'candidate' => User::model()->findByPk($model->candidate_id)->realname,
 					'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
 					'revoke' => ($model->candidate_id == Yii::app()->user->id),
+					'nextVoteTime' => $this->nextVoteTime($id, true), // vote time estimate
 					'id' => $id,
 				));
 				return;
@@ -155,7 +156,6 @@ class VoteController extends Controller
 		$reason = ($vote !== null) ? $vote->reason : '';
 
 		$votedTime = ($vote !== null ? strtotime($vote->timestamp) : 0);
-		$nextVoteTime = ($vote !== null ? ($votedTime + Vote::model()->calculateSustainTime(Yii::app()->user->id, $id)) : 0);
 
 		$this->render('view', array(
 			'votePath' => Vote::model()->loadVotePath($id),
@@ -168,7 +168,7 @@ class VoteController extends Controller
 			// for testing
 			'ranking' => User::model()->getVoteCountInCategoryTotal($id),
 			'votedTime' => $votedTime,
-			'nextVoteTime' => $nextVoteTime,
+			'nextVoteTime' => $this->nextVoteTime($id),
 			'mayVote' => $this->mayVote($id),
 			/*'numberofcandidates' => 3,
 			'names' => array("hans", "georg", "franz"),
@@ -231,9 +231,19 @@ class VoteController extends Controller
 	 */
 	private function mayVote($categoryId)
 	{
+		return (time() > $this->nextVoteTime($categoryId));
+	}
+
+	/**
+	 * @return approximate time the next vote change will be allowed
+	 */
+	private function nextVoteTime($categoryId, $estimate=false)
+	{
 		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($categoryId);
 		$votedTime = ($vote !== null ? strtotime($vote->timestamp) : 0);
-		$nextVoteTime = ($vote !== null ? ($votedTime + Vote::model()->calculateSustainTime(Yii::app()->user->id, $categoryId)) : 0);
-		return (time() > $nextVoteTime);
+		if($estimate)
+			$votedTime = time();
+		$nextVoteTime = (($vote !== null || $estimate) ? ($votedTime + Vote::model()->calculateSustainTime(Yii::app()->user->id, $categoryId)) : 0);
+		return $nextVoteTime;
 	}
 }
