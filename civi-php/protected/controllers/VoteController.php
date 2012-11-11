@@ -130,6 +130,38 @@ class VoteController extends Controller
 	}
 
 	/**
+	 * View the vote path for a given category.
+	 * @param integer category ID
+	 */
+	public function actionView($id)
+	{
+		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
+		$reason = ($vote !== null) ? $vote->reason : '';
+
+		$votedTime = ($vote !== null ? strtotime($vote->timestamp) : 0);
+		$nextVoteTime = ($vote !== null ? ($votedTime + Vote::model()->calculateSustainTime(Yii::app()->user->id, $id)) : 0);
+
+		$this->render('view', array(
+			'votePath' => Vote::model()->loadVotePath($id),
+			'category' => Category::model()->findByPk($id),
+			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
+			'reason' => $reason,
+			'voted' => ($vote !== null),
+			'id' => $id,
+
+			// for testing
+			'ranking' => User::model()->getVoteCountInCategoryTotal($id),
+			'votedTime' => $votedTime,
+			'nextVoteTime' => $nextVoteTime,
+			'deltaT' => ($vote !== null ? Vote::model()->calculateSustainTime(Yii::app()->user->id, $id) : 0),
+			/*'numberofcandidates' => 3,
+			'names' => array("hans", "georg", "franz"),
+			'weightAbs' => array(5, 10, 5),
+			'weightPer' => array(25, 50, 25),*/				
+				));
+	}
+
+	/**
 	 * Save a Vote model while keeping history in VoteHistory.
 	 */
 	private function saveVoteAndHistory($model, $active=1)
@@ -176,37 +208,5 @@ class VoteController extends Controller
 			$slogans[$c->realname] = $c->slogan;
 		}
 		return array('names' => $nameList, 'slogans' => $slogans);
-	}
-
-	/**
-	 * View the vote path for a given category.
-	 * @param integer category ID
-	 */
-	public function actionView($id)
-	{
-		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
-		$reason = ($vote !== null) ? $vote->reason : '';
-
-		$votedTime = ($vote !== null ? strtotime($vote->timestamp) : 0);
-		$nextVoteTime = ($vote !== null ? ($votedTime + Vote::model()->calculateSustainTime(Yii::app()->user->id, $id)) : 0);
-
-		$this->render('view', array(
-			'votePath' => Vote::model()->loadVotePath($id),
-			'category' => Category::model()->findByPk($id),
-			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
-			'reason' => $reason,
-			'voted' => ($vote !== null),
-			'id' => $id,
-
-			// for testing
-			'ranking' => User::model()->getVoteCountInCategoryTotal($id),
-			'votedTime' => $votedTime,
-			'nextVoteTime' => $nextVoteTime,
-			'deltaT' => ($vote !== null ? Vote::model()->calculateSustainTime(Yii::app()->user->id, $id) : 0),
-			/*'numberofcandidates' => 3,
-			'names' => array("hans", "georg", "franz"),
-			'weightAbs' => array(5, 10, 5),
-			'weightPer' => array(25, 50, 25),*/				
-				));
 	}
 }
