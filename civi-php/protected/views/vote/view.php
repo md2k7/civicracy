@@ -48,7 +48,7 @@ $this->menu=array(
 			 			</tr>
 		 				
 		 				<?php 
-							for($i=0; $i<$boardsize; $i++)
+							for($i=0; $i<count($ranking); $i++)
 								echo '<tr><td>'.CHtml::encode($ranking[$i]['realname']).'</td> <td>'.CHtml::encode($ranking[$i]['slogan']).'</td> </tr>';
 						?>
 					</table> 
