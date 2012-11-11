@@ -200,7 +200,7 @@ class Vote extends CActiveRecord
 		return round(((100*count($votesInCat))/(count($allUsers))));
 	}
 	/**
-	 * Log and actually remove votes of/for the specified user. Use only in a try/catch block in a transactional context!
+	 * Log and remove votes of/for the specified user. Use only in a try/catch block in a transactional context!
 	 */
 	public function removeUserVotes($userId)
 	{
@@ -216,9 +216,8 @@ class Vote extends CActiveRecord
 				throw new Exception('logging of removal of votes of/for user ' . $userId . ' failed');
 		}
 
-		// remove all votes of or for this user
-		if(!Vote::model()->deleteAll('voter_id = :user_id OR candidate_id = :user_id', array('user_id' => $userId)))
-			throw new Exception('removal of votes of/for user ' . $userId . ' failed');
+		// remove all votes of or for this user (vote for self = inactive vote)
+		Vote::model()->updateAll(array('candidate_id' => new CDbExpression('voter_id')), 'voter_id = :user_id OR candidate_id = :user_id', array('user_id' => $userId));
 	}
 
 	/**
