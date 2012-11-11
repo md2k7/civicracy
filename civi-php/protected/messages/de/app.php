@@ -28,6 +28,8 @@ return array (
   'error' => 'Fehler',
   'email.adds' => 'Gesammelte E-Mail Adressen',
   'email.text' => 'E-Mail Text',
+  'email.topic' => 'Betreff',
+  'email.sent' => 'Die E-Mail wurde erfolgreich verschickt!',
   'email.send.button' => 'E-Mail absenden',
   'forms.advancedSearch' => 'Erweiterte Suche',
   'forms.compareOperators' => '<p>Optional kann ein Vergleichsoperator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b> or <b>=</b>) am Anfang jedes Suchwertes benutzt werden, um einen bestimmten Vergleich durchzuführen.</p>',
