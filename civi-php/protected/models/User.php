@@ -163,7 +163,7 @@ class User extends CActiveRecord
 	
 	/**
 	 * @param $categoryID ID of category
-	 * @return $weights all user weights
+	 * @return $ranking array Array of all users in Board or false if there are no votes existent
 	 */
 	public function getVoteCountInCategoryTotal($categoryID) {
 		$userObjects = User::model()->findAll();
@@ -173,21 +173,33 @@ class User extends CActiveRecord
 			$users[] = $u->id;
 		$votes = Vote::model()->findAllByAttributes(array('category_id' => $category->id));
 		$graph = new VoteGraph($users, $votes);
-		$weights = $graph->getWeights();
-		$ranking=array();
-		$realname=array();
-		$email=array();
-		$weighttable=array();
-		foreach($weights as $id => $weight)	
+		if(count($votes))
 		{
-			$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
-			$ranking[$id]['email'] = User::model()->findByPk($id)->email;
-			$ranking[$id]['weight'] = $weight;
-			$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
-			$weighttable[$id]=$weight;
-		}
-		array_multisort($weighttable, SORT_DESC, $ranking);
-		array_splice($ranking, $boardsize);
+			// Getting Boardmembers for percentage-defined boardsize
+			if($boardsize<1)
+			{
+				
+			}
+			// Getting Boardmembers for a number-defined boardsize
+			else {
+				$weights = $graph->getWeights();
+				$ranking=array();
+				$realname=array();
+				$email=array();
+				$weighttable=array();
+				foreach($weights as $id => $weight)	
+				{
+					$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
+					$ranking[$id]['email'] = User::model()->findByPk($id)->email;
+					$ranking[$id]['weight'] = $weight;
+					$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
+					$weighttable[$id]=$weight;
+				}
+				array_multisort($weighttable, SORT_DESC, $ranking);
+				array_splice($ranking, $boardsize);
+			}
+		}else 
+			$ranking=false;
 		return $ranking;
 	}
 
