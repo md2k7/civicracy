@@ -1,5 +1,4 @@
 <?php
-	//$piece_values = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20/*, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50*/);
 	$height = 250; $width = 350;
 	$height3d = 20;
 	$no_sort = false; // Sortierung an
@@ -7,75 +6,56 @@
 	$data = $_GET["data"];
 	$piece_values = explode('*',$data);
 
-	graph_pie_3d($piece_values, /*$piece_names,*/ $height, $width, $height3d, $no_sort);
+	graph_pie_3d($piece_values, $height, $width, $height3d, $no_sort);
+	
 	
 	function graph_colors($im, $werteAnzahl) 
 	{
 		$dark = 50;
 		
+		$rot = array(0, 0, 0, 0, 0, 102, 102, 102, 102, 102, 102, 102, 102, 102, 204, 204, 204, 204, 204, 204, 204, 204, 204, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 51, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102);
+		$gruen = array(102, 102, 204, 204, 204, 0, 0, 0, 102, 102, 102, 204, 204, 204, 0, 0, 0, 102, 102, 102, 204, 204, 204, 51, 51, 51, 51, 51, 51, 102, 102, 102, 102, 102, 102, 153, 153, 153, 153, 153, 153, 204, 204, 204, 204, 204, 204, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 51, 51, 51, 51, 51, 51, 102, 102, 102, 102, 102, 102, 153, 153, 153, 153, 153, 153, 204, 204, 204, 204, 204, 204, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 51, 51, 51, 51, 51);
+		$blau = array(102, 204, 0, 102, 204, 0, 102, 204, 0, 102, 204, 0, 102, 204, 0, 102, 204, 0, 102, 204, 0, 102, 204, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204, 255, 0, 51, 102, 153, 204);
+		
 		$colors["background"] = ImageColorAllocate($im, 255, 255, 255);
-		$colors["text"] = ImageColorAllocate($im, 0, 0, 0);
-		
-		$stufe = 102;		//wert um den die farbe erhöht wird
-		
-		$rot = 0;
-		$gruen = $stufe;
-		$blau = 0;
-		
-		
-		$rot_dark = 0;
-	
-		if($gruen < $dark)
-			$gruen_dark = 0;
-		else
-			$gruen_dark = $gruen - $dark;
-		
-		$blau_dark = 0;
-		
-		
+		//$colors["text"] = ImageColorAllocate($im, 0, 0, 0);
+
 		for($i=0; $i<$werteAnzahl; $i++)
-		{
-			$colors[$i] = ImageColorAllocate($im, $rot, $gruen, $blau);
-			$colors_dark[$i] = ImageColorAllocate($im, $rot_dark, $gruen_dark, $blau_dark);
-			
-			$blau += $stufe;
-			if($blau > 255)
-			{
-				$blau = 0;
-				$gruen += $stufe;
-			}
-			if($gruen > 255)
-			{
-				$gruen = 0;
-				$rot += $stufe;
-			}
-			if($rot > 255)
-			{
-				$stufe /= 2;
-				
-				if($stufe > 1)
-				{
-					$rot = 0;
-					$gruen = $stufe;
-					$blau = 0;
-				}
-			}
-	
-			if($rot < $dark)
+		{		
+			if($i>count($rot)-1)
+				$r = count($rot) - 1;
+			else
+				$r = $i;
+			 
+			if($i>count($gruen)-1)
+				$g = count($gruen) - 1;
+			else
+				$g = $i;
+			 
+			if($i>count($blau)-1)
+				$b = count($blau) - 1;
+			else
+				$b = $i;
+			 
+			//$color = ImageColorAllocate($im, $rot[$r], $gruen[$g], $blau[$b]);
+
+			if($rot[$r] < $dark)
 				$rot_dark = 0;
 			else
-				$rot_dark = $rot - $dark;
+				$rot_dark = $rot[$r] - $dark;
 			
-			if($gruen < $dark)
+			if($gruen[$g] < $dark)
 				$gruen_dark = 0;
 			else
-				$gruen_dark = $gruen - $dark;
+				$gruen_dark = $gruen[$g] - $dark;
 			
-			if($blau < $dark)
+			if($blau[$b] < $dark)
 				$blau_dark = 0;
 			else
-				$blau_dark = $blau - $dark;
-	
+				$blau_dark = $blau[$b] - $dark;
+			
+			$colors[$i] = ImageColorAllocate($im, $rot[$r], $gruen[$g], $blau[$b]);
+			$colors_dark[$i] = ImageColorAllocate($im, $rot_dark, $gruen_dark, $blau_dark);
 		}
 		return array("colors" => $colors, "colors_dark" => $colors_dark);
 	}
