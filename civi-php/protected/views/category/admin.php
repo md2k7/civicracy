@@ -46,7 +46,13 @@ $('.search-form form').submit(function(){
 	)),
 	'filter'=>$model,
 	'columns'=>array(
-		'name',
+		array(
+
+			'name'=>'name',
+			'type'=>'raw',
+			'value'=>'CHtml::link($data->name,Yii::app()->createUrl("category/view",array("id"=>"$data->id")))',
+
+			),
 		'description',
 		'boardsize',
 		array(

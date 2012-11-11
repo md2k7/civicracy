@@ -27,7 +27,7 @@ class CategoryController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform the actions
-				'actions'=>array('index','view','create','update','admin','delete'),
+				'actions'=>array('index','view','create','update','admin','delete','contact'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -62,10 +62,15 @@ class CategoryController extends Controller
 
 		if(isset($_POST['Category']))
 		{
+			// If a wholenumber percent number is entered for boardsize it's getting converted to a 0.xx number
+			if(preg_match('/^[0-9]{1,2}\%$/', $_POST['Category']['boardsize']))
+			{
+				$_POST['Category']['boardsize']=(substr($_POST['Category']['boardsize'], 0, strpos($_POST['Category']['boardsize'],'%'))/100);
+			}
 			$model->attributes=$_POST['Category'];
 			if($this->saveCategoryAndHistory($model))
 				$this->redirect(array('view','id'=>$model->id));
-		}
+			}
 
 		$this->render('create',array(
 			'model'=>$model,
@@ -76,14 +81,31 @@ class CategoryController extends Controller
 	 * or all members of the board of a specific categories (has to be updated aswell, currently just one board/category possible
 	 * 
 	 */
-	public function contact($categoryId, $target)
-	{
-		// Formular für gewählte Benutzergruppe anzeigen!
-		if(!isset($_POST['Email']))
-		{
-			
-		}
-	}
+	public function actionContact($categoryId, $target)
+	 {
+	 	 // Formular für gewählte Benutzergruppe anzeigen!
+		  	if(!isset($_POST['Email']))
+		  	{
+		   		$email='';
+		   	if($target=='all')
+		   	{
+		    	$users=User::model()->findAll();
+		    	foreach($users as $row)
+		    	{
+		     		$email.=$row->email.',';
+		    	}
+		    	$this->render('createEmail',array('email' => $email));
+		   	}elseif($target=='board')
+		   	{
+		    	$users=User::model()->getVoteCountInCategoryTotal($categoryId);
+		    	foreach($users as $row)
+		    	{
+		     		$email.=$row['email'].',';
+		    	}
+		    	$this->render('createEmail',array('email' => $email));
+	   		}
+	  }
+	 }
 
 	/**
 	 * Updates a particular model.
@@ -99,6 +121,11 @@ class CategoryController extends Controller
 
 		if(isset($_POST['Category']))
 		{
+			// If a wholenumber percent number is entered for boardsize it's getting converted to a 0.xx number
+			if(preg_match('/^[0-9]{1,2}\%$/', $_POST['Category']['boardsize']))
+			{
+				$_POST['Category']['boardsize']=(substr($_POST['Category']['boardsize'], 0, strpos($_POST['Category']['boardsize'],'%'))/100);
+			}
 			$model->attributes=$_POST['Category'];
 			if($this->saveCategoryAndHistory($model))
 				$this->redirect(array('view','id'=>$model->id));
