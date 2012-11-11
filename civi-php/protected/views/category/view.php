@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label' => Yii::t('app', 'menu.categories.create'), 'url'=>array('create')),
 	array('label' => Yii::t('app', 'menu.categories.update'), 'url'=>array('update', 'id'=>$model->id)),
-	array('label' => Yii::t('app', 'menu.categories.delete'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm' => Yii::t('zii', 'Are you sure you want to delete this item?'))),
+	array('label' => Yii::t('app', 'menu.categories.delete'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'))),
 	array('label' => Yii::t('app', 'menu.categories.manageAll'), 'url'=>array('admin')),
 );
 ?>
@@ -53,7 +53,7 @@ $this->menu=array(
 				<?php if(!$ranking===false) { ?>
 				<?php
 				$pievalues=$ranking[0]['weight'];
-					for($i=1; $i<$boardsize; $i++)
+					for($i=1; $i<count($ranking); $i++)
 						$pievalues.='*'.$ranking[$i]['weight'];
 				?>
 				<br>
@@ -75,7 +75,8 @@ $this->menu=array(
 		 					<th><?php echo Yii::t('app', 'voteresult.rank'); ?></th>
 			 				<th><?php echo Yii::t('app', 'voteresult.name'); ?></th>
 			 				<th><?php echo Yii::t('app', 'voteresult.weightAbs'); ?></th>
-			 				<th><?php echo Yii::t('app', 'voteresult.weightPer'); ?></th>
+			 				<th><?php echo Yii::t('app', 'voteresult.weightPerBoard'); ?></th>
+			 				<th><?php echo Yii::t('app', 'voteresult.weightPerAll'); ?></th>
 			 				<th><?php echo Yii::t('app', 'voteresult.slogan'); ?></th>
 			 			</tr>
 		 				
@@ -84,8 +85,7 @@ $this->menu=array(
 		 				<?php 
 							for($i=0; $i<$boardsize; $i++)
 							{
-								
-								echo '<tr> <td> <img src= "'.Yii::app()->request->baseUrl.' /img/rectangle.php?data='.($i).'"> </td> <td>'.($i+1).'</td> <td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['weight'].'</td> <td> </td> <td>'.$ranking[$i]['slogan'].'</td> </tr>';
+								echo '<tr> <td> <img src= "'.Yii::app()->request->baseUrl.' /img/rectangle.php?data='.($i).'"> </td> <td>'.($i+1).'</td> <td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['weight'].'</td> <td>'.$ranking[$i]['percentBoard'].'%</td> <td>'.$ranking[$i]['percentUsers'].'%</td> <td>'.$ranking[$i]['slogan'].'</td> </tr>';
 							}
 						?>
 					</table> 
