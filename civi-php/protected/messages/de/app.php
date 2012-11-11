@@ -19,6 +19,7 @@
  * @version $Id: $
  */
 return array (
+  'cancel.button' => 'Abbrechen',
   'category.create.button' => 'Erstellen',
   'category.save.button' => 'Speichern',
   'error' => 'Fehler',
@@ -43,6 +44,8 @@ return array (
   'menu.categories.view' => 'Kategorie anzeigen',
   'menu.category' => 'Kategorie {category}',
   'menu.categoryVote' => '{category}-Stimme',
+  'menu.categoryVoteFor' => '{category}-Stimme für {candidate} abgeben?',
+  'menu.categoryVoteRevoke' => '{category}-Stimme zurücknehmen?',
   'menu.create' => 'Erstellen',
   'menu.users.import' => 'Benutzer importieren',
   'menu.login' => 'Login',
@@ -94,7 +97,7 @@ return array (
   'users.updateOne' => 'Benutzer {user} bearbeiten',
   'vote.button' => 'Abstimmen',
   'vote.days' => 'Tage',
-  'vote.explainVoting' => '<p>Entscheide, wem Du das Vertrauen schenkst! Die gewählte Person übernimmt deine gesamte Verantwortung (zusätzlich zur Verantwortung, die ihr schon von anderen weitergegeben wird).</p>',
+  'vote.explainVoting' => '<p>Entscheide, wem Du das Vertrauen schenkst! Die gewählte Person übernimmt Deine gesamte Verantwortung (zusätzlich zur Verantwortung, die ihr schon von anderen weitergegeben wird).</p>',
   'vote.greeting' => 'Hallo, {realname}!',
   'vote.currentlyresult' => 'Momentane Verantwortungsverteilung',
   'voteresult.name' => 'Name',
@@ -106,6 +109,7 @@ return array (
   'vote.ownWeight' => 'Verantwortung',
   'vote.path' => 'Verlauf meiner Stimme',
   'vote.remaining' => 'verbleibend',
+  'vote.remove.button' => 'Stimme zurücknehmen',
   'vote.update.button' => 'Stimme bearbeiten',
   'vote.votedFor' => 'Vergebene Stimmen',
   'vote.yetToVote' => 'Stimme zu vergeben',

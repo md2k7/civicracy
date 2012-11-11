@@ -2,7 +2,7 @@
 
 $this->breadcrumbs=array(
     Yii::t('app', 'menu.vote') => array('/vote'),
-    Yii::t('app', 'menu.viewCategoryVote', array('{category}' => $category->name)),
+    Yii::t('app', 'menu.confirmCategoryVote', array('{category}' => $category->name)),
 );
 
 $this->menu=array(
@@ -30,11 +30,80 @@ $this->menu=array(
 			<div class="container"></div>
 		</div>
 		<div class="main-content">
-		
+			<div class="responsibility">
+				<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
+				<div class="responsibility-number"><?php echo $weight; ?></div>
+				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
+			</div>
+
+			<h4><?php echo Yii::t('app', $revoke ? 'menu.categoryVoteRevoke' : 'menu.categoryVoteFor', array('{category}' => $category->name, '{candidate}' => $candidate)); ?></h4>
+
+			<?php if($revoke) { ?>
+			<p>Du bist dabei, deine <?php echo CHtml::encode($category->name); ?>-Stimme zurückzunehmen.</p>
+			<?php } else { ?>
+			<p>Du bist dabei, deine <?php echo CHtml::encode($category->name); ?>-Stimme für <strong><?php echo CHtml::encode($candidate); ?></strong> abzugeben. Damit bekommt diese Person zusätzlich Deine gesamte Verantwortung (aktuell <strong><?php echo $weight; ?></strong>).</p>
+			<p><em>Deine Begründung:</em> <strong><?php echo CHtml::encode($model->reason); ?></strong></p>
+			<?php } ?>
+
+			<div class="container">
+				<?php echo $this->renderPartial('_path', array('votePath'=>$votePath, 'noSloganChange' => true)); ?>
+			</div>
+
+			<div class="alert alert-red space-top">
+				<?php if($revoke) { ?>
+				<p>Bist Du sicher, dass Du die beste Person bist?</p>
+				<?php } else { ?>
+				<p>Die jetzt abgegebene Stimme wirst Du voraussichtlich <strong>[3 Tage, 23:59:14] Stunden lang nicht neu vergeben</strong> können. Bist Du sicher, dass du richtig gestimmt hast?</p>
+				<?php } ?>
+			</div>
+
+			<div class="buttons">
+				<?php $form=$this->beginWidget('CActiveForm', array(
+					'id'=>'vote-form',
+					'enableAjaxValidation'=>false,
+				)); ?>
+					<?php echo $form->hiddenField($model,'category_id'); ?>
+					<?php echo $form->hiddenField($model,'candidate_id',array('name'=>'candidate','value'=>$candidate)); ?>
+					<?php echo $form->hiddenField($model,'reason'); ?>
+					<?php echo CHtml::submitButton(Yii::t('app', 'cancel.button'), CMap::mergeArray(CiviGlobals::$buttonClass, array('name' => 'cancel'))); ?> <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'vote.button') : Yii::t('app', $revoke ? 'vote.remove.button' : 'vote.button'), CMap::mergeArray(CiviGlobals::$buttonClassWarning, array('name' => 'confirm'))); ?>
+				<?php $this->endWidget(); ?>
+			</div>
+
+<?php /* ?>
 			<div class="row">
 				<div class="span5">
 					<h4><?php echo Yii::t('app', 'vote.path'); ?></h4>
-					<?php echo $this->renderPartial('_path', array('votePath'=>$votePath)); ?>
+					<?php 
+						foreach($votePath as $vote) 
+						{ ?>
+							<div class="vp-row">
+								<div class="vp-left">
+									<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/user_arrows.png" alt="User" />
+								</div>
+								<div class="vp-right">
+									<h5><?php echo $vote->realname; ?></h5>
+									<p>
+								       <?php 
+								        echo $vote->slogan == '' ? Yii::t('app', 'vote.noslogan') : $vote->slogan; 
+								        echo " "; 
+								        if ($vote->candidate_id == Yii::app()->user->id) 
+								        { 
+								         echo "<a class='label label-info' href=".$this->createUrl('user/settings', array('id' => $id)).">".Yii::t('app','vote.changeslogan.button')."</a>"; 
+								        }
+								       ?> 
+								    </p>
+								</div>
+							</div>
+							<?php if($vote !== end($votePath)) 
+							{ ?>
+								<div class="vp-row vp-row-arrow">
+									<div class="vp-left">
+										<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/arrow.png" alt="delegiert" />
+									</div>
+									<div class="vp-right"><?php echo $vote->reason; ?></div>
+								</div>
+							<?php 
+						} } ?>
 				</div>
 				<div class="span4" align="center">
 					
@@ -72,7 +141,7 @@ $this->menu=array(
   				</div>
 			</div>
 
-			<p><?php if($voted) { ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id, 'remove' => 1)); ?>"><?php echo Yii::t('app', 'vote.remove.button'); ?></a> <?php } ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
+			<p><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
 			<h4>Zeit bis zur erneuten Stimmabgabe (DRAFT - work in progress)</h4>
 			<p>delta T = <?php echo $deltaT; ?></p>
 			<p>Sie haben am <?php echo date(Yii::t('app', 'timestamp.format'), $votedTime); ?> abgestimmt. Sie können Ihre Stimme voraussichtlich ab <?php echo date(Yii::t('app', 'timestamp.format'), $nextVoteTime); ?> wieder ändern.</p>
@@ -147,3 +216,5 @@ $(document).ready(function() {
 	$(".progress").countdown();
 });
 </script>
+<?php */ ?>
+		</div>

@@ -191,3 +191,11 @@ div.alert ul {
 div.alert {
 	clear: both;
 }
+
+div.alert-red p {
+	color: #FF5823;
+}
+
+div.space-top {
+	margin-top: 15px;
+}

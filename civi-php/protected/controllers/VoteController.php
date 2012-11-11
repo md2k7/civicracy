@@ -76,52 +76,65 @@ class VoteController extends Controller
 	}
 
 	/**
-	 * Delete the vote in a category.
-	 * @param integer category ID
-	 */
-	public function actionDelete($id)
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
-			if($vote === null)
-				throw new CHttpException(404, Yii::t('app', 'http.404'));
-
-			// delete: save with active=0
-			$this->saveVoteAndHistory($vote, 0);
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-		}
-	}
-
-	/**
 	 * Enter vote for a given category.
-	 * @param integer category ID
+	 *
+	 * @param integer $id category ID
+	 * @param integer $remove whether remove action is active
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($id, $remove=0)
 	{
 		$model = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
-		if($model === null)
-		{
+		if($model === null) {
 			$model = new Vote;
 			$model->category_id = $id;
 		}
 		$categoryModel = Category::model()->findByPk($id);
+		$failedValidation = false;
 
-		if(isset($_POST['Vote']))
-		{
-			$model->attributes=$_POST['Vote'];
+		if(isset($_POST['Vote']) || $remove === '1') {
+			if($remove === '1') {
+				// remove comes via GET
+				$model->candidate_id = Yii::app()->user->id; // vote removal = vote for self
+			} else {
+				// update comes via POST
+				$model->attributes=$_POST['Vote'];
+				$failedValidation = !$model->setCandidate($_POST['candidate']);
+			}
+
 			$model->voter_id = Yii::app()->user->id; // for security, we don't use a hidden field for this
-			$model->setCandidate($_POST['candidate']);
 
-			if($this->saveVoteAndHistory($model))
+			if(isset($_POST['confirm'])) {
+				// vote confirmed
+
+				// vote removal = vote for self
+				if($model->candidate_id == Yii::app()->user->id) {
+					// remove: save with active=0
+					$this->saveVoteAndHistory($model, 0);
+				} else {
+					if(!$this->saveVoteAndHistory($model))
+						$failedValidation = true;
+				}
+			} else if(!isset($_POST['cancel']) && !$failedValidation) {
+				// isset($_POST['cancel']) would mean: canceled voting from confirmation page
+
+				// not confirmed, not canceled: just sent vote, display confirmation page ("are you sure"?)
+				$this->render('confirm', array(
+					'model' => $model,
+					'votePath' => Vote::model()->previewVotePath($model),
+					'category' => Category::model()->findByPk($id),
+					'candidate' => User::model()->findByPk($model->candidate_id)->realname,
+					'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
+					'revoke' => ($model->candidate_id == Yii::app()->user->id),
+					'id' => $id,
+				));
+				return;
+			}
+			if(!$failedValidation)
 				$this->redirect(array('view','id'=>$id)); // doesn't return
 		}
 
 		$this->render('update', array(
+			'id' => $id,
 			'model' => $model,
 			'category' => Category::model()->findByPk($id),
 			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
@@ -200,7 +213,7 @@ class VoteController extends Controller
 	 */
 	private function loadCandidates()
 	{
-		$candidates = User::model()->findAll("username != :adminUser AND active = :active", array('adminUser' => 'admin', 'active' => 1));
+		$candidates = User::model()->findAll("username != :adminUser AND active = :active AND id != :currentId", array('adminUser' => 'admin', 'active' => 1, 'currentId' => Yii::app()->user->id));
 		$nameList = array();
 		$slogans = array();
 		foreach($candidates as $c) {
