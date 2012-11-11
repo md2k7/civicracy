@@ -87,8 +87,8 @@ class CategoryController extends Controller
 	 */
 	public function actionContact($categoryId, $target)
 	 {
-	 	 // Formular für gewählte Benutzergruppe anzeigen!
-		  	if(!isset($_POST['createEmail_form']))
+	 	 // Formular fï¿½r gewï¿½hlte Benutzergruppe anzeigen!
+		  	if(!isset($_POST['ContactEmail']))
 		  	{
 		   		$email='';
 		   		$model=new ContactEmail();
@@ -114,9 +114,10 @@ class CategoryController extends Controller
 		  } else 
 		  {
 		  		$model=new ContactEmail();
-		  		$model->attributes=$_POST['createEmail_form'];
+		  		$model->attributes=$_POST['ContactEmail'];
 		  		if($model->sendMail())
 		  		{
+		  			$model->sent=true;
 		  			$this->render('createEmail',array('model' => $model));
 		  		}
 		  }
