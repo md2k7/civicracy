@@ -22,9 +22,9 @@ $this->menu=array(
 			</div>
 			<div class="hero-right hero-title-right">
 				<h2>HTL Rennweg</h2>
-				<h3><?php echo $category->name; ?></h3>
+				<h3><?php echo CHtml::encode($category->name); ?></h3>
 				<div class="hero-description">
-					<p><?php echo $category->description; ?></p>
+					<p><?php echo CHtml::encode($category->description); ?></p>
 				</div>
 			</div>
 			<div class="container"></div>
@@ -37,17 +37,8 @@ $this->menu=array(
 					<?php echo $this->renderPartial('_path', array('votePath'=>$votePath)); ?>
 				</div>
 				<div class="span4" align="center">
-					
-					<?php $boardsize = count($ranking)?>	
-					
-					<h4><?php echo Yii::t('app', 'vote.currentlyresult').$boardsize; ?></h4>
-				
-					<?php 
-						$pievalues=$ranking[0]['weight'];
-						for($i=1; $i<$boardsize; $i++)
-							$pievalues.='*'.$ranking[$i]['weight'];
-					?>
-					
+					<h4><?php echo Yii::t('app', 'vote.currentlyresult'); ?></h4>
+
 					<br>
 						
 					<table class="table table-striped">
@@ -58,7 +49,7 @@ $this->menu=array(
 		 				
 		 				<?php 
 							for($i=0; $i<$boardsize; $i++)
-								echo '<tr><td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['slogan'].'</td> </tr>';
+								echo '<tr><td>'.CHtml::encode($ranking[$i]['realname']).'</td> <td>'.CHtml::encode($ranking[$i]['slogan']).'</td> </tr>';
 						?>
 					</table> 
 				</div>
@@ -67,7 +58,7 @@ $this->menu=array(
 				</div>
   				<div class="span2">
   					<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
-					<div class="responsibility-number"><?php echo $weight; ?></div>
+					<div class="responsibility-number"><?php echo CHtml::encode($weight); ?></div>
 					<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
   				</div>
 			</div>

@@ -22,9 +22,9 @@ $this->menu=array(
 			</div>
 			<div class="hero-right hero-title-right">
 				<h2>HTL Rennweg</h2>
-				<h3><?php echo $category->name; ?></h3>
+				<h3><?php echo CHtml::encode($category->name); ?></h3>
 				<div class="hero-description">
-					<p><?php echo $category->description; ?></p>
+					<p><?php echo CHtml::encode($category->description); ?></p>
 				</div>
 			</div>
 			<div class="container"></div>
@@ -32,7 +32,7 @@ $this->menu=array(
 		<div class="main-content">
 			<div class="responsibility">
 				<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
-				<div class="responsibility-number"><?php echo $weight; ?></div>
+				<div class="responsibility-number"><?php echo CHtml::encode($weight); ?></div>
 				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
 			</div>
 
@@ -41,7 +41,7 @@ $this->menu=array(
 			<?php if($revoke) { ?>
 			<p>Du bist dabei, deine <?php echo CHtml::encode($category->name); ?>-Stimme zurückzunehmen.</p>
 			<?php } else { ?>
-			<p>Du bist dabei, deine <?php echo CHtml::encode($category->name); ?>-Stimme für <strong><?php echo CHtml::encode($candidate); ?></strong> abzugeben. Damit bekommt diese Person zusätzlich Deine gesamte Verantwortung (aktuell <strong><?php echo $weight; ?></strong>).</p>
+			<p>Du bist dabei, deine <?php echo CHtml::encode($category->name); ?>-Stimme für <strong><?php echo CHtml::encode($candidate); ?></strong> abzugeben. Damit bekommt diese Person zusätzlich Deine gesamte Verantwortung (aktuell <strong><?php echo CHtml::encode($weight); ?></strong>).</p>
 			<p><em>Deine Begründung:</em> <strong><?php echo CHtml::encode($model->reason); ?></strong></p>
 			<p>Personen, die Dich wählen, können Deine Wahl und Begründung in ihrem Stimmenverlauf sehen.</p>
 			<?php } ?>

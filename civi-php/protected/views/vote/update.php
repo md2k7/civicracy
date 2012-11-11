@@ -18,9 +18,9 @@ $this->breadcrumbs=array(
 			</div>
 			<div class="hero-right hero-title-right">
 				<h2>HTL Rennweg</h2>
-				<h3><?php echo $category->name; ?></h3>
+				<h3><?php echo CHtml::encode($category->name); ?></h3>
 				<div class="hero-description">
-					<p><?php echo $category->description; ?></p>
+					<p><?php echo CHtml::encode($category->description); ?></p>
 				</div>
 			</div>
 			<div class="container"></div>
@@ -28,7 +28,7 @@ $this->breadcrumbs=array(
 		<div class="main-content">
 			<div class="responsibility">
 				<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
-				<div class="responsibility-number"><?php echo $weight; ?></div>
+				<div class="responsibility-number"><?php echo CHtml::encode($weight); ?></div>
 				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
 			</div>
 			<h4><?php echo Yii::t('app', 'menu.categoryVote', array('{category}' => $category->name)); ?></h4>
