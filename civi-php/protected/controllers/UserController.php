@@ -88,28 +88,71 @@ class UserController extends Controller
 	{
 		$model = new CsvFile();
 		$form = new CForm('application.views.user.importForm', $model);
-		if ($form->submitted('submit') && $form->validate()) {
+		if ($form->submitted('submit') && $form->validate())
+		{
 			$form->model->csvfile = CUploadedFile::getInstance($form->model, 'csvfile');
 			$savepath=Yii::getPathOfAlias('webroot').'/csvfiles/current.csv';
 			$model->csvfile->saveAs($savepath);
-			$new_users=$model->extractUsers($savepath);
-			// insert users into DB
-			foreach($new_users as $key => $value)
+
+			try
 			{
-				$newU[$key] = new User;
-				$newU[$key]->attributes = $value;
-				$password = $newU[$key]->createRandomPassword();
-				if($this->saveUserAndHistory($newU[$key]))
-				{
-					$this->sendPasswordEmail($newU[$key], $password);
-				}
+				$new_users=$model->extractUsers($savepath);
+			}
+			catch(CException $e)
+			{
+				$model->addError('csvfile', $e->getMessage());
+				$this->render('import', array('form' => $form));
+				return;
 			}
 
-			$this->createLogEntry(Log::USER_CONTROLLER, 'Admin completed CSV user import');
+			$importSuccess = false;
+			$transaction = Yii::app()->db->beginTransaction();
+
+			try
+			{
+				$newU = array();
+				$pass = array();
+
+				Yii::log(CVarDumper::dumpAsString($new_users), 'info', 'UserController');
+
+				// insert users into DB
+				foreach($new_users as $key => $value)
+				{
+					$newU[$key] = new User;
+					$newU[$key]->attributes = $value;
+					$pass[$key] = $newU[$key]->createRandomPassword();
+					if(!$this->saveUserAndHistory($newU[$key]))
+						throw new CException(CVarDumper::dumpAsString($newU[$key]->getErrors()));
+				}
+				$importSuccess = true;
+				$transaction->commit();
+
+				// send password e-mail
+				foreach($new_users as $key => $value)
+				{
+					$this->sendPasswordEmail($newU[$key], $pass[$key]);
+				}
+
+				$this->createLogEntry(Log::USER_CONTROLLER, 'Admin completed CSV user import');
+			}
+			catch(Exception $e)
+			{
+				if($importSuccess)
+				{
+					// sending e-mail failed, log this!
+					Yii::log($e->getMessage(), 'error', 'UserController');
+					$model->addError('csvfile', 'failed to send e-mail: ' . $e->getMessage());
+				}
+				else
+				{
+					$transaction->rollBack();
+					$model->addError('csvfile', $e->getMessage());
+				}
+				$this->render('import', array('form' => $form));
+				return;
+			}
 
 			$this->render('showImported', array('newU'=>$newU));
-			//$this->redirect(array('showImported','users'=>$newU));
-			
 		}
 		else
 			$this->render('import', array('form' => $form));
@@ -306,6 +349,8 @@ class UserController extends Controller
 				'model' => $user,
 				'password' => $password,
 			), true), $headers);
+
+			$this->createLogEntry(Log::USER_CONTROLLER, 'Admin sent password email to ' . $user->username);
 		}
 	}
 

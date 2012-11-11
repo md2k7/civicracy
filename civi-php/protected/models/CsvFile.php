@@ -13,6 +13,7 @@ class CsvFile extends CFormModel {
             array('csvfile', 'file', 'types' => 'csv'),
         );
     }
+
     public function extractUsers($location)
     {
     	
@@ -25,7 +26,7 @@ class CsvFile extends CFormModel {
 
 				if($num < 2 || $num > 3)
 				{
-					throw new CException(Yii::t('app', 'Wrong number of columns (must be 2 or 3) in row {row}', array('row' => ($row + 1))));
+					throw new CException(Yii::t('app', 'Wrong number of columns (must be 2 or 3) in row {row}', array('{row}' => ($row + 1))));
 				}
 				else
 				{
