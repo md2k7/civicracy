@@ -58,12 +58,12 @@ $this->menu=array(
 				?>
 				<br>
 				<h4><?php echo Yii::t('app', 'vote.currentlyresult')?></h4>
-				<img src= "<?php echo Yii::app()->request->baseUrl; ?> /img/piechart.php?data= <?php echo $pievalues; ?>">
+				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/piechart.php?data=<?php echo $pievalues; ?>">
 				
 				<br><br>
 				
-				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact').'&categoryId='.$model->id.'&target=board'; ?>"><?php echo Yii::t('app', 'category.top').' '.$boardsize.' '.Yii::t('app', 'category.send'); ?></a>
-				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact').'&categoryId='.$model->id.'&target=all'; ?>"><?php echo '&nbsp;&nbsp;'.Yii::t('app', 'category.all').' '.Yii::t('app', 'category.send').'&nbsp;&nbsp;'; ?></a>
+				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact', array('categoryId' => $model->id, 'target' => 'board')); ?>"><?php echo Yii::t('app', 'category.top').' '.$boardsize.' '.Yii::t('app', 'category.send'); ?></a>
+				<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('contact', array('categoryId' => $model->id, 'target' => 'all')); ?>"><?php echo Yii::t('app', 'category.all').' '.Yii::t('app', 'category.send'); ?></a>
 			</div>
 		
 			<div class="span8" align="center">
@@ -85,7 +85,7 @@ $this->menu=array(
 							for($i=0; $i<$boardsize; $i++)
 							{
 								
-								echo '<tr> <td> <img src= "'.Yii::app()->request->baseUrl.' /img/rectangle.php?data='.($i).'"> </td> <td>'.($i+1).'</td> <td>'.$ranking[$i]['realname'].'</td> <td>'.$ranking[$i]['weight'].'</td> <td> </td> <td>'.$ranking[$i]['slogan'].'</td> </tr>';
+								echo '<tr> <td> <img src="'.Yii::app()->request->baseUrl.'/img/rectangle.php?data='.($i).'"> </td> <td>'.($i+1).'</td> <td>'.CHtml::encode($ranking[$i]['realname']).'</td> <td>'.CHtml::encode($ranking[$i]['weight']).'</td> <td> </td> <td>'.CHtml::encode($ranking[$i]['slogan']).'</td> </tr>';
 							}
 						?>
 					</table> 
