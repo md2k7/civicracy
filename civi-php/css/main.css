@@ -199,3 +199,12 @@ div.alert-red p {
 div.space-top {
 	margin-top: 15px;
 }
+
+div.navbar a.brand {
+	padding-left: 45px;
+	margin-left: -45px;
+}
+
+div.navbar img.logo {
+	float: left; padding-top: 4px; padding-right: 8px;
+}
