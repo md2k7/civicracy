@@ -83,29 +83,41 @@ class CategoryController extends Controller
 	 */
 	public function actionContact($categoryId, $target)
 	 {
-	 	 // Formular fÃ¼r gewÃ¤hlte Benutzergruppe anzeigen!
-		  	if(!isset($_POST['Email']))
+	 	 // Formular für gewählte Benutzergruppe anzeigen!
+		  	if(!isset($_POST['createEmail_form']))
 		  	{
 		   		$email='';
-		   	if($target=='all')
-		   	{
-		    	$users=User::model()->findAll();
-		    	foreach($users as $row)
-		    	{
-		     		$email.=$row->email.',';
-		    	}
-		    	$this->render('createEmail',array('email' => $email));
-		   	}elseif($target=='board')
-		   	{
-		    	$users=User::model()->getVoteCountInCategoryTotal($categoryId);
-		    	foreach($users as $row)
-		    	{
-		     		$email.=$row['email'].',';
-		    	}
-		    	$this->render('createEmail',array('email' => $email));
-	   		}
-	  }
+		   		$model=new ContactEmail();
+			   	if($target=='all')
+			   	{
+			    	$users=User::model()->findAll();
+			    	foreach($users as $row)
+			    	{
+			     		$email.=$row->email.',';
+			    	}
+			    	$model->email_adds=$email;
+			    	$this->render('createEmail',array('model' => $model));
+			   	}elseif($target=='board')
+			   	{
+			    	$users=User::model()->getVoteCountInCategoryTotal($categoryId);
+			    	foreach($users as $row)
+			    	{
+			     		$email.=$row['email'].',';
+			    	}
+			    	$model->email_adds=$email;
+			    	$this->render('createEmail',array('model' => $model));
+		   		}
+		  } else 
+		  {
+		  		$model=new ContactEmail();
+		  		$model->attributes=$_POST['createEmail_form'];
+		  		if($model->sendMail())
+		  		{
+		  			$this->render('createEmail',array('model' => $model));
+		  		}
+		  }
 	 }
+
 
 	/**
 	 * Updates a particular model.
