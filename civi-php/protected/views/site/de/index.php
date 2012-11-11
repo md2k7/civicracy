@@ -38,7 +38,8 @@
 
 			<h2>Für wen?</h2>
 			<p>Für alle! Civicracy richtet sich aber in erster Linie an Organisationen (wie Schulen oder Vereine), die eine höhere Beteiligung der Menschen an der Entscheidungsfindung erreichen wollen.</p>
-
+<!--
 			<h2>Wie?</h2>
 			<p>Einfach ausprobieren und ein <a class="btn btn-primary" href="<?php echo $this->createUrl('/site/login'); /* TODO */ ?>">Civi erstellen</a>!</p>
+-->
 		</div>
