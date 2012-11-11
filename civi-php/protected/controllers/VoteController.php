@@ -42,7 +42,7 @@ class VoteController extends Controller
 	{
 		// temp: for now, redirect directly to the single active election (currently called category)
 		$categoryId = Category::model()->find('active = :active', array('active' => 1))->id;
-		$this->redirect($this->createUrl('/vote/view', array('id'=>$categoryId)));
+		$this->redirect($this->createUrl('/vote/view', array('id'=>$categoryId))); // doesn't return
 
 		// get vote counts for us
 		$ownWeight = User::model()->findByPk(Yii::app()->user->id)->getVoteCount();
@@ -83,6 +83,9 @@ class VoteController extends Controller
 	 */
 	public function actionUpdate($id, $remove=0)
 	{
+		if(!$this->mayVote($id))
+			throw new CHttpException(403, Yii::t('app', 'http.403'));
+
 		$model = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
 		if($model === null) {
 			$model = new Vote;
@@ -166,7 +169,7 @@ class VoteController extends Controller
 			'ranking' => User::model()->getVoteCountInCategoryTotal($id),
 			'votedTime' => $votedTime,
 			'nextVoteTime' => $nextVoteTime,
-			'deltaT' => ($vote !== null ? Vote::model()->calculateSustainTime(Yii::app()->user->id, $id) : 0),
+			'mayVote' => $this->mayVote($id),
 			/*'numberofcandidates' => 3,
 			'names' => array("hans", "georg", "franz"),
 			'weightAbs' => array(5, 10, 5),
@@ -221,5 +224,16 @@ class VoteController extends Controller
 			$slogans[$c->realname] = $c->slogan;
 		}
 		return array('names' => $nameList, 'slogans' => $slogans);
+	}
+
+	/**
+	 * @return whether the current user is allowed to vote 
+	 */
+	private function mayVote($categoryId)
+	{
+		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($categoryId);
+		$votedTime = ($vote !== null ? strtotime($vote->timestamp) : 0);
+		$nextVoteTime = ($vote !== null ? ($votedTime + Vote::model()->calculateSustainTime(Yii::app()->user->id, $categoryId)) : 0);
+		return (time() > $nextVoteTime);
 	}
 }

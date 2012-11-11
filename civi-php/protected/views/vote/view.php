@@ -72,13 +72,18 @@ $this->menu=array(
   				</div>
 			</div>
 
-			<p><?php if($voted) { ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id, 'remove' => 1)); ?>"><?php echo Yii::t('app', 'vote.remove.button'); ?></a> <?php } ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
-			<h4>Zeit bis zur erneuten Stimmabgabe (DRAFT - work in progress)</h4>
-			<p>delta T = <?php echo $deltaT; ?></p>
-			<p>Sie haben am <?php echo date(Yii::t('app', 'timestamp.format'), $votedTime); ?> abgestimmt. Sie können Ihre Stimme voraussichtlich ab <?php echo date(Yii::t('app', 'timestamp.format'), $nextVoteTime); ?> wieder ändern.</p>
-			<div class="progress">
-				<div id="elapsed" class="bar bar-success" style="width: 0%;"></div><div id="remaining" class="bar" style="width: 0%;"></div>
+			<div id="voteButtonPanel"<?php if(!$mayVote) { echo ' style="display: none;"'; } ?>>
+				<p><?php if($voted) { ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id, 'remove' => 1)); ?>"><?php echo Yii::t('app', 'vote.remove.button'); ?></a> <?php } ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
 			</div>
+			<?php if(!$mayVote) { ?>
+			<div id="countdownPanel">
+				<h4>Zeit bis zur erneuten Stimmabgabe</h4>
+				<p>Du hast am <?php echo date(Yii::t('app', 'timestamp.format'), $votedTime); ?> abgestimmt. Du kannst Deine Stimme voraussichtlich ab <?php echo date(Yii::t('app', 'timestamp.format'), $nextVoteTime); ?> wieder ändern.</p>
+				<div class="progress">
+					<div id="elapsed" class="bar bar-success" style="width: 0%;"></div><div id="remaining" class="bar" style="width: 0%;"></div>
+				</div>
+			</div>
+			<?php } ?>
 		</div>
 <script type="text/javascript">
 (function ($) {
@@ -99,10 +104,8 @@ $this->menu=array(
 			curDate = new Date();
 			diff = Math.floor((target - curDate) / 1000);
 			if(diff < 0) {
-				$('#remaining').html('');
-				$('#elapsed').html('00:00:00');
-				$('#elapsed').css('width', '100%');
-				$('#remaining').css('width', '0%');
+				$('#voteButtonPanel').show();
+				$('#countdownPanel').hide();
 			} else {
 				delta = '';
 

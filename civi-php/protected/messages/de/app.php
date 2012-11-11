@@ -32,6 +32,7 @@ return array (
   'forms.importCSVfile' => '<p>Das CSV File sollte mindestens zwei Spalten (Voller Name; E-Mail Adresse;) enthalten! Der Benutzername kann entweder als 3. Spalte angegeben werden oder wird aus dem vollen Namen ohne Leerzeichen erstellt!</p>',
   'forms.required' => '<p class="note">Mit <span class="required">*</span> gekennzeichnete Felder sind Pflichtfelder.</p>',
   'http.400' => 'Falsche Anfrage. Bitte Anfrage nicht wiederholen.',
+  'http.403' => 'Verbotene Anfrage. Bitte Anfrage nicht wiederholen.',
   'http.404' => 'Die angefragte Seite konnte nicht gefunden werden.',
   'login.button' => 'Login',
   'login.incorrect' => 'Falscher Benutzername oder Passwort.',
