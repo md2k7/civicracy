@@ -194,11 +194,12 @@ class Vote extends CActiveRecord
 	 */
 	public function getVoteParticipation($categoryId)
 	{
-		// For current Version all Users (including 'admin') are counted as potential Voters - has to be adapted for more Categories		
-		$allUsers=User::model()->findAll();
-		$votesInCat=Vote::model()->findAll('category_id = :category_id', array('category_id'=>$categoryId));
-		return round(((100*count($votesInCat))/(count($allUsers))));
+		// For current Version all Users are counted as potential Voters - has to be adapted for more Categories		
+		$allUsers=User::model()->count('username != :username', array('username' => 'admin')); // TODO: another adminity test...
+		$votesInCat=Vote::model()->count('category_id = :category_id', array('category_id'=>$categoryId));
+		return round(((100*$votesInCat)/($allUsers)));
 	}
+
 	/**
 	 * Log and remove votes of/for the specified user. Use only in a try/catch block in a transactional context!
 	 */
