@@ -36,6 +36,7 @@ return array (
   'http.404' => 'Die angefragte Seite konnte nicht gefunden werden.',
   'login.button' => 'Login',
   'login.incorrect' => 'Falscher Benutzername oder Passwort.',
+  'login.password.incorrect' => 'Falsches Passwort.',
   'login.rememberMe' => 'Angemeldet bleiben',
   'menu.categories' => 'Kategorien',
   'menu.categories.create' => 'Kategorie erstellen',

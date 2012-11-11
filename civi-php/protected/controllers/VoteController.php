@@ -95,6 +95,9 @@ class VoteController extends Controller
 		$categoryModel = Category::model()->findByPk($id);
 		$failedValidation = false;
 
+		if(isset($_POST['VoteConfirm']))
+			$_POST['Vote'] = $_POST['VoteConfirm'];
+
 		if(isset($_POST['Vote']) || $remove === '1') {
 			if($remove === '1') {
 				// remove comes via GET
@@ -109,16 +112,29 @@ class VoteController extends Controller
 
 			$model->voter_id = Yii::app()->user->id; // for security, we don't use a hidden field for this
 
+			$authOk = true;
 			if(isset($_POST['confirm'])) {
+				// vote confirmed, now check password
+				Yii::log('confirmed, auth now', 'info', 'VoteController');
+				$identity = new UserIdentity(Yii::app()->user->name, $_POST['VoteConfirm']['password']);
+				$authOk = $identity->authenticate();
+			}
+
+			if(isset($_POST['confirm']) && $authOk) {
 				// vote confirmed
 				if(!$this->saveVoteAndHistory($model))
 					$failedValidation = true;
 			} else if(!isset($_POST['cancel']) && !$failedValidation) {
 				// isset($_POST['cancel']) would mean: canceled voting from confirmation page
 
+				$confirmModel = new VoteConfirm;
+				$confirmModel->attributes = $model->attributes;
+				if(!$authOk)
+					$confirmModel->addError('password', Yii::t('app', 'login.password.incorrect'));
+
 				// not confirmed, not canceled: just sent vote, display confirmation page ("are you sure"?)
 				$this->render('confirm', array(
-					'model' => $model,
+					'model' => $confirmModel,
 					'votePath' => Vote::model()->previewVotePath($model),
 					'category' => Category::model()->findByPk($id),
 					'candidate' => User::model()->findByPk($model->candidate_id)->realname,

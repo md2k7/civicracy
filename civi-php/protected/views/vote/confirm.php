@@ -57,16 +57,23 @@ $this->menu=array(
 				<p>Die jetzt abgegebene Stimme wirst Du voraussichtlich ab <strong><?php echo CHtml::encode(date(Yii::t('app', 'timestamp.format'), $nextVoteTime)); ?> wieder ändern</strong> können. Bist Du sicher, dass Du richtig gestimmt hast?</p>
 				<?php } ?>
 			</div>
-
-			<div class="buttons">
+			<div class="form">
 				<?php $form=$this->beginWidget('CActiveForm', array(
 					'id'=>'vote-form',
 					'enableAjaxValidation'=>false,
 				)); ?>
-					<?php echo $form->hiddenField($model,'category_id'); ?>
-					<?php echo $form->hiddenField($model,'candidate_id',array('name'=>'candidate','value'=>$candidate)); ?>
-					<?php echo $form->hiddenField($model,'reason'); ?>
-					<?php echo CHtml::submitButton(Yii::t('app', 'cancel.button'), CMap::mergeArray(CiviGlobals::$buttonClass, array('name' => 'cancel'))); ?> <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'vote.button') : Yii::t('app', $revoke ? 'vote.remove.button' : 'vote.button'), CMap::mergeArray(CiviGlobals::$buttonClassWarning, array('name' => 'confirm'))); ?>
+				<div>
+					<?php echo $form->label($model,'password'); ?>
+					<p>Bitte gib zum Abstimmen Dein aktuelles Passwort ein.</p>
+					<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
+					<?php echo $form->error($model,'password'); ?>
+				</div>
+				<div class="buttons">
+						<?php echo $form->hiddenField($model,'category_id'); ?>
+						<?php echo $form->hiddenField($model,'candidate_id',array('name'=>'candidate','value'=>$candidate)); ?>
+						<?php echo $form->hiddenField($model,'reason'); ?>
+						<?php echo CHtml::submitButton(Yii::t('app', 'cancel.button'), CMap::mergeArray(CiviGlobals::$buttonClass, array('name' => 'cancel'))); ?> <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'vote.button') : Yii::t('app', $revoke ? 'vote.remove.button' : 'vote.button'), CMap::mergeArray(CiviGlobals::$buttonClassWarning, array('name' => 'confirm'))); ?>
+				</div>
 				<?php $this->endWidget(); ?>
 			</div>
 		</div>

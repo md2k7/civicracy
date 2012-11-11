@@ -33,6 +33,7 @@ return array (
   'http.404' => 'The requested page does not exist.',
   'login.button' => 'Login',
   'login.incorrect' => 'Incorrect username or password.',
+  'login.password.incorrect' => 'Incorrect password.',
   'login.rememberMe' => 'Remember me next time',
   'menu.categories' => 'Categories',
   'menu.categories.create' => 'Create Category',
