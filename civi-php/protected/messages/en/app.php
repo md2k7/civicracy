@@ -19,6 +19,7 @@
  * @version $Id: $
  */
 return array (
+  'cancel.button' => 'Cancel',
   'category.create.button' => 'Create',
   'category.save.button' => 'Save',
   'error' => 'Error',
@@ -42,6 +43,8 @@ return array (
   'menu.categories.view' => 'View Category',
   'menu.category' => 'Category {category}',
   'menu.categoryVote' => '{category} Vote',
+  'menu.categoryVoteFor' => '{voteOrRevoke}{category} vote for {candidate}?',
+  'menu.categoryVoteRevoke' => 'Revoke {category} vote?',
   'menu.create' => 'Create',
   'menu.login' => 'Login',
   'menu.logout' => 'Logout ({user})',
@@ -97,6 +100,7 @@ return array (
   'vote.ownWeight' => 'Responsibility',
   'vote.path' => 'Path of my vote',
   'vote.remaining' => 'remaining',
+  'vote.remove.button' => 'Take back vote',
   'vote.update.button' => 'Update vote',
   'vote.votedFor' => 'Voted for',
   'vote.yetToVote' => 'Yet to vote for',

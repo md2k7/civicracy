@@ -34,5 +34,5 @@ $this->breadcrumbs=array(
 			<h4><?php echo Yii::t('app', 'menu.categoryVote', array('{category}' => $category->name)); ?></h4>
 			<?php echo Yii::t('app', 'vote.explainVoting'); ?>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model, 'category'=>$category, 'candidates'=>$candidates)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model, 'category'=>$category, 'candidates'=>$candidates, 'id'=>$id)); ?>
 		</div>

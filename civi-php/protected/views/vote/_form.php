@@ -58,7 +58,7 @@ foreach($candidates['names'] as $can) {
 	<?php echo $form->hiddenField($model,'category_id'); ?>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'vote.button') : Yii::t('app', 'vote.update.button'), CiviGlobals::$buttonClass); ?>
+		<?php echo CHtml::button(Yii::t('app', 'cancel.button'), CMap::mergeArray(CiviGlobals::$buttonClass, array('onclick' => "location.href='" . $this->createUrl('view', array('id' => $id)) . "'"))); ?> <?php echo CHtml::submitButton(Yii::t('app', 'vote.button'), CiviGlobals::$buttonClass); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

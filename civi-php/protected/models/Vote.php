@@ -71,7 +71,7 @@ class Vote extends CActiveRecord
 		);
 	}
 
-	/*
+	/**
 	 * @param string $attribute the name of the attribute to be validated
 	 * @param array $params options specified in the validation rule
 	 */
@@ -81,16 +81,21 @@ class Vote extends CActiveRecord
 			$this->addError($attribute, Yii::t('app', 'models.vote.categoryIncorrect'));
 	}
 
-	/*
+	/**
 	 * Set the candidate_id from a realname of a user
+	 * @return boolean success
 	 */
 	public function setCandidate($candidateName)
 	{
 		$candidate = User::model()->find('realname=:realname', array(':realname' => $candidateName));
-		$this->candidate_id = ($candidate !== null) ? $candidate->id : -1;
+		$success = ($candidate !== null);
+		$this->candidate_id = $success ? $candidate->id : -1;
+		if(!$success)
+			$this->addError('candidate_id', Yii::t('app', 'models.vote.candidateIncorrect'));
+		return $success;
 	}
 
-	/*
+	/**
 	 * @param string $attribute the name of the attribute to be validated
 	 * @param array $params options specified in the validation rule
 	 */
@@ -124,7 +129,7 @@ class Vote extends CActiveRecord
 		$myself->candidate_id = $voterId;
 		$myself->reason = ($vote !== null) ? $vote->reason : '';
 		$myself->realname = Yii::app()->user->realname;
-		$myself->slogan = User::model()->findByPk(Yii::app()->user->id)->slogan;
+		$myself->slogan = User::model()->findByPk($voterId)->slogan;
 		$path[] = $myself;
 
 		while($run)
@@ -151,6 +156,35 @@ class Vote extends CActiveRecord
 
 		return $path;
 	}
+
+	/**
+	 * Get a vote path like in loadVotePath(), but before the vote has been cast: only shows the user and the candidate.
+	 */
+	public function previewVotePath($vote)
+	{
+		$path = array();
+		$voterId = Yii::app()->user->id;
+
+		$myself = new VotePath;
+		$myself->candidate_id = $voterId;
+		$myself->reason = ($vote !== null) ? $vote->reason : '';
+		$myself->realname = Yii::app()->user->realname;
+		$myself->slogan = User::model()->findByPk($voterId)->slogan;
+		$path[] = $myself;
+
+		if($vote->candidate_id != $voterId) {
+			$candidate = User::model()->findByPk($vote->candidate_id);
+			$entry = new VotePath;
+			$entry->candidate_id = $vote->candidate_id;
+			$entry->reason = '';
+			$entry->realname = $candidate->realname;
+			$entry->slogan = $candidate->slogan;
+			$path[] = $entry;
+		}
+
+		return $path;
+	}
+
 	/**
 	 * Count and return percentage of Vote participation by Users
 	 * 

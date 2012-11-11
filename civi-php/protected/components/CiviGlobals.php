@@ -5,6 +5,7 @@
  */
 class CiviGlobals {
 	public static $buttonClass = array('class' => 'btn btn-primary btn-civi'); // CSS class for buttons
+	public static $buttonClassWarning = array('class' => 'btn btn-primary btn-civi btn-warning'); // CSS class for buttons with warning
 	public static $infoboxClass = array('class' => 'alert alert-error'); // CSS class for form error infoboxes
 
 	// for now, store config parameters for voting here...
