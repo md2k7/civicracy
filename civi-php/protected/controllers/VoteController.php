@@ -87,6 +87,7 @@ class VoteController extends Controller
 			throw new CHttpException(403, Yii::t('app', 'http.403'));
 
 		$model = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
+
 		if($model === null) {
 			$model = new Vote;
 			$model->category_id = $id;
@@ -97,7 +98,9 @@ class VoteController extends Controller
 		if(isset($_POST['Vote']) || $remove === '1') {
 			if($remove === '1') {
 				// remove comes via GET
+				$model->setScenario('delete');
 				$model->candidate_id = Yii::app()->user->id; // vote removal = vote for self
+				$model->reason = '';
 			} else {
 				// update comes via POST
 				$model->attributes=$_POST['Vote'];
@@ -108,15 +111,8 @@ class VoteController extends Controller
 
 			if(isset($_POST['confirm'])) {
 				// vote confirmed
-
-				// vote removal = vote for self
-				if($model->candidate_id == Yii::app()->user->id) {
-					// remove: save with active=0
-					$this->saveVoteAndHistory($model, 0);
-				} else {
-					if(!$this->saveVoteAndHistory($model))
-						$failedValidation = true;
-				}
+				if(!$this->saveVoteAndHistory($model))
+					$failedValidation = true;
 			} else if(!isset($_POST['cancel']) && !$failedValidation) {
 				// isset($_POST['cancel']) would mean: canceled voting from confirmation page
 
@@ -152,7 +148,7 @@ class VoteController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
+		$vote = $this->loadVoteByCategoryId($id);
 		$reason = ($vote !== null) ? $vote->reason : '';
 
 		$votedTime = ($vote !== null ? strtotime($vote->timestamp) : 0);
@@ -183,6 +179,7 @@ class VoteController extends Controller
 	private function saveVoteAndHistory($model, $active=1)
 	{
 		$historyModel = new VoteHistory;
+		$historyModel->setScenario($model->scenario);
 		$historyModel->attributes = $model->attributes;
 
 		// copy safe attributes separately
@@ -239,11 +236,26 @@ class VoteController extends Controller
 	 */
 	private function nextVoteTime($categoryId, $estimate=false)
 	{
-		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($categoryId);
+		$vote = $this->loadVoteByCategoryId($categoryId);
+
 		$votedTime = ($vote !== null ? strtotime($vote->timestamp) : 0);
 		if($estimate)
 			$votedTime = time();
 		$nextVoteTime = (($vote !== null || $estimate) ? ($votedTime + Vote::model()->calculateSustainTime(Yii::app()->user->id, $categoryId)) : 0);
 		return $nextVoteTime;
+	}
+
+	/**
+	 * Load vote by categoryId, like the User model function, but return null if vote for self (deleted vote)
+	 */
+	private function loadVoteByCategoryId($categoryId)
+	{
+		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($categoryId);
+
+		// handle vote for self as deleted vote
+		if($vote->candidate_id == Yii::app()->user->id)
+			$vote = null;
+
+		return $vote;
 	}
 }
