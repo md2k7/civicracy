@@ -12,3 +12,6 @@ $this->breadcrumbs=array(
 <div class="form">
 <?php echo $form; ?>
 </div>
+<?php if(isset($newU))
+			$this->renderPartial('showImported', array('newU'=>$newU));	
+	?>

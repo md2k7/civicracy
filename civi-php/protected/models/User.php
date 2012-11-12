@@ -188,7 +188,16 @@ class User extends CActiveRecord
 				$minimumweight = $numberofusers * $boardsize;
 				foreach($weights as $id => $weight)
 				{
-					if($weight > $minimumweight)
+					$vote=Vote::model()->find('voter_id = :voter_id', array('voter_id'=>$id));
+					$boardflag=false;
+					if(isset($vote))
+					{
+						if($vote->candidate_id==$id)
+							$boardflag=true;
+					}
+					else
+						$boardflag=true;
+					if(($weight > $minimumweight) && (User::model()->findByPk($id)->username != "admin") && $boardflag)
 					{
 						$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
 						$ranking[$id]['email'] = User::model()->findByPk($id)->email;
@@ -207,13 +216,25 @@ class User extends CActiveRecord
 			{
 				foreach($weights as $id => $weight)	
 				{
-					$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
-					$ranking[$id]['email'] = User::model()->findByPk($id)->email;
-					$ranking[$id]['weight'] = $weight;
-					$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
-					$ranking[$id]['percentUsers'] = round($weight / $numberofusers, 3)*100;
-					$ranking[$id]['percentBoard'] = 0;
-					$weighttable[$id]=$weight;
+					$vote=Vote::model()->find('voter_id = :voter_id', array('voter_id'=>$id));
+					$boardflag=false;
+					if(isset($vote))
+					{
+						if($vote->candidate_id==$id)
+							$boardflag=true;
+					}
+					else
+						$boardflag=true;
+					if((User::model()->findByPk($id)->username != "admin") && $boardflag)
+					{
+						$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
+						$ranking[$id]['email'] = User::model()->findByPk($id)->email;
+						$ranking[$id]['weight'] = $weight;
+						$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
+						$ranking[$id]['percentUsers'] = round($weight / $numberofusers, 3)*100;
+						$ranking[$id]['percentBoard'] = 0;
+						$weighttable[$id]=$weight;
+					}
 				}
 				array_multisort($weighttable, SORT_DESC, $ranking);
 				array_splice($ranking, $boardsize);

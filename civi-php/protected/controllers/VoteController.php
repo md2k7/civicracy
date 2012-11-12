@@ -269,7 +269,7 @@ class VoteController extends Controller
 		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($categoryId);
 
 		// handle vote for self as deleted vote
-		if($vote->candidate_id == Yii::app()->user->id)
+		if($vote !== null && $vote->candidate_id == Yii::app()->user->id)
 			$vote = null;
 
 		return $vote;

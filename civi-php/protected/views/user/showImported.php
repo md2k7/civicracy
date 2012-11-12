@@ -22,7 +22,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 		<div class="main-content">
-<h1><?php echo Yii::t('app', 'menu.users.displayImported'); ?></h1>
+<h3><?php echo Yii::t('app', 'menu.users.displayImported'); ?></h3>
 
 <?php echo Yii::t('app', 'forms.displayImported'); ?>
 
@@ -56,4 +56,5 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		),
 	),
 )); ?>
+<a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('import', array('sendemail' => 'true')); ?>"><?php echo Yii::t('app', 'user.import.confirmEmailSend');; ?></a>
 		</div>
