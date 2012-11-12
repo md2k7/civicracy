@@ -120,7 +120,7 @@ class UserController extends Controller
 				{
 					$newU[$key] = new User;
 					$newU[$key]->attributes = $value;
-					$pass[$key] = $newU[$key]->createRandomPassword();
+					//$pass[$key] = $newU[$key]->createRandomPassword();
 					if(!$this->saveUserAndHistory($newU[$key]))
 						throw new CException(CVarDumper::dumpAsString($newU[$key]->getErrors()));
 				}
@@ -128,10 +128,10 @@ class UserController extends Controller
 				$transaction->commit();
 
 				// send password e-mail
-				foreach($new_users as $key => $value)
+				/*foreach($new_users as $key => $value)
 				{
 					$this->sendPasswordEmail($newU[$key], $pass[$key]);
-				}
+				}*/
 
 				$this->createLogEntry(Log::USER_CONTROLLER, 'Admin completed CSV user import');
 			}
@@ -148,14 +148,43 @@ class UserController extends Controller
 					$transaction->rollBack();
 					$model->addError('csvfile', $e->getMessage());
 				}
-				$this->render('import', array('form' => $form));
+				$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
+				if(isset($importedUsers))
+					$this->render('import', array('form' => $form, 'newU'=>$importedUsers));
+				else
+					$this->render('import', array('form' => $form));
 				return;
 			}
-
-			$this->render('showImported', array('newU'=>$newU));
+			$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
+			$this->render('import', array('form' => $form, 'newU'=>$importedUsers));
+			return;
+		} elseif (isset($_GET['sendemail']))
+		{
+			if($_GET['sendemail']==true)
+			{
+				$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
+				$pass = array();				
+				foreach($importedUsers as $row)
+				{
+					$pass[$row->id] = $row->createRandomPassword();
+					if(!$this->saveUserAndHistory($row))
+						throw new CException(CVarDumper::dumpAsString($row->getErrors()));
+					$this->sendPasswordEmail($row, $pass[$row->id]);
+				}
+				$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
+				$this->render('import', array('form' => $form, 'newU'=>$importedUsers));
+				unset($_GET);
+				return;
+			}
 		}
 		else
-			$this->render('import', array('form' => $form));
+			$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
+			if(isset($importedUsers))
+					$this->render('import', array('form' => $form, 'newU'=>$importedUsers));
+			else
+					$this->render('import', array('form' => $form));
+			return;
+			
 	}	
 	
 	/**
