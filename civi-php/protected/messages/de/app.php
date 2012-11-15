@@ -23,7 +23,7 @@ return array (
   'category.create.button' => 'Erstellen',
   'category.save.button' => 'Speichern',
   'category.all' => 'Alle',
-  'category.top' => 'Top',
+  'category.board' => 'Rat',
   'category.send' => 'benachrichtigen',
   'error' => 'Fehler',
   'email.adds' => 'Gesammelte E-Mail Adressen',
