@@ -44,6 +44,12 @@
 		<?php echo $form->textField($model,'tmax',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'tmax'); ?>
 	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'viewboard'); ?>
+		<?php echo $form->checkBox($model,'viewboard'); ?>
+		<?php echo $form->error($model,'viewboard'); ?>
+	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'category.create.button') : Yii::t('app', 'category.save.button'), CiviGlobals::$buttonClass); ?>
