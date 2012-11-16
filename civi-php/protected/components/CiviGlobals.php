@@ -5,7 +5,8 @@
  */
 class CiviGlobals {
 	public static $buttonClass = array('class' => 'btn btn-primary btn-civi'); // CSS class for buttons
-	public static $buttonClassWarning = array('class' => 'btn btn-primary btn-civi btn-warning'); // CSS class for buttons with warning
+	public static $buttonClassWarning = array('class' => 'btn btn-warning btn-civi'); // CSS class for buttons with warning
+	public static $buttonClassCancel = array('class' => 'btn btn-civi'); // CSS class for cancel buttons
 	public static $infoboxClass = array('class' => 'alert alert-error'); // CSS class for form error infoboxes
 
 	public static $defaultBoardSize = 10; // proposal if you create a new Category
