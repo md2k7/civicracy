@@ -113,7 +113,7 @@ return array (
   'vote.days' => 'Tage',
   'vote.explainVoting' => '<p>Entscheide, wem Du das Vertrauen schenkst! Die gewählte Person übernimmt Deine gesamte Verantwortung (zusätzlich zur Verantwortung, die ihr schon von anderen weitergegeben wird).</p>',
   'vote.greeting' => 'Hallo, {realname}!',
-  'vote.currentlyresult' => 'Momentane Verantwortungsverteilung',
+  'vote.currentlyresult' => 'Aktueller Schülerrat',
   'voteresult.name' => 'Name',
   'voteresult.rank' => 'Rang',
   'voteresult.weightAbs' => 'Abs.',
