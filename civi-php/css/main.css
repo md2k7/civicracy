@@ -196,7 +196,7 @@ div.alert-red p {
 	color: #FF5823;
 }
 
-div.space-top {
+.space-top {
 	margin-top: 15px;
 }
 
@@ -207,4 +207,12 @@ div.navbar a.brand {
 
 div.navbar img.logo {
 	float: left; padding-top: 4px; padding-right: 8px;
+}
+
+.buttonExpl {
+	margin-left: 10px;
+}
+
+.btn-update-choice {
+	width: 150px;
 }

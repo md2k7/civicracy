@@ -158,6 +158,13 @@ class VoteController extends Controller
 		));
 	}
 
+	public function actionUpdateOptions($id) {
+		$this->render('updateoptions', array(
+			'id' => $id,
+			'category' => Category::model()->findByPk($id),
+		));
+	}
+
 	/**
 	 * View the vote path for a given category.
 	 * @param integer category ID
