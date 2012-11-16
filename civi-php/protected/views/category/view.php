@@ -23,6 +23,10 @@ $this->menu=array(
 		'boardsize',
 		'rmax',
 		'tmax',
+		array(
+			'label'=>Yii::t('app', 'models.viewboard'),
+			'value'=> $model->viewboard(),
+		),
 	),
 )); ?>
 		</div>

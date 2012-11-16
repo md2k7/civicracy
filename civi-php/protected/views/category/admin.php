@@ -59,6 +59,10 @@ $('.search-form form').submit(function(){
 		'rmax',
 		'tmax',
 		array(
+			'name'=>'viewboard',
+			'value' => '$data->viewboard()',
+		),
+		array(
 			'class'=>'CButtonColumn',
 		),
 	),

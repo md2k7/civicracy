@@ -11,6 +11,7 @@
  * @property float $boardsize
  * @property float $rmax
  * @property float $tmax
+ * @property boolean $viewboard
  * @property integer $active
  *
  * The followings are the available model relations:
@@ -50,6 +51,7 @@ class Category extends CActiveRecord
 			array('name, institution', 'length', 'max'=>255),
 			array('boardsize, rmax, tmax', 'required'),
 			array('boardsize, rmax, tmax', 'numerical'),
+			array('viewboard', 'boolean'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('name, description, institution, boardsize, rmax, tmax', 'safe', 'on'=>'search'),
@@ -81,6 +83,7 @@ class Category extends CActiveRecord
 			'boardsize' => Yii::t('app', 'models.boardsize'),
 			'rmax' => Yii::t('app', 'models.rmax'),
 			'tmax' => Yii::t('app', 'models.tmax'),
+			'viewboard' => Yii::t('app', 'models.viewboard'),
 		);
 	}
 
@@ -109,5 +112,12 @@ class Category extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	public function viewboard()
+	{
+		if($this->viewboard==true)
+			return Yii::t('app', 'yes');
+		else 
+			return Yii::t('app', 'no');
 	}
 }

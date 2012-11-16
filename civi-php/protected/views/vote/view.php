@@ -17,23 +17,34 @@ $this->menu=array(
 				<div class="span5">
 					<h4><?php echo Yii::t('app', 'vote.path'); ?></h4>
 					<?php echo $this->renderPartial('_path', array('votePath'=>$votePath)); ?>
+					<br><br>
+					<div id="voteButtonPanel"<?php if(!$mayVote) { echo ' style="display: none;"'; } ?>>
+						<p><?php if($voted) { ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id, 'remove' => 1)); ?>"><?php echo Yii::t('app', 'vote.remove.button'); ?></a> <?php } ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
+					</div>
 				</div>
 				<div class="span4" align="center">
-					<h4><?php echo Yii::t('app', 'vote.currentlyresult'); ?></h4>
-
-					<br>
-						
-					<table class="table table-striped">
-		 				<tr>
-			 				<th><?php echo Yii::t('app', 'voteresult.name'); ?></th>
-			 				<th><?php echo Yii::t('app', 'voteresult.slogan'); ?></th>
-			 			</tr>
-		 				
-		 				<?php 
-							for($i=0; $i<count($ranking); $i++)
-								echo '<tr><td>'.CHtml::encode($ranking[$i]['realname']).'</td> <td>'.CHtml::encode($ranking[$i]['slogan']).'</td> </tr>';
-						?>
-					</table> 
+					<?php 
+					if($category->viewboard == true)
+					{?>
+					
+					
+						<h4><?php echo Yii::t('app', 'vote.currentlyresult'); ?></h4>
+	
+						<br>
+							
+						<table class="table table-striped">
+			 				<tr>
+				 				<th><?php echo Yii::t('app', 'voteresult.name'); ?></th>
+				 				<th><?php echo Yii::t('app', 'voteresult.slogan'); ?></th>
+				 			</tr>
+			 				
+			 				<?php 
+								for($i=0; $i<count($ranking); $i++)
+									echo '<tr><td>'.CHtml::encode($ranking[$i]['realname']).'</td> <td>'.CHtml::encode($ranking[$i]['slogan']).'</td> </tr>';
+							?>
+						</table> 
+					<?php 
+					}?>
 				</div>
 				<div class="span1" align="center">
 				
@@ -43,10 +54,6 @@ $this->menu=array(
 					<div class="responsibility-number"><?php echo CHtml::encode($weight); ?></div>
 					<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
   				</div>
-			</div>
-
-			<div id="voteButtonPanel"<?php if(!$mayVote) { echo ' style="display: none;"'; } ?>>
-				<p><?php if($voted) { ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id, 'remove' => 1)); ?>"><?php echo Yii::t('app', 'vote.remove.button'); ?></a> <?php } ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
 			</div>
 			<?php if(!$mayVote) { ?>
 			<div id="countdownPanel">
