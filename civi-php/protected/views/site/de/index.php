@@ -27,12 +27,12 @@
 			<p>Ein Civi ist eine <strong>elektronische Wahl</strong> nach dem <em>Civicracy</em>-Prinzip auf dieser Website.</p>
 			<h2>Civicracy in Kürze</h2>
 			<ul>
-			<li><strong>Jeder ist wählbar.</strong><br/>Man wählt einfach jemanden, den man kennt und dem man vertraut, die richtigen Entscheidungen zu treffen.</li>
+			<li><strong>Jeder ist wählbar.</strong><br/>Man wählt einfach eine bekannte Person, die man kennt und der man vertraut, die richtigen Entscheidungen zu treffen.</li>
 			<li><strong>Mehrere Sieger.</strong><br/>Es gibt nicht nur einen Wahlsieger – die besten Köpfe bilden ein Gremium, das gemeinsam entscheidet.</li>
 			<li><strong>Wahl ist immer.</strong><br/>Stell' dir vor, es ist immer Wahl! Entscheidungsträger können jederzeit zur Verantwortung gezogen werden. Entscheidungen werden immer von denen getroffen, die das meiste Vertrauen haben.</li>
 			<li><strong>Vertrauen wird weitergegeben.</strong><br/>Jede Stimme zählt: Meine Verantwortung ist nicht verloren, selbst wenn ich nicht als Entscheidungsträger in ein Gremium berufen werde. Ich entscheide, wem ich meine gesamte Verantwortung weitergebe.</li>
-			<li><strong>Expertise ist wichtig.</strong><br/>Wer mehr von der Sache versteht, dem vertraut man auch mehr, die richtigen Entscheidungen zu treffen.</li>
-			<li><strong>Keine Wahlpflicht.</strong><br/>Man muss nicht immer wählen – es reicht, wenn man ein einziges Mal sein Vertrauen jemandem gibt, der am politischen Geschehen interessiert ist, um seine Stimme dauerhaft einzubringen.</li>
+			<li><strong>Expertise ist wichtig.</strong><br/>Wer mehr von der Sache versteht, der vertraut man auch mehr, die richtigen Entscheidungen zu treffen.</li>
+			<li><strong>Keine Wahlpflicht.</strong><br/>Es muss nicht immer gewählt werden – es reicht, wenn das Vertrauen ein einziges Mal jemanden gegeben wird, die am politischen Geschehen interessiert ist, um die eigene Stimme dauerhaft einzubringen.</li>
 			<li><strong>Expertenmeinungen zählen.</strong><br/>Selbst wenn sich Experten mit hohem Vertrauen nicht an der politischen Diskussion beteiligen wollen, können sie ihr gesammeltes Vertrauen an die richtigen Personen weitergeben.</li>
 			</ul>
 
