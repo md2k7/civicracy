@@ -53,7 +53,7 @@ class SiteController extends Controller
 	{
 		$model=new LoginForm;
 		$afterLoginRedirect = $this->createUrl('/vote/index'); // after login, redirect to vote page
-		$afterLoginRedirectAdmin = $this->createUrl('/user/admin');
+		$afterLoginRedirectAdmin = $this->createUrl('/category/admin');
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')

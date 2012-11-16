@@ -13,7 +13,9 @@
  * @property float $boardsize
  * @property float $rmax
  * @property float $tmax
+ * @property boolean $viewboard
  * @property integer $active
+ * 
  *
  * The followings are the available model relations:
  * @property User[] $tblUsers
