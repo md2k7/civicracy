@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'tbl_vote':
  * @property integer $category_id
  * @property integer $voter_id
- * @property integer $candidate_id
+ * @property integer $candidate_id  may be null to indicate abstainment, or equal to $voter_id to indicate candidate for board
  * @property string $reason
  * @property timestamp $timestamp
  */
@@ -38,7 +38,8 @@ class Vote extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('category_id, candidate_id', 'required'),
+			array('category_id', 'required'),
+			array('candidate_id', 'required', 'on' => 'delegate'),
 			array('reason', 'required', 'on' => 'insert, update'),
 			array('category_id, candidate_id', 'numerical', 'integerOnly'=>true),
 			array('category_id', 'isValidCategory'),
@@ -86,12 +87,12 @@ class Vote extends CActiveRecord
 	 * Set the candidate_id from a realname of a user
 	 * @return boolean success
 	 */
-	public function setCandidate($candidateName)
+	public function setCandidate($candidateName, $requireCandidate=true)
 	{
 		$candidate = User::model()->find('realname=:realname', array(':realname' => $candidateName));
 		$success = ($candidate !== null);
-		$this->candidate_id = $success ? $candidate->id : -1;
-		if(!$success)
+		$this->candidate_id = $success ? $candidate->id : null;
+		if(!$success && $requireCandidate)
 			$this->addError('candidate_id', Yii::t('app', 'models.vote.candidateIncorrect'));
 		return $success;
 	}
@@ -102,7 +103,9 @@ class Vote extends CActiveRecord
 	 */
 	public function isValidCandidate($attribute, $params)
 	{
-		$chainLink = ' -&gt; ';
+		// null is a valid candidate (user abstains from voting)
+		if($this->candidate_id === null)
+			return;
 
 		$candidate = User::model()->findByPk($this->candidate_id);
 		if($candidate === null)
@@ -137,7 +140,7 @@ class Vote extends CActiveRecord
 		{
 			// we could use a prepared statement here to improve performance
 			$vote = Vote::model()->with('candidate')->find('voter_id=:voter_id AND category_id=:category_id', array(':voter_id' => $voterId, ':category_id' => $categoryId));
-			if($vote !== null && $voterId != $vote->candidate_id && !in_array($vote->candidate_id, $voters))
+			if($vote !== null && $voterId != $vote->candidate_id && $vote->candidate_id !== null && !in_array($vote->candidate_id, $voters))
 			{
 				$voterId = $vote->candidate_id;
 				$entry = new VotePath;
@@ -173,7 +176,7 @@ class Vote extends CActiveRecord
 		$myself->slogan = User::model()->findByPk($voterId)->slogan;
 		$path[] = $myself;
 
-		if($vote->candidate_id != $voterId) {
+		if($vote->candidate_id != $voterId && $vote->candidate_id !== null) {
 			$candidate = User::model()->findByPk($vote->candidate_id);
 			$entry = new VotePath;
 			$entry->candidate_id = $vote->candidate_id;

@@ -57,6 +57,7 @@ class Controller extends CController
 		if(!$model->save()) {
 			if($myTransaction)
 				$transaction->rollBack();
+			Yii::log('model validation failed: ' . CVarDumper::dumpAsString($model), 'warning', 'Controller');
 			return false;
 		}
 

@@ -8,13 +8,11 @@ $this->breadcrumbs=array(
 ?>
 		<?php echo $this->renderPartial('heroUnit', array('category' => $category)); ?>
 		<div class="main-content">
-			<div class="responsibility">
-				<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
-				<div class="responsibility-number"><?php echo CHtml::encode($weight); ?></div>
-				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
-			</div>
-			<h4><?php echo Yii::t('app', 'menu.categoryVote', array('{category}' => $category->name)); ?></h4>
-			<?php echo Yii::t('app', 'vote.explainVoting'); ?>
-
-<?php echo $this->renderPartial('_form', array('model'=>$model, 'category'=>$category, 'candidates'=>$candidates, 'id'=>$id)); ?>
+			<h4><?php echo Yii::t('app', 'menu.categoryVoteUpdate', array('{category}' => $category->name)); ?></h4>
+			<ul class="update-choice">
+			<li><a class="<?php echo CiviGlobals::$buttonClass['class']; ?> btn-success btn-large btn-update-choice" href="<?php echo $this->createUrl('delegate', array('id' => $id)); ?>"><?php echo Yii::t('app', 'vote.delegate.button'); ?></a> <span class="buttonExpl"><strong>Ich kenne eine Person, die besser als ich entscheiden kann.</strong> Ich möchte derzeit nicht in den Rat.</span></li>
+			<li><a class="<?php echo CiviGlobals::$buttonClassWarning['class']; ?> btn-large btn-update-choice" href="<?php echo $this->createUrl('reference', array('id' => $id)); ?>"><?php echo Yii::t('app', 'vote.reference.button'); ?></a> <span class="buttonExpl"><strong>Ich möchte Entscheidungen treffen.</strong> Ich kenne keine Person, der ich die Entscheidung überlassen würde.</span></li>
+			<li><a class="<?php echo CiviGlobals::$buttonClassDanger['class']; ?> btn-large btn-update-choice" href="<?php echo $this->createUrl('revoke', array('id' => $id)); ?>"><?php echo Yii::t('app', 'vote.revoke.button'); ?></a> <span class="buttonExpl"><strong>Ich kenne keine Person, der ich die Entscheidung überlassen würde.</strong> Ich enthalte mich meiner Stimme und möchte derzeit nicht in den Rat.</span></li>
+			</ul>
+			<p class="space-top"><a class="btn btn-civi" href="<?php echo $this->createUrl('view', array('id' => $id)); ?>"><?php echo Yii::t('app', 'cancel.button'); ?></a> <span class="buttonExpl">Abbrechen und derzeitige Stimme beibehalten.</span></p>
 		</div>

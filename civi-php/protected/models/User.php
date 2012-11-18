@@ -214,7 +214,7 @@ class User extends CActiveRecord
 			// Getting Boardmembers for a number-defined boardsize
 			else 
 			{
-				foreach($weights as $id => $weight)	
+				foreach($weights as $id => $weight)
 				{
 					$vote=Vote::model()->find('voter_id = :voter_id', array('voter_id'=>$id));
 					$boardflag=false;

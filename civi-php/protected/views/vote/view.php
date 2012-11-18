@@ -19,7 +19,7 @@ $this->menu=array(
 					<?php echo $this->renderPartial('_path', array('votePath'=>$votePath)); ?>
 					<br><br>
 					<div id="voteButtonPanel"<?php if(!$mayVote) { echo ' style="display: none;"'; } ?>>
-						<p><?php if($voted) { ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id, 'remove' => 1)); ?>"><?php echo Yii::t('app', 'vote.remove.button'); ?></a> <?php } ?><a class="btn btn-primary btn-civi" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
+						<p><a class="<?php echo CiviGlobals::$buttonClassVote['class']; ?>" href="<?php echo $this->createUrl('update', array('id' => $id)); ?>"><?php echo Yii::t('app', $voted ? 'vote.update.button' : 'vote.button'); ?></a></p>
 					</div>
 				</div>
 				<div class="span4" align="center">
@@ -55,6 +55,7 @@ $this->menu=array(
 					<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
   				</div>
 			</div>
+
 			<?php if(!$mayVote) { ?>
 			<div id="countdownPanel">
 				<h4>Zeit bis zur erneuten Stimmabgabe</h4>

@@ -18,31 +18,13 @@ $this->menu=array(
 				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
 			</div>
 
-			<h4><?php echo Yii::t('app', $revoke ? 'menu.categoryVoteRevoke' : 'menu.categoryVoteFor', array('{category}' => $category->name, '{candidate}' => $candidate)); ?></h4>
+			<?php echo $this->renderPartial('confirm' . ucfirst($type), array('category' => $category, 'candidate' => $candidate, 'votePath' => $votePath, 'model' => $model, 'weight' => $weight, 'nextVoteTime' => $nextVoteTime)); ?>
 
-			<?php if($revoke) { ?>
-			<p>Du bist dabei, deine <?php echo CHtml::encode($category->name); ?>-Stimme zurückzunehmen.</p>
-			<?php } else { ?>
-			<p>Du bist dabei, deine <?php echo CHtml::encode($category->name); ?>-Stimme für <strong><?php echo CHtml::encode($candidate); ?></strong> abzugeben. Damit bekommt diese Person zusätzlich Deine gesamte Verantwortung (aktuell <strong><?php echo CHtml::encode($weight); ?></strong>).</p>
-			<p><em>Deine Begründung:</em> <strong><?php echo CHtml::encode($model->reason); ?></strong></p>
-			<p>Personen, die Dich wählen, können Deine Wahl und Begründung in ihrem Stimmenverlauf sehen.</p>
-			<?php } ?>
-
-			<div class="container">
-				<?php echo $this->renderPartial('_path', array('votePath'=>$votePath, 'noSloganChange' => true)); ?>
-			</div>
-
-			<div class="alert alert-red space-top">
-				<?php if($revoke) { ?>
-				<p>Bist Du sicher, dass Du die beste Person bist?</p>
-				<?php } else { ?>
-				<p>Die jetzt abgegebene Stimme wirst Du voraussichtlich ab <strong><?php echo CHtml::encode(date(Yii::t('app', 'timestamp.format'), $nextVoteTime)); ?> wieder ändern</strong> können. Bist Du sicher, dass Du richtig gestimmt hast?</p>
-				<?php } ?>
-			</div>
 			<div class="form">
 				<?php $form=$this->beginWidget('CActiveForm', array(
 					'id'=>'vote-form',
 					'enableAjaxValidation'=>false,
+					'action'=>$this->createUrl('confirm', array('id' => $id)),
 				)); ?>
 				<div>
 					<?php echo $form->label($model,'password'); ?>
@@ -54,7 +36,7 @@ $this->menu=array(
 						<?php echo $form->hiddenField($model,'category_id'); ?>
 						<?php echo $form->hiddenField($model,'candidate_id',array('name'=>'candidate','value'=>$candidate)); ?>
 						<?php echo $form->hiddenField($model,'reason'); ?>
-						<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'vote.button') : Yii::t('app', $revoke ? 'vote.remove.button' : 'vote.button'), CMap::mergeArray(CiviGlobals::$buttonClassWarning, array('name' => 'confirm'))); ?> <?php echo CHtml::submitButton(Yii::t('app', 'cancel.button'), CMap::mergeArray(CiviGlobals::$buttonClassCancel, array('name' => 'cancel'))); ?> 
+						<?php echo CHtml::submitButton(Yii::t('app', "vote.$type.button"), CMap::mergeArray(CiviGlobals::$buttonClassWarning, array('name' => 'confirm', 'style' => 'margin-bottom: 1px;'))); ?> <a class="btn btn-civi" href="<?php echo $this->createUrl('view', array('id' => $id)); ?>"><?php echo Yii::t('app', 'cancel.button'); ?></a>
 				</div>
 				<?php $this->endWidget(); ?>
 			</div>

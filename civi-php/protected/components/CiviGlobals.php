@@ -5,7 +5,9 @@
  */
 class CiviGlobals {
 	public static $buttonClass = array('class' => 'btn btn-primary btn-civi'); // CSS class for buttons
+	public static $buttonClassVote = array('class' => 'btn btn-large btn-success btn-civi'); // CSS class for voting button
 	public static $buttonClassWarning = array('class' => 'btn btn-warning btn-civi'); // CSS class for buttons with warning
+	public static $buttonClassDanger = array('class' => 'btn btn-danger btn-civi'); // CSS class for buttons with danger
 	public static $buttonClassCancel = array('class' => 'btn btn-civi'); // CSS class for cancel buttons
 	public static $infoboxClass = array('class' => 'alert alert-error'); // CSS class for form error infoboxes
 

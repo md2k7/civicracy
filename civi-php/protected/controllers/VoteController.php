@@ -81,75 +81,21 @@ class VoteController extends Controller
 	 * @param integer $id category ID
 	 * @param integer $remove whether remove action is active
 	 */
-	public function actionUpdate($id, $remove=0)
+	public function actionDelegate($id, $remove=0)
 	{
 		if(!$this->mayVote($id))
 			throw new CHttpException(403, Yii::t('app', 'http.403'));
 
-		$model = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
+		// fetch model and update it from POST data
+		$model = $this->loadVote($id);
 
-		if($model === null) {
-			$model = new Vote;
-			$model->category_id = $id;
-		}
-		$categoryModel = Category::model()->findByPk($id);
-		$failedValidation = false;
-
-		if(isset($_POST['VoteConfirm']))
-			$_POST['Vote'] = $_POST['VoteConfirm'];
-
-		if(isset($_POST['Vote']) || $remove === '1') {
-			if($remove === '1') {
-				// remove comes via GET
-				$model->setScenario('delete');
-				$model->candidate_id = Yii::app()->user->id; // vote removal = vote for self
-				$model->reason = '';
-			} else {
-				// update comes via POST
-				$model->attributes=$_POST['Vote'];
-				$failedValidation = !$model->setCandidate($_POST['candidate']);
-			}
-
-			$model->voter_id = Yii::app()->user->id; // for security, we don't use a hidden field for this
-
-			$authOk = true;
-			if(isset($_POST['confirm'])) {
-				// vote confirmed, now check password
-				Yii::log('confirmed, auth now', 'info', 'VoteController');
-				$identity = new UserIdentity(Yii::app()->user->name, $_POST['VoteConfirm']['password']);
-				$authOk = $identity->authenticate();
-			}
-
-			if(isset($_POST['confirm']) && $authOk) {
-				// vote confirmed
-				if(!$this->saveVoteAndHistory($model))
-					$failedValidation = true;
-			} else if(!isset($_POST['cancel']) && !$failedValidation) {
-				// isset($_POST['cancel']) would mean: canceled voting from confirmation page
-
-				$confirmModel = new VoteConfirm;
-				$confirmModel->attributes = $model->attributes;
-				if(!$authOk)
-					$confirmModel->addError('password', Yii::t('app', 'login.password.incorrect'));
-
-				// not confirmed, not canceled: just sent vote, display confirmation page ("are you sure"?)
-				$this->render('confirm', array(
-					'model' => $confirmModel,
-					'votePath' => Vote::model()->previewVotePath($model),
-					'category' => Category::model()->findByPk($id),
-					'candidate' => User::model()->findByPk($model->candidate_id)->realname,
-					'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
-					'revoke' => ($model->candidate_id == Yii::app()->user->id),
-					'nextVoteTime' => $this->nextVoteTime($id, true), // vote time estimate
-					'id' => $id,
-				));
-				return;
-			}
-			if(!$failedValidation)
-				$this->redirect(array('view','id'=>$id)); // doesn't return
+		// form data comes via POST
+		if(isset($_POST['Vote']) && $model->validate()) {
+			$this->actionConfirm($id); // render confirm view for vote
+			return;
 		}
 
-		$this->render('update', array(
+		$this->render('delegate', array(
 			'id' => $id,
 			'model' => $model,
 			'category' => Category::model()->findByPk($id),
@@ -158,8 +104,70 @@ class VoteController extends Controller
 		));
 	}
 
-	public function actionUpdateOptions($id) {
-		$this->render('updateoptions', array(
+	/**
+	 * Confirm vote revocation.
+	 * @param integer $id category ID
+	 */
+	public function actionRevoke($id)
+	{
+		$this->actionConfirm($id, 'revoke');
+	}
+
+	/**
+	 * Confirm vote self-reference.
+	 * @param integer $id category ID
+	 */
+	public function actionReference($id)
+	{
+		$this->actionConfirm($id, 'reference');
+	}
+
+	/**
+	 * Confirm vote delegation.
+	 *
+	 * @param integer $id category ID
+	 * @param $type optional type for loadVote(), delegate|revoke|reference
+	 */
+	public function actionConfirm($id, $type='delegate')
+	{
+		if(!$this->mayVote($id))
+			throw new CHttpException(403, Yii::t('app', 'http.403'));
+
+		// fetch model and update it from POST data
+		$model = $this->loadVote($id, $type);
+
+		$authOk = true;
+		if(isset($_POST['confirm'])) {
+			// vote confirmed, now check password
+			Yii::log('confirmed, auth now', 'info', 'VoteController');
+			$identity = new UserIdentity(Yii::app()->user->name, $_POST['VoteConfirm']['password']);
+			if($identity->authenticate()) {
+				// vote confirmed
+				if($this->saveVoteAndHistory($model))
+					$this->redirect(array('view','id'=>$id)); // doesn't return
+			}
+		}
+
+		$confirmModel = new VoteConfirm;
+		$confirmModel->attributes = $model->attributes;
+		if(!$authOk)
+			$confirmModel->addError('password', Yii::t('app', 'login.password.incorrect'));
+
+		// not confirmed, not canceled: just sent vote, display confirmation page ("are you sure"?)
+		$this->render('confirm', array(
+			'model' => $confirmModel,
+			'votePath' => Vote::model()->previewVotePath($model),
+			'category' => Category::model()->findByPk($id),
+			'candidate' => ($model->candidate_id !== null ? User::model()->findByPk($model->candidate_id)->realname : ''),
+			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
+			'type' => $type,
+			'nextVoteTime' => $this->nextVoteTime($id, true), // vote time estimate
+			'id' => $id,
+		));
+	}
+
+	public function actionUpdate($id) {
+		$this->render('update', array(
 			'id' => $id,
 			'category' => Category::model()->findByPk($id),
 		));
@@ -232,6 +240,43 @@ class VoteController extends Controller
 	}
 
 	/**
+	 * Load a Vote model: Either load it for the given category, or create one from scratch if there is none yet.
+	 * Update its attributes from POST data.
+	 *
+	 * @param $id category ID
+	 * @param $type optional, delegate|revoke|reference
+	 */
+	private function loadVote($id, $type='delegate')
+	{
+		$model = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($id);
+
+		if($model === null) {
+			$model = new Vote;
+			$model->category_id = $id;
+		}
+
+		// we might get POST data of Vote when called from actionDelegate()
+		if(isset($_POST['VoteConfirm']))
+			$_POST['Vote'] = $_POST['VoteConfirm'];
+
+		// update comes via POST
+		if(isset($_POST['Vote'])) {
+			$model->attributes=$_POST['Vote'];
+			$model->setCandidate($_POST['candidate']);
+		} else if($type == 'revoke') {
+			// user abstains from voting
+			$model->candidate_id = null;
+		} else if($type == 'reference') {
+			// user wants to be a candidate for the board
+			$model->candidate_id = Yii::app()->user->id;
+		}
+
+		$model->voter_id = Yii::app()->user->id; // for security, we don't use a hidden field for this
+
+		return $model;
+	}
+
+	/**
 	 * @return array of candidate names
 	 */
 	private function loadCandidates()
@@ -275,8 +320,8 @@ class VoteController extends Controller
 	{
 		$vote = User::model()->findByPk(Yii::app()->user->id)->loadVoteByCategoryId($categoryId);
 
-		// handle vote for self as deleted vote
-		if($vote !== null && $vote->candidate_id == Yii::app()->user->id)
+		// handle abstained vote (candidate null) as deleted vote
+		if($vote !== null && $vote->candidate_id == null)
 			$vote = null;
 
 		return $vote;
