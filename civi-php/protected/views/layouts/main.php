@@ -52,7 +52,7 @@
 		<?php echo $content; ?>
 		<footer>
 			<hr/>
-			<p>&copy; 2011-2012 Arbeitskreis "Demokratiesimulation" der TU Wien.</p>
+			<p>&copy; 2011-2012 Arbeitskreis "Demokratiesimulation" der TU Wien. &nbsp; | &nbsp; Kontakt: <a href="mailto:support@civicracy.at">support@civicracy.at</a></p>
 			<p><?php echo $this->renderPartial('//site/_version'); ?></p>
 		</footer>
 	</div>
