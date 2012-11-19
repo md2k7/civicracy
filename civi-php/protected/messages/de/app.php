@@ -102,6 +102,8 @@ return array (
   'models.vote.categoryIncorrect' => 'Falsche Kategorie.',
   'models.vote.reason' => 'Begründung',
   'models.voteCount' => 'Anzahl Stimmen',
+  'passwordReset.subject' => 'Passwort für Civicracy',
+  'registration.subject' => 'Benutzer für Civicracy angelegt',
   'search.button' => 'Suchen',
   'sidebar.operations' => 'Aktionen',
   'site.motto' => 'Demokratisch Entscheidungsträger finden',
