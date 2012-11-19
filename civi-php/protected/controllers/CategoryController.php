@@ -87,7 +87,7 @@ class CategoryController extends Controller
 	 */
 	public function actionContact($categoryId, $target)
 	 {
-	 	 // Formular f�r gew�hlte Benutzergruppe anzeigen!
+	 	 // Formular für gewählte Benutzergruppe anzeigen!
 		  	if(!isset($_POST['ContactEmail']))
 		  	{
 		   		$email='';

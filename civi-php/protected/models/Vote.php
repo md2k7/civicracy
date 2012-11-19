@@ -201,7 +201,7 @@ class Vote extends CActiveRecord
 		// For current Version all Users are counted as potential Voters - has to be adapted for more Categories		
 		$allUsers=User::model()->count('username != :username', array('username' => 'admin')); // TODO: another adminity test...
 		$votesInCat=Vote::model()->count('category_id = :category_id', array('category_id'=>$categoryId));
-		return round(((100*$votesInCat)/($allUsers)));
+		return $allUsers > 0 ? round(((100*$votesInCat)/($allUsers))) : 0;
 	}
 
 	/**

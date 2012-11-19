@@ -169,6 +169,7 @@ class User extends CActiveRecord
 		$userObjects = User::model()->findAll('username != :username', array('username' => 'admin')); // TODO: adminity check
 		$category = Category::model()->findByPk($categoryID);
 		$boardsize = $category->boardsize;
+		$users = array();
 		foreach($userObjects as $u)
 			$users[] = $u->id;
 		$votes = Vote::model()->findAllByAttributes(array('category_id' => $category->id));
