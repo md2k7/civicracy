@@ -12,7 +12,7 @@
 
 ?>
 			<h4><?php echo Yii::t('app', 'menu.categoryVoteReference', array('{category}' => $category->name, '{candidate}' => $candidate)); ?></h4>
-			<p>Du bist dabei, deine <?php echo CHtml::encode($category->name); ?>-Stimme Dir selbst zu geben. Falls Du zu wenig Stimmen erhältst, um in den Rat zu kommen, sind diese Stimmen verloren!</p>
+			<p>Du bist dabei, deine <?php echo CHtml::encode($category->name); ?>-Stimme Dir selbst zu geben. Bitte denke daran, nach dieser Bestätigung in deinem Benutzerprofil (Menüpunkt "Einstellungen") unter "Slogan" zu begründen, warum Du für den Rat geeignet bist!</p>
 
 			<div class="container">
 				<?php echo $this->renderPartial('_path', array('votePath'=>$votePath, 'noSloganChange' => true)); ?>
