@@ -147,6 +147,8 @@ class VoteController extends Controller
 				// vote confirmed
 				if($this->saveVoteAndHistory($model))
 					$this->redirect(array('view','id'=>$id)); // doesn't return
+			} else {
+				$authOk = false;
 			}
 		}
 
@@ -284,6 +286,8 @@ class VoteController extends Controller
 			$model = new Vote;
 			$model->category_id = $id;
 		}
+		if($type == 'delegate')
+			$model->setScenario('delegate');
 
 		// we might get POST data of Vote when called from actionDelegate()
 		if(isset($_POST['VoteConfirm']))
@@ -296,9 +300,11 @@ class VoteController extends Controller
 		} else if($type == 'revoke') {
 			// user abstains from voting
 			$model->candidate_id = null;
+			$model->reason = '';
 		} else if($type == 'reference') {
 			// user wants to be a candidate for the board
 			$model->candidate_id = Yii::app()->user->id;
+			$model->reason = '';
 		}
 
 		$model->voter_id = Yii::app()->user->id; // for security, we don't use a hidden field for this

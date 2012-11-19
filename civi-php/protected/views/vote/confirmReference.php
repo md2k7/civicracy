@@ -6,6 +6,7 @@
  * @param Category $category the current category we are viewing
  * @param string $candidate real name of the candidate to confirm vote delegation for (TODO: use model)
  * @param Vote $model the current Vote we are confirming (not yet used)
+ * @param int $nextVoteTime unix timestamp of the prediction of the next time user can change the vote
  * @param array $votePath array of vote elements, each with realname, slogan, candidate_id, reason
  */
 
@@ -18,5 +19,5 @@
 			</div>
 
 			<div class="alert alert-red space-top">
-				<p>Bist Du sicher, dass Du die beste Person bist?</p>
+				<p>Du kandidierst für den Rat. Das wirst Du voraussichtlich ab <strong><?php echo CHtml::encode(date(Yii::t('app', 'timestamp.format'), $nextVoteTime)); ?> wieder ändern</strong> können. Bist Du sicher, dass Du die beste Person bist?</p>
 			</div>

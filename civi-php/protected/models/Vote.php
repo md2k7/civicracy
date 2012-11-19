@@ -40,11 +40,12 @@ class Vote extends CActiveRecord
 		return array(
 			array('category_id', 'required'),
 			array('candidate_id', 'required', 'on' => 'delegate'),
-			array('reason', 'required', 'on' => 'insert, update'),
+			array('reason', 'safe'),
+			array('reason', 'required', 'on' => 'delegate'),
 			array('category_id, candidate_id', 'numerical', 'integerOnly'=>true),
 			array('category_id', 'isValidCategory'),
 			array('candidate_id', 'isValidCandidate'),
-			array('timestamp', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false, 'on' => 'insert, update'),
+			array('timestamp', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false, 'on' => 'insert, update, delegate'),
 		);
 	}
 

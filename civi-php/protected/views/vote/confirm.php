@@ -24,7 +24,7 @@ $this->menu=array(
 				<?php $form=$this->beginWidget('CActiveForm', array(
 					'id'=>'vote-form',
 					'enableAjaxValidation'=>false,
-					'action'=>$this->createUrl('confirm', array('id' => $id)),
+					'action'=>$this->createUrl('confirm', array('id' => $id, 'type' => $type)),
 				)); ?>
 				<div>
 					<?php echo $form->label($model,'password'); ?>
