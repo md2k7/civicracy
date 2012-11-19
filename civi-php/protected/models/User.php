@@ -227,6 +227,7 @@ class User extends CActiveRecord
 						$boardflag=true;
 					if((User::model()->findByPk($id)->username != "admin") && $boardflag)
 					{
+						$ranking[$id]['id'] = $id;
 						$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
 						$ranking[$id]['email'] = User::model()->findByPk($id)->email;
 						$ranking[$id]['weight'] = $weight;

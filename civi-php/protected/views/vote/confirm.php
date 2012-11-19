@@ -18,7 +18,7 @@ $this->menu=array(
 				<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
 			</div>
 
-			<?php echo $this->renderPartial('confirm' . ucfirst($type), array('category' => $category, 'candidate' => $candidate, 'votePath' => $votePath, 'model' => $model, 'weight' => $weight, 'nextVoteTime' => $nextVoteTime)); ?>
+			<?php echo $this->renderPartial('confirm' . ucfirst($type), array('category' => $category, 'candidate' => $candidate, 'votePath' => $votePath, 'model' => $model, 'weight' => $weight, 'nextVoteTime' => $nextVoteTime, 'leaveBoard' => $leaveBoard)); ?>
 
 			<div class="form">
 				<?php $form=$this->beginWidget('CActiveForm', array(

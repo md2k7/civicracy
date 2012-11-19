@@ -215,7 +215,6 @@ div.navbar img.logo {
 
 .btn-update-choice {
 	width: 240px;
-	/*height: 40px;*/
 	padding: 10px 0px 10px 0px;
 }
 
@@ -225,4 +224,10 @@ div.main-content > ul {
 
 div.main-content > ul > li {
 	margin-bottom: 30px;
+}
+
+div.current-status {
+	float: right;
+	clear: right;
+	margin-top: 20px;
 }

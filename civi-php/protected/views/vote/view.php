@@ -49,11 +49,15 @@ $this->menu=array(
 				<div class="span1" align="center">
 				
 				</div>
-  				<div class="span2">
-  					<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
+				<div class="span2">
+					<h4><?php echo Yii::t('app', 'vote.ownWeight'); ?></h4>
 					<div class="responsibility-number"><?php echo CHtml::encode($weight); ?></div>
 					<img src="<?php echo Yii::app()->request->baseUrl; ?>/img/responsibility.png" alt="<?php echo Yii::t('app', 'vote.ownWeight'); ?>" />
-  				</div>
+				</div>
+				<div class="span2 current-status">
+					<h4>Mein Status</h4>
+					<p><?php echo Yii::t('app', 'voter.status.' . $voterStatus); ?></p>
+				</div>
 			</div>
 
 			<?php if(!$mayVote) { ?>

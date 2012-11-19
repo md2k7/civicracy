@@ -136,10 +136,12 @@ class VoteController extends Controller
 		// fetch model and update it from POST data
 		$model = $this->loadVote($id, $type);
 
+		$category = Category::model()->findByPk($id);
+		$board = $category->viewboard ? User::model()->getVoteCountInCategoryTotal($id) : false;
+
 		$authOk = true;
 		if(isset($_POST['confirm'])) {
 			// vote confirmed, now check password
-			Yii::log('confirmed, auth now', 'info', 'VoteController');
 			$identity = new UserIdentity(Yii::app()->user->name, $_POST['VoteConfirm']['password']);
 			if($identity->authenticate()) {
 				// vote confirmed
@@ -157,12 +159,13 @@ class VoteController extends Controller
 		$this->render('confirm', array(
 			'model' => $confirmModel,
 			'votePath' => Vote::model()->previewVotePath($model),
-			'category' => Category::model()->findByPk($id),
+			'category' => $category,
 			'candidate' => ($model->candidate_id !== null ? User::model()->findByPk($model->candidate_id)->realname : ''),
 			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
 			'type' => $type,
 			'nextVoteTime' => $this->nextVoteTime($id, true), // vote time estimate
 			'id' => $id,
+			'leaveBoard' => $this->onBoard(Yii::app()->user->id, $board),
 		));
 	}
 
@@ -184,24 +187,51 @@ class VoteController extends Controller
 
 		$votedTime = ($vote !== null ? strtotime($vote->timestamp) : 0);
 
+		$category = Category::model()->findByPk($id);
+		$board = $category->viewboard ? User::model()->getVoteCountInCategoryTotal($id) : false;
+
+		$voterStatus = 'unknown';
+		if($vote !== null) {
+			if($vote->candidate_id == null) {
+				// there is no candidate: revoked
+				$voterStatus = 'revoke';
+			} else if($vote->candidate_id != Yii::app()->user->id) {
+				// there is a candidate, and candidate_id is not self: delegation
+				$voterStatus = 'delegate';
+			} else if($vote->candidate_id == Yii::app()->user->id) {
+				// candidate is self: self-referenced vote for getting on board
+				if($board !== false && $this->onBoard(Yii::app()->user->id, $board)) // don't display 'on board' for user if viewboard is turned off
+					$voterStatus = 'board';
+				else
+					$voterStatus = 'reference';
+			}
+		} else {
+			// no vote yet
+			$voterStatus = 'revoke';
+		}
+
 		$this->render('view', array(
 			'votePath' => Vote::model()->loadVotePath($id),
-			'category' => Category::model()->findByPk($id),
+			'category' => $category,
 			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
 			'reason' => $reason,
 			'voted' => ($vote !== null),
 			'id' => $id,
 
-			// for testing
-			'ranking' => User::model()->getVoteCountInCategoryTotal($id),
+			'ranking' => $board,
 			'votedTime' => $votedTime,
 			'nextVoteTime' => $this->nextVoteTime($id),
 			'mayVote' => $this->mayVote($id),
-			/*'numberofcandidates' => 3,
-			'names' => array("hans", "georg", "franz"),
-			'weightAbs' => array(5, 10, 5),
-			'weightPer' => array(25, 50, 25),*/				
-				));
+			'voterStatus' => $voterStatus,
+		));
+	}
+
+	private function onBoard($userId, $board)
+	{
+		for($i = 0; $i < count($board); $i++)
+			if($board[$i]['id'] == $userId)
+				return true;
+		return false;
 	}
 
 	/**

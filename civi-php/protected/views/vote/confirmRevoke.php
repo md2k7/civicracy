@@ -7,6 +7,7 @@
  * @param string $candidate real name of the candidate to confirm vote delegation for (TODO: use model)
  * @param Vote $model the current Vote we are confirming (not yet used)
  * @param array $votePath array of vote elements, each with realname, slogan, candidate_id, reason
+ * @param boolean $leaveBoard whether to display warning that user is leaving the board
  */
 
 ?>
@@ -19,4 +20,5 @@
 
 			<div class="alert alert-red space-top">
 				<p>Bist Du sicher, dass Du keine bessere Person kennst?</p>
+				<?php if($leaveBoard) { echo Yii::t('app', 'vote.warning.leaveBoard'); } ?>
 			</div>

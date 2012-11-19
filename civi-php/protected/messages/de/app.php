@@ -137,4 +137,9 @@ return array (
   'vote.yetToVote' => 'Stimme zu vergeben',
   'voteresult.slogan' => 'Slogan',
   'vote.changeslogan.button' => 'Slogan ändern',
+  'voter.status.delegate' => 'Wähler.',
+  'voter.status.revoke' => 'Ich enthalte mich meiner Stimme.',
+  'voter.status.reference' => 'Ich möchte in den Rat.',
+  'vote.warning.leaveBoard' => '<p><strong>VORSICHT:</strong> Du bist dabei, den Rat zu verlassen!</p>',
+  'voter.status.board' => 'Ich bin im Rat.',
 );

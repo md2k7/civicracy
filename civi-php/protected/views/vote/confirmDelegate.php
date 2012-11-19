@@ -8,6 +8,7 @@
  * @param Vote $model the current Vote we are confirming
  * @param int $nextVoteTime unix timestamp of the prediction of the next time user can change the vote
  * @param array $votePath array of vote elements, each with realname, slogan, candidate_id, reason
+ * @param boolean $leaveBoard whether to display warning that user is leaving the board
  */
 
 ?>
@@ -23,4 +24,5 @@
 
 			<div class="alert alert-red space-top">
 				<p>Die jetzt abgegebene Stimme wirst Du voraussichtlich ab <strong><?php echo CHtml::encode(date(Yii::t('app', 'timestamp.format'), $nextVoteTime)); ?> wieder ändern</strong> können. Bist Du sicher, dass Du richtig gestimmt hast?</p>
+				<?php if($leaveBoard) { echo Yii::t('app', 'vote.warning.leaveBoard'); } ?>
 			</div>
