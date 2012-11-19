@@ -48,6 +48,7 @@ return array (
   'menu.categoryVoteFor' => '{voteOrRevoke}{category} vote for {candidate}?',
   'menu.categoryVoteRevoke' => 'Revoke {category} vote?',
   'menu.create' => 'Create',
+  'menu.faq' => 'FAQ',
   'menu.login' => 'Login',
   'menu.logout' => 'Logout ({user})',
   'menu.manage' => 'Manage',

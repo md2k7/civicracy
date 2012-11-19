@@ -37,9 +37,10 @@
 			array('label' => CHtml::encode(Yii::t('app', 'menu.users.create')), 'active'=>false, 'url'=>array('/user/create')),
 			array('label' => CHtml::encode(Yii::t('app', 'menu.users.import')), 'active'=>false, 'url'=>array('/user/import')),
 		)),
+		array('label' => CHtml::encode(Yii::t('app', 'menu.faq')), 'url'=>array('/site/faq')),
 		array('label' => CHtml::encode(Yii::t('app', 'menu.login')), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 		array('label' => CHtml::encode(Yii::t('app', 'menu.settings')), 'url'=>array('/user/settings'), 'visible'=>!Yii::app()->user->isGuest),
-		array('label' => CHtml::encode(Yii::t('app', 'menu.logout', array('{user}' => Yii::app()->user->name))), 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+		array('label' => CHtml::encode(Yii::t('app', 'menu.logout', array('{user}' => Yii::app()->user->name))), 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
 	),
 	'htmlOptions'=>array('class' => 'nav'),
 )); ?>

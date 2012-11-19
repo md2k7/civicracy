@@ -61,6 +61,7 @@ return array (
   'menu.categoryVoteRevoke' => '{category}-Stimme zurücknehmen?',
   'menu.categoryVoteUpdate' => '{category}-Stimme bearbeiten',
   'menu.create' => 'Erstellen',
+  'menu.faq' => 'FAQ',
   'menu.users.import' => 'Benutzer importieren',
   'menu.login' => 'Login',
   'menu.logout' => 'Logout ({user})',
