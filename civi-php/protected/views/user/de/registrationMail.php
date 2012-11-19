@@ -16,6 +16,7 @@ Benutzername: <?php echo $model->username; ?>
 
 Passwort: <?php echo $password; ?>
 
+
 Dein Passwort kannst Du unter "Einstellungen" ändern.
 
 Viel Spaß mit Civi!
