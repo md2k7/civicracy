@@ -166,7 +166,7 @@ class User extends CActiveRecord
 	 * @return $ranking array Array of all users in Board or false if there are no votes existent
 	 */
 	public function getVoteCountInCategoryTotal($categoryID) {
-		$userObjects = User::model()->findAll();
+		$userObjects = User::model()->findAll('username != :username', array('username' => 'admin')); // TODO: adminity check
 		$category = Category::model()->findByPk($categoryID);
 		$boardsize = $category->boardsize;
 		foreach($userObjects as $u)
@@ -175,7 +175,7 @@ class User extends CActiveRecord
 		$graph = new VoteGraph($users, $votes);
 		if(count($votes))
 		{
-			// Getting Boardmembers for percentage-defined boardsize		
+			// Getting Boardmembers for percentage-defined boardsize
 			$weights = $graph->getWeights();
 			$ranking=array();
 			$realname=array();
@@ -183,68 +183,38 @@ class User extends CActiveRecord
 			$weighttable=array();
 			$numberofusers = count($userObjects);
 			
-			if($boardsize<1)
+			// getting board members
+			foreach($weights as $id => $weight)
 			{
-				$minimumweight = $numberofusers * $boardsize;
-				foreach($weights as $id => $weight)
+				$vote=Vote::model()->find('voter_id = :voter_id', array('voter_id'=>$id));
+				$boardflag=($vote !== null && $vote->candidate_id == $id);
+				// decimal boardsize denotes board members defined by minimum representation percentage
+				if($boardsize < 1)
 				{
-					$vote=Vote::model()->find('voter_id = :voter_id', array('voter_id'=>$id));
-					$boardflag=false;
-					if(isset($vote))
-					{
-						if($vote->candidate_id==$id)
-							$boardflag=true;
-					}
-					else
-						$boardflag=true;
-					if(($weight > $minimumweight) && (User::model()->findByPk($id)->username != "admin") && $boardflag)
-					{
-						$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
-						$ranking[$id]['email'] = User::model()->findByPk($id)->email;
-						$ranking[$id]['weight'] = $weight;
-						$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
-						$ranking[$id]['percentUsers'] = round($weight / $numberofusers, 3)*100;
-						$ranking[$id]['percentBoard'] = 0;
-						$weighttable[$id]=$weight;
-					}
+					$minimumweight = $numberofusers * $boardsize;
+					$boardflag = $boardflag && ($weight > $minimumweight);
 				}
-				array_multisort($weighttable, SORT_DESC, $ranking);
-				
+				if((User::model()->findByPk($id)->username != "admin") && $boardflag)
+				{
+					$ranking[$id]['id'] = $id;
+					$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
+					$ranking[$id]['email'] = User::model()->findByPk($id)->email;
+					$ranking[$id]['weight'] = $weight;
+					$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
+					$ranking[$id]['percentUsers'] = round($weight / $numberofusers, 3)*100;
+					$ranking[$id]['percentBoard'] = 0;
+					$weighttable[$id]=$weight;
+				}
 			}
-			// Getting Boardmembers for a number-defined boardsize
-			else 
-			{
-				foreach($weights as $id => $weight)
-				{
-					$vote=Vote::model()->find('voter_id = :voter_id', array('voter_id'=>$id));
-					$boardflag=false;
-					if(isset($vote))
-					{
-						if($vote->candidate_id==$id)
-							$boardflag=true;
-					}
-					else
-						$boardflag=true;
-					if((User::model()->findByPk($id)->username != "admin") && $boardflag)
-					{
-						$ranking[$id]['id'] = $id;
-						$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;
-						$ranking[$id]['email'] = User::model()->findByPk($id)->email;
-						$ranking[$id]['weight'] = $weight;
-						$ranking[$id]['slogan'] = User::model()->findByPk($id)->slogan;
-						$ranking[$id]['percentUsers'] = round($weight / $numberofusers, 3)*100;
-						$ranking[$id]['percentBoard'] = 0;
-						$weighttable[$id]=$weight;
-					}
-				}
-				array_multisort($weighttable, SORT_DESC, $ranking);
+			array_multisort($weighttable, SORT_DESC, $ranking);
+			// numerical notion of board size: remove the remaining users
+			if($boardsize >= 1)
 				array_splice($ranking, $boardsize);
-			}
 			
 			$allWeights = 0;
 			foreach($ranking as $id)
 			{
-				$allWeights += $id['weight'];	
+				$allWeights += $id['weight'];
 			}
 			
 			for($n=0; $n<count($ranking); $n++)
