@@ -46,16 +46,23 @@ class ContactEmail extends CFormModel
 		{
 			$email_adds_arr=explode(',',$this->email_adds);
 			
-			$subject = '=?UTF-8?B?'.base64_encode($this->email_topic).'?=';
-			
-			$headers = 'From: ' . Yii::app()->params['registration.adminEmail'] . "\r\n";
-			$headers .= 'MIME-Version: 1.0' . "\r\n";
-			$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
-			
+			$subject = $this->email_topic;
+
+			require_once(Yii::getPathOfAlias('webroot') . 'phpmailer/class.phpmailer.php');
+
 			foreach($email_adds_arr as $user)
 			{
-				Yii::log('User-Email: ' . $user . ' wurde ausgeschickt durch Admin', 'info', 'ContactEMail');
-				mail($user, $this->email_topic, $this->email_text."\n\n".'-------'."\n".'Visit the Civi plattform at '.Yii::app()->params['registration.url'], $headers);
+				$mail = new PHPMailer(); // defaults to using php "mail()"
+				$mail->CharSet = 'utf-8';
+				$mail->SetFrom(Yii::app()->params['registration.adminEmail'], Yii::app()->params['registration.adminEmailName']);
+				$mail->AddAddress($user);
+				$mail->Subject = $this->email_topic;
+				$mail->Body =  $this->email_text."\n\n".'-------'."\n".'Visit the Civi plattform at '.Yii::app()->params['registration.url'];
+
+				if($mail->Send())
+					$this->createLogEntry(Log::USER_CONTROLLER, 'Admin sent password email to ' . $user->username);
+				else
+					Yii::log('mail send failed to ' . $user . ': ' . $mail->ErrorInfo, 'error', 'ContactEmail');
 			}			
 			$sent=true;
 			return $sent;

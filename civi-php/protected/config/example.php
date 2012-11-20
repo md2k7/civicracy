@@ -84,6 +84,7 @@ return array(
 	'params'=>array(
 		// this is used to send out password e-mails
 		'registration.adminEmail'=>'user@example.com',
+		'registration.adminEmailName'=>'Civicracy.at',
 		'registration.url'=>'http://localhost/david/civi',
 		'database.schema'=>'test',
 		'users.testmode'=>false, // whether to block user1-4 and admin

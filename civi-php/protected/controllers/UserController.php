@@ -364,22 +364,29 @@ class UserController extends Controller
 	private function sendPasswordEmail($user, $password, $passwordReset=false)
 	{
 		$subjectMessageKey = $passwordReset ? 'passwordReset.subject' : 'registration.subject';
-		$subject = '=?UTF-8?B?'.base64_encode(Yii::t('app', $subjectMessageKey)).'?=';
-
-		$headers = 'From: ' . Yii::app()->params['registration.adminEmail'] . "\r\n";
-		$headers .= 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
+		$subject = Yii::t('app', $subjectMessageKey);
 
 		if(Yii::app()->params['users.logpassword']) {
 			// log password for testing, instead of sending e-mail
 			Yii::log('user: ' . $user->username . ', password: ' . $password, 'info', 'UserController');
 		} else {
-			mail($user->email, $subject, $this->renderPartial('registrationMail', array(
+			$body = $this->renderPartial('registrationMail', array(
 				'model' => $user,
 				'password' => $password,
-			), true), $headers);
+			), true);
 
-			$this->createLogEntry(Log::USER_CONTROLLER, 'Admin sent password email to ' . $user->username);
+			require_once(Yii::getPathOfAlias('webroot') . 'phpmailer/class.phpmailer.php');
+			$mail = new PHPMailer(); // defaults to using php "mail()"
+			$mail->CharSet = 'utf-8';
+			$mail->SetFrom(Yii::app()->params['registration.adminEmail'], Yii::app()->params['registration.adminEmailName']);
+			$mail->AddAddress($user->email, $user->realname);
+			$mail->Subject = $subject;
+			$mail->Body = $body;
+
+			if($mail->Send())
+				$this->createLogEntry(Log::USER_CONTROLLER, 'Admin sent password email to ' . $user->username);
+			else
+				Yii::log('mail send failed to ' . $user->realname . ' <' . $user->email . '>: ' . $mail->ErrorInfo, 'error', 'UserController');
 		}
 	}
 
