@@ -221,8 +221,8 @@ class Vote extends CActiveRecord
 				throw new Exception('logging of removal of votes of/for user ' . $userId . ' failed');
 		}
 
-		// remove all votes of or for this user (vote for self = inactive vote)
-		Vote::model()->updateAll(array('candidate_id' => new CDbExpression('voter_id')), 'voter_id = :user_id OR candidate_id = :user_id', array('user_id' => $userId));
+		// remove all votes of or for this user (vote for null = abstain from voting)
+		Vote::model()->updateAll(array('candidate_id' => null), 'voter_id = :user_id OR candidate_id = :user_id', array('user_id' => $userId));
 	}
 
 	/**
