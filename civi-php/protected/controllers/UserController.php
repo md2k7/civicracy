@@ -375,7 +375,7 @@ class UserController extends Controller
 				'password' => $password,
 			), true);
 
-			require_once(Yii::getPathOfAlias('webroot') . 'phpmailer/class.phpmailer.php');
+			require_once(Yii::getPathOfAlias('webroot') . '/phpmailer/class.phpmailer.php');
 			$mail = new PHPMailer(); // defaults to using php "mail()"
 			$mail->CharSet = 'utf-8';
 			$mail->SetFrom(Yii::app()->params['registration.adminEmail'], Yii::app()->params['registration.adminEmailName']);

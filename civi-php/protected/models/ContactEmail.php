@@ -48,7 +48,7 @@ class ContactEmail extends CFormModel
 			
 			$subject = $this->email_topic;
 
-			require_once(Yii::getPathOfAlias('webroot') . 'phpmailer/class.phpmailer.php');
+			require_once(Yii::getPathOfAlias('webroot') . '/phpmailer/class.phpmailer.php');
 
 			foreach($email_adds_arr as $user)
 			{
