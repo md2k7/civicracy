@@ -57,7 +57,7 @@ class ContactEmail extends CFormModel
 				$mail->SetFrom(Yii::app()->params['registration.adminEmail'], Yii::app()->params['registration.adminEmailName']);
 				$mail->AddAddress($user);
 				$mail->Subject = $this->email_topic;
-				$mail->Body =  $this->email_text."\n\n".'-------'."\n".'Visit the Civi plattform at '.Yii::app()->params['registration.url'];
+				$mail->Body =  $this->email_text."\n\n".'-------'."\n".'Visit the Civi platform at '.Yii::app()->params['registration.url'];
 
 				if($mail->Send())
 					$this->createLogEntry(Log::USER_CONTROLLER, 'Admin sent password email to ' . $user->username);
