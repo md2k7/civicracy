@@ -90,7 +90,8 @@ class Vote extends CActiveRecord
 	 */
 	public function setCandidate($candidateName, $requireCandidate=true)
 	{
-		$candidate = User::model()->find('realname=:realname', array(':realname' => $candidateName));
+		$condition = User::model()->voterEligibilityConditions('realname = :realname', array(':realname' => $candidateName));
+		$candidate = User::model()->find($condition['condition'], $condition['params']);
 		$success = ($candidate !== null);
 		$this->candidate_id = $success ? $candidate->id : null;
 		if(!$success && $requireCandidate)
@@ -192,16 +193,14 @@ class Vote extends CActiveRecord
 
 	/**
 	 * Count and return percentage of Vote participation by Users
-	 * 
-	 * For future versions with more Categories a selector in which categories a user is permitted to vote has to be added!!
+	 *
 	 * @param int $categoryId
 	 */
 	public function getVoteParticipation($categoryId)
 	{
-		// For current Version all Users are counted as potential Voters - has to be adapted for more Categories		
-		$allUsers=User::model()->count('username != :username', array('username' => 'admin')); // TODO: another adminity test...
+		$voterCount=User::model()->getVoterCountInCategory($categoryId);
 		$votesInCat=Vote::model()->count('category_id = :category_id', array('category_id'=>$categoryId));
-		return $allUsers > 0 ? round(((100*$votesInCat)/($allUsers))) : 0;
+		return $voterCount > 0 ? round(((100*$votesInCat)/($voterCount))) : 0;
 	}
 
 	/**
@@ -234,9 +233,10 @@ class Vote extends CActiveRecord
 		$user = User::model()->findByPk($userId);
 		$R = $user->getVoteCountInCategory($categoryId)->voteCount;
 		$category = Category::model()->findByPk($categoryId);
+		$voterCount = User::model()->getVoterCountInCategory($categoryId);
 
 		$params = CiviGlobals::getSustainTimeParameters();
-		$R_max = $category->rmax * User::model()->count('username != :username', array('username' => 'admin')); // TODO: another adminity test...
+		$R_max = $category->rmax * $voterCount;
 		$T_max = $category->tmax * (60 * 60 * 24);
 
 		$t_sustain = ($R / $R_max) * $T_max + 1;

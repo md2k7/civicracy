@@ -100,7 +100,7 @@ class VoteController extends Controller
 			'model' => $model,
 			'category' => Category::model()->findByPk($id),
 			'weight' => User::model()->findByPk(Yii::app()->user->id)->getVoteCountInCategory($id)->voteCount,
-			'candidates' => $this->loadCandidates(),
+			'candidates' => $this->loadCandidates($id),
 		));
 	}
 
@@ -315,9 +315,9 @@ class VoteController extends Controller
 	/**
 	 * @return array of candidate names
 	 */
-	private function loadCandidates()
+	private function loadCandidates($categoryId)
 	{
-		$candidates = User::model()->findAll("username != :adminUser AND active = :active AND id != :currentId", array('adminUser' => 'admin', 'active' => 1, 'currentId' => Yii::app()->user->id));
+		$candidates = User::model()->getVotersInCategory($categoryId, 'id != :currentId', array('currentId' => Yii::app()->user->id));
 		$nameList = array();
 		$slogans = array();
 		foreach($candidates as $c) {

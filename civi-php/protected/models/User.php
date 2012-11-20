@@ -119,7 +119,8 @@ class User extends CActiveRecord
 		$voteCount = array();
 
 		$users = array();
-		$userObjects = User::model()->findAll();
+		$condition = $this->activeUserConditions();
+		$userObjects = User::model()->findAll($condition['condition'], $condition['params']);
 		foreach($userObjects as $u)
 			$users[] = $u->id;
 
@@ -138,7 +139,7 @@ class User extends CActiveRecord
 	 */
 	public function getVoteCountInCategory($categoryId) {
 		$users = array();
-		$userObjects = User::model()->findAll();
+		$userObjects = $this->getVotersInCategory($categoryId);
 		foreach($userObjects as $u)
 			$users[] = $u->id;
 
@@ -160,13 +161,62 @@ class User extends CActiveRecord
 
 		return $entry;
 	}
-	
+
+	/**
+	 * @param $categoryID
+	 * @param $addCondition optional condition string to be appended, strictly clean SQL, no OR allowed!, ' AND ' will be prepended
+	 * @param $addParams optional condition parameters for the condition string
+	 * @return array of users eligible for voting in a specified category.
+	 */
+	public function getVotersInCategory($categoryID, $addCondition = '', $addParams = array()) {
+		$condition = $this->voterEligibilityConditions($categoryID, $addCondition, $addParams);
+		return User::model()->findAll($condition['condition'], $condition['params']);
+	}
+
+	/**
+	 * @param $categoryID
+	 * @param $addCondition optional condition string to be appended, strictly clean SQL, no OR allowed!, ' AND ' will be prepended
+	 * @param $addParams optional condition parameters for the condition string
+	 * @return number of users eligible for voting in a specified category.
+	 */
+	public function getVoterCountInCategory($categoryID, $addCondition = '', $addParams = array()) {
+		$condition = $this->voterEligibilityConditions($categoryID, $addCondition, $addParams);
+		return User::model()->count($condition['condition'], $condition['params']);
+	}
+
+	/**
+	 * Return conditions for User model indicating active users eligible for voting in the specified category.
+	 *
+	 * @param $categoryID
+	 * @param $addCondition optional condition string to be appended, strictly clean SQL, no OR allowed!, ' AND ' will be prepended
+	 * @param $addParams optional condition parameters for the condition string
+	 * @return Yii conditions for finding users eligible for voting in a specified category.
+	 */
+	public function voterEligibilityConditions($categoryID, $addCondition = '', $addParams = array()) {
+		// later: add condition to check if user is really allowed to vote in the category
+		return $this->activeUserConditions($addCondition, $addParams);
+	}
+
+	/**
+	 * Return conditions for User model indicating active users.
+	 *
+	 * @param $addCondition optional condition string to be appended, strictly clean SQL, no OR allowed!, ' AND ' will be prepended
+	 * @param $addParams optional condition parameters for the condition string
+	 *
+	 * @return Yii conditions for finding users eligible for voting in general.
+	 */
+	public function activeUserConditions($addCondition = '', $addParams = array()) {
+		// TODO: adminity check
+		$cond = ($addCondition != '') ? ' AND ' . $addCondition : '';
+		return array('condition' => 'username != :username AND active = :active' . $cond, 'params' => CMap::mergeArray(array('username' => 'admin', 'active' => 1), $addParams));
+	}
+
 	/**
 	 * @param $categoryID ID of category
 	 * @return $ranking array Array of all users in Board or false if there are no votes existent
 	 */
 	public function getVoteCountInCategoryTotal($categoryID) {
-		$userObjects = User::model()->findAll('username != :username', array('username' => 'admin')); // TODO: adminity check
+		$userObjects = $this->getVotersInCategory($categoryID);
 		$category = Category::model()->findByPk($categoryID);
 		$boardsize = $category->boardsize;
 		$users = array();
@@ -195,7 +245,7 @@ class User extends CActiveRecord
 					$minimumweight = $numberofusers * $boardsize;
 					$boardflag = $boardflag && ($weight > $minimumweight);
 				}
-				if((User::model()->findByPk($id)->username != "admin") && $boardflag)
+				if($boardflag)
 				{
 					$ranking[$id]['id'] = $id;
 					$ranking[$id]['realname'] = User::model()->findByPk($id)->realname;

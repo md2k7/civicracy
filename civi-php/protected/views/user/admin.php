@@ -33,12 +33,16 @@ $('.search-form form').submit(function(){
 )); ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php
+
+$condition = User::model()->activeUserConditions();
+
+$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'user-grid',
 	'dataProvider'=>new CActiveDataProvider('User', array(
 		'criteria'=>array(
-			'condition'=>'username != :username AND active = :active',
-			'params'=>array('username'=>'admin', 'active'=>1), // TODO: improve admin check
+			'condition'=>$condition['condition'],
+			'params'=>$condition['params'],
 		),
 		'pagination'=>array(
 			'pageSize'=>20,
