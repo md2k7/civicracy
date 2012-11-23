@@ -296,7 +296,7 @@ class VoteController extends Controller
 		// update comes via POST
 		if(isset($_POST['Vote'])) {
 			$model->attributes=$_POST['Vote'];
-			$model->setCandidate($_POST['candidate']);
+			$model->setCandidate($_POST['candidate'], $id);
 		} else if($type == 'revoke') {
 			// user abstains from voting
 			$model->candidate_id = null;

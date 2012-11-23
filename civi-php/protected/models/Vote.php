@@ -88,9 +88,9 @@ class Vote extends CActiveRecord
 	 * Set the candidate_id from a realname of a user
 	 * @return boolean success
 	 */
-	public function setCandidate($candidateName, $requireCandidate=true)
+	public function setCandidate($candidateName, $categoryId, $requireCandidate=true)
 	{
-		$condition = User::model()->voterEligibilityConditions('realname = :realname', array(':realname' => $candidateName));
+		$condition = User::model()->voterEligibilityConditions($categoryId, 'realname = :realname', array(':realname' => $candidateName));
 		$candidate = User::model()->find($condition['condition'], $condition['params']);
 		$success = ($candidate !== null);
 		$this->candidate_id = $success ? $candidate->id : null;
