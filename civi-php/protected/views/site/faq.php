@@ -26,6 +26,7 @@
 <h3>Kann ich mich selbst wählen?</h3>
 <p>Sollte jemand der Meinung sein selbst die Dinge am besten in die Hand nehmen zu können so kann man die eigene Vertrauensstimme auf sich selbst referenzieren (die Funktion dazu heißt "Ich möchte in den Rat"). Ein plausible Erklärung und Darlegung dieser Entscheidung hilft vielleicht zur Berufung in den Rat.</p>
 <h3>Kann ich sehen, wer mich gewählt hat?</h3>
+<p>Die Anzeige der Verantwortung im persönlichen Profil zeigt die Summe der direkt erhaltenen und Übertragenen Stimmen auf die eigenen Person an. Bei der Abgabe der eigenen Vertrauensstimme trägt man die Verantwortung für die angezeigte Anzahl an Personen.</p>
 <p>Derzeit haben wir keine Funktion implementiert, die explizit die eigenen Vertrauenden sichtbar macht. (Wir denken, dass dies aus gruppendynamischer Sicht besser so ist, und auch die Erfolgskontrolle eines möglichen Stimmenkaufs ohne diese Einsicht erschwert wird.)</p>
 <h3>Sieht man, wie viele Stimmen jemand hat?</h3>
 <p>Für die Funktion von Civicracy ist es für den einzelnen nicht wichtig zu wissen wer genau wie viele Vertrauensstimmen hat, und dies braucht auch gar nicht transparent sein, um jemandem zu vertrauen. Wir sehen ein wenig die Gefahr eines Schafherden-artigen Wahlverhaltens, welches so gut als möglich vermieden werden soll (ähnlich wie "Umfragen" vor Wahlen ja auch starken Einfluss auf punktuelle Entscheidungen nehmen).</p>
