@@ -17,6 +17,16 @@
  */
 class UserHistory extends User
 {
+	private $referenceModel;
+
+	/**
+	 * Set reference model (User) so we can clone its password hash.
+	 */
+	public function setReferenceModel($referenceModel)
+	{
+		$this->referenceModel = $referenceModel;
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -30,6 +40,8 @@ class UserHistory extends User
 	 */
 	protected function beforeSave()
 	{
+		$this->password = $this->referenceModel->password;
+		$this->salt = $this->referenceModel->salt;
 		return CActiveRecord::beforeSave();
 	}
 
@@ -39,5 +51,13 @@ class UserHistory extends User
 	public function isUniqueAttribute($attribute, $params)
 	{
 		// do nothing - work around unique username check in User model
+	}
+
+	/**
+	 * Checks old password, not used in UserHistory
+	 */
+	public function validOldPassword($attribute, $params)
+	{
+		// do nothing - work around valid password check in User model
 	}
 }

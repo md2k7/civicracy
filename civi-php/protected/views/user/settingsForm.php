@@ -21,6 +21,12 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'old_password'); ?>
+		<p><?php echo Yii::t('app', 'models.old_password.description'); ?></p>
+		<?php echo $form->passwordField($model,'old_password',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'old_password'); ?>
+	</div>
+	<div class="row">
 		<?php echo $form->label($model,'password'); ?>
 		<p><?php echo Yii::t('app', 'models.password.description'); ?></p>
 		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>

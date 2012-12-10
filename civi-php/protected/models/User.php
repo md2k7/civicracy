@@ -19,6 +19,7 @@
 class User extends CActiveRecord
 {
 	public $repeat_password;
+	public $old_password;
 	public $initialPassword; // stores the password hash
 	public $reset_password; // flag for admin if he wants to reset the password
 
@@ -49,13 +50,14 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, email, realname', 'required'),
-			array('password, repeat_password', 'default'),
+			array('password, repeat_password, old_password', 'default'),
 			array('slogan', 'default'),
 			array('reset_password', 'default', 'value'=>false),
 			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'settings'),
 			array('username, password, email, realname', 'length', 'max'=>128),
 			array('username, email, realname', 'length', 'max'=>128),
 			array('username, realname', 'isUniqueAttribute'),
+			array('old_password', 'validOldPassword'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('username, realname, slogan', 'safe', 'on'=>'search'),
@@ -83,6 +85,7 @@ class User extends CActiveRecord
 		return array(
 			'username' => Yii::t('app', 'models.username'),
 			'password' => Yii::t('app', 'models.password'),
+			'old_password' => Yii::t('app', 'models.old_password'),
 			'repeat_password' => Yii::t('app', 'models.repeat_password'),
 			'reset_password' => Yii::t('app', 'models.reset_password'),
 			'email' => Yii::t('app', 'models.email'),
@@ -291,10 +294,13 @@ class User extends CActiveRecord
 	protected function beforeSave()
 	{
 		// if the user left the pw field empty, he didn't change his password - keep the old one
-		if(empty($this->password))
+		if(empty($this->password)) {
 			$this->password = $this->initialPassword;
-		else
+		} else {
+			if(!$this->validatePassword($this->old_password))
+				throw new CException("Internal error in User::beforeSave()"); // we should've validated before
 			$this->createPasswordHash();
+		}
 
 		return parent::beforeSave();
 	}
@@ -318,6 +324,7 @@ class User extends CActiveRecord
 	{
 		$this->password = '';
 		$this->repeat_password = '';
+		$this->old_password = '';
 	}
 
 	private function createSalt($len = 20)
@@ -363,6 +370,20 @@ class User extends CActiveRecord
 		// if there is another user with that attribute, and that user is not us, that's a problem
 		if($other !== null && $other->id !== $this->id)
 			$this->addError($attribute, Yii::t('app', 'models.duplicate', array('{attribute}' => $this->getAttributeLabel($attribute), '{value}' => $this->getAttribute($attribute))));
+	}
+
+	/**
+	 * When a new password is specified, check if the old one is valid and add a model error otherwise.
+	 * Used in rules() method.
+	 *
+	 * @param string $attribute the name of the attribute to be validated
+	 * @param array $params options specified in the validation rule
+	 */
+	public function validOldPassword($attribute, $params)
+	{
+		if(!empty($this->password))
+			if(!$this->validatePassword($this->old_password))
+				$this->addError($attribute, Yii::t('app', 'models.old_password.invalid'));
 	}
 
 	/**

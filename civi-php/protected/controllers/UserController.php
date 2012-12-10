@@ -350,6 +350,7 @@ class UserController extends Controller
 	{
 		$historyModel = new UserHistory;
 		$historyModel->attributes = $model->attributes;
+		$historyModel->setReferenceModel($model);
 
 		// copy safe attributes separately
 		$historyModel->salt = $model->salt;
