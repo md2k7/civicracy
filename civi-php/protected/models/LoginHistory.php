@@ -14,6 +14,7 @@ class LoginHistory extends CActiveRecord
 	// enum values for $action
 	const ACTION_LOGIN = "LOGIN";
 	const ACTION_LOGOUT = "LOGOUT";
+	const ACTION_ACTIVATE = "ACTIVATE";
 
 	/**
 	 * Returns the static model of the specified AR class.

@@ -34,6 +34,10 @@ class UserController extends Controller
 				'actions'=>array('settings'),
 				'users'=>array('@'),
 			),
+			array('allow', // allow everyone to activate their user
+				'actions'=>array('activate'),
+				'users'=>array('*'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -50,7 +54,54 @@ class UserController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-	
+
+	/**
+	 * Activation of user via activation code from e-mail.
+	 */
+	public function actionActivate($id, $code)
+	{
+		$user = User::model()->findByPk($id);
+		$valid = ($user !== null && $user->activationcode !== null && $user->activationcode == $code);
+
+		if($valid && isset($_POST['User'])) {
+			$user->scenario = 'settings';
+			$user->attributes = $_POST['User'];
+			$user->active = true;
+			$user->activationcode = null;
+
+			if($this->saveUserAndHistory($user)) {
+				// log activation event
+				$history = new LoginHistory;
+				$history->user_id = $user->id;
+				$history->action = LoginHistory::ACTION_ACTIVATE;
+				$history->save();
+
+				$this->loginActivatedUser($user);
+			}
+
+			$user->sanitizePassword(); // don't retransmit even the hashed password to the user
+		}
+
+		$this->render('activate',array(
+			'user'=>$user,
+			'valid'=>$valid,
+		));
+	}
+
+	private function loginActivatedUser($user)
+	{
+		$model = new LoginForm;
+		$model->username = $user->username;
+		$model->password = $_POST['User']['password'];
+
+		$success = ($model->validate() && $model->login());
+
+		if(!$success)
+			throw new CHttpException(500, 'Interner Serverfehler bei Aktivierung des Benutzers.');
+
+		$this->redirect(array('settings', 'activationSuccess' => 1));
+	}
+
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -65,10 +116,10 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			$password = $model->createRandomPassword();
+			$model->active = 0;
 
 			if($this->saveUserAndHistory($model)) {
-				$this->sendPasswordEmail($model, $password);
+				$this->sendActivationEmail($model);
 				$this->redirect(array('view','id'=>$model->id));
 			}
 		}
@@ -111,7 +162,6 @@ class UserController extends Controller
 			try
 			{
 				$newU = array();
-				$pass = array();
 
 				Yii::log(CVarDumper::dumpAsString($new_users), 'info', 'UserController');
 
@@ -120,18 +170,13 @@ class UserController extends Controller
 				{
 					$newU[$key] = new User;
 					$newU[$key]->attributes = $value;
-					//$pass[$key] = $newU[$key]->createRandomPassword();
+					$newU[$key]->active = 0;
+
 					if(!$this->saveUserAndHistory($newU[$key]))
 						throw new CException(CVarDumper::dumpAsString($newU[$key]->getErrors()));
 				}
 				$importSuccess = true;
 				$transaction->commit();
-
-				// send password e-mail
-				/*foreach($new_users as $key => $value)
-				{
-					$this->sendPasswordEmail($newU[$key], $pass[$key]);
-				}*/
 
 				$this->createLogEntry(Log::USER_CONTROLLER, 'Admin completed CSV user import');
 			}
@@ -148,45 +193,50 @@ class UserController extends Controller
 					$transaction->rollBack();
 					$model->addError('csvfile', $e->getMessage());
 				}
-				$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
+				$importedUsers=$this->getImportedUsers();
 				if(isset($importedUsers))
 					$this->render('import', array('form' => $form, 'newU'=>$importedUsers));
 				else
 					$this->render('import', array('form' => $form));
 				return;
 			}
-			$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
+			$importedUsers=$this->getImportedUsers();
 			$this->render('import', array('form' => $form, 'newU'=>$importedUsers));
 			return;
 		} elseif (isset($_GET['sendemail']))
 		{
 			if($_GET['sendemail']==true)
 			{
-				$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
-				$pass = array();				
+				$importedUsers=$this->getImportedUsers();
+				$pass = array();
 				foreach($importedUsers as $row)
 				{
-					$pass[$row->id] = $row->createRandomPassword();
-					if(!$this->saveUserAndHistory($row))
-						throw new CException(CVarDumper::dumpAsString($row->getErrors()));
-					$this->sendPasswordEmail($row, $pass[$row->id]);
+					$this->sendActivationEmail($row);
 				}
-				$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
+				$importedUsers=$this->getImportedUsers();
 				$this->render('import', array('form' => $form, 'newU'=>$importedUsers));
 				unset($_GET);
 				return;
 			}
 		}
 		else
-			$importedUsers=User::model()->findAll('password = "" AND active = :active', array('active'=>1));
-			if(isset($importedUsers))
-					$this->render('import', array('form' => $form, 'newU'=>$importedUsers));
-			else
-					$this->render('import', array('form' => $form));
-			return;
-			
-	}	
-	
+			$importedUsers=$this->getImportedUsers();
+
+		if(isset($importedUsers))
+				$this->render('import', array('form' => $form, 'newU'=>$importedUsers));
+		else
+				$this->render('import', array('form' => $form));
+		return;
+	}
+
+	/**
+	 * @return array of imported users which haven't been sent any activation e-mail yet
+	 */
+	private function getImportedUsers()
+	{
+		return User::model()->findAll('activationcode = :activationcode AND active = :active', array('activationcode'=>'', 'active'=>0));
+	}
+
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -230,7 +280,7 @@ class UserController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionSettings()
+	public function actionSettings($activationSuccess=0)
 	{
 		$message = '';
 		$model=$this->loadModel(Yii::app()->user->id);
@@ -254,6 +304,9 @@ class UserController extends Controller
 			if($this->saveUserAndHistory($model))
 				$message = Yii::t('app', 'user.settings.saved');
 		}
+
+		if($activationSuccess === '1')
+			$message = Yii::t('app', 'user.activation.success');
 
 		$model->sanitizePassword(); // don't retransmit even the hashed password to the user
 
@@ -357,6 +410,42 @@ class UserController extends Controller
 		$historyModel->active = $model->active;
 
 		return $this->saveModelAndHistory($model, $historyModel, 'user_id');
+	}
+
+	/**
+	 * Send out an activation e-mail with a link to create a user.
+	 */
+	private function sendActivationEmail($user)
+	{
+		$code = $user->createActivationCode();
+
+		if(!$this->saveUserAndHistory($user))
+			throw new CException(CVarDumper::dumpAsString($user->getErrors()));
+
+		$subject = Yii::t('app', 'activation.subject');
+
+		if(Yii::app()->params['users.logpassword']) {
+			// log activation code for testing, instead of sending e-mail
+			Yii::log('user: ' . $user->username . ', activation code: ' . $code, 'info', 'UserController');
+		} else {
+			$body = $this->renderPartial('activationMail', array(
+				'model' => $user,
+				'url' => $this->createAbsoluteUrl('/user/activate', array('id' => $user->id, 'code' => $code)),
+			), true);
+
+			require_once(Yii::getPathOfAlias('webroot') . '/phpmailer/class.phpmailer.php');
+			$mail = new PHPMailer(); // defaults to using php "mail()"
+			$mail->CharSet = 'utf-8';
+			$mail->SetFrom(Yii::app()->params['registration.adminEmail'], Yii::app()->params['registration.adminEmailName']);
+			$mail->AddAddress($user->email, $user->realname);
+			$mail->Subject = $subject;
+			$mail->Body = $body;
+
+			if($mail->Send())
+				$this->createLogEntry(Log::USER_CONTROLLER, 'Admin sent password email to ' . $user->username);
+			else
+				Yii::log('mail send failed to ' . $user->realname . ' <' . $user->email . '>: ' . $mail->ErrorInfo, 'error', 'UserController');
+		}
 	}
 
 	/**

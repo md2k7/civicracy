@@ -19,6 +19,7 @@
  * @version $Id: $
  */
 return array (
+  'activation.subject' => 'Benutzer für Civicracy anlegen',
   'cancel.button' => 'Abbrechen',
   'category.create.button' => 'Erstellen',
   'category.save.button' => 'Speichern',
@@ -111,6 +112,7 @@ return array (
   'sidebar.operations' => 'Aktionen',
   'site.motto' => 'Demokratisch Entscheidungsträger finden',
   'timestamp.format' => 'd.m.Y H:i:s',
+  'user.activation.success' => '<div class="alert alert-success"><p>Benutzer erfolgreich aktiviert.</p></div>',
   'user.create.button' => 'Erstellen',
   'user.deleteConfirmation' => 'Diese Person wirklich löschen?',
   'user.csvselectfile.label' => 'Bitte lokales CSV File auswählen:',

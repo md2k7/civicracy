@@ -12,6 +12,7 @@
  * @property string $realname
  * @property string $slogan
  * @property integer $active
+ * @property string $activationcode
  *
  * The followings are the available model relations:
  * @property Category[] $tblCategories
@@ -51,6 +52,7 @@ class User extends CActiveRecord
 		return array(
 			array('username, email, realname', 'required'),
 			array('password, repeat_password, old_password', 'default'),
+			array('password', 'required', 'on'=>'settings'),
 			array('slogan', 'default'),
 			array('reset_password', 'default', 'value'=>false),
 			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'settings'),
@@ -297,7 +299,7 @@ class User extends CActiveRecord
 		if(empty($this->password)) {
 			$this->password = $this->initialPassword;
 		} else {
-			if(!$this->validatePassword($this->old_password))
+			if(!empty($this->old_password) && !$this->validatePassword($this->old_password))
 				throw new CException("Internal error in User::beforeSave()"); // we should've validated before
 			$this->createPasswordHash();
 		}
@@ -329,7 +331,7 @@ class User extends CActiveRecord
 
 	private function createSalt($len = 20)
 	{
-		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!$%&/()=[]{}+#-*~.,_';
+		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!$%&/()=[]{}+#-*~.,_';
 		$salt = '';
 
 		for($i = 0; $i < $len; $i++)
@@ -345,6 +347,23 @@ class User extends CActiveRecord
 	{
 		$this->password = $this->createSalt(12);
 		return $this->password;
+	}
+
+	public function createActivationCode()
+	{
+		$this->activationcode = $this->genUrlFriendly();
+		return $this->activationcode;
+	}
+
+	private function genUrlFriendly($len = 20)
+	{
+		$alphabet = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+		$salt = '';
+
+		for($i = 0; $i < $len; $i++)
+			$salt .= substr($alphabet, rand(0, strlen($alphabet) - 1), 1);
+
+		return $salt;
 	}
 
 	/**
@@ -382,7 +401,7 @@ class User extends CActiveRecord
 	public function validOldPassword($attribute, $params)
 	{
 		if(!empty($this->password))
-			if(!$this->validatePassword($this->old_password))
+			if(!empty($this->old_password) && !$this->validatePassword($this->old_password))
 				$this->addError($attribute, Yii::t('app', 'models.old_password.invalid'));
 	}
 
