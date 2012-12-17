@@ -406,7 +406,6 @@ class UserController extends Controller
 		$historyModel->setReferenceModel($model);
 
 		// copy safe attributes separately
-		$historyModel->salt = $model->salt;
 		$historyModel->active = $model->active;
 
 		return $this->saveModelAndHistory($model, $historyModel, 'user_id');

@@ -7,7 +7,6 @@
  * @property integer $id
  * @property string $username
  * @property string $password
- * @property string $salt
  * @property string $email
  * @property string $realname
  * @property string $slogan
@@ -280,18 +279,37 @@ class User extends CActiveRecord
 		return $ranking;
 	}
 
+	/**
+	 * Checks if a passed password is valid for this user.
+	 */
 	public function validatePassword($password)
 	{
-		return $this->hashPassword($password,$this->salt)===$this->initialPassword;
-	}
- 
-	public function hashPassword($password,$salt)
-	{
-		return md5($salt.$password);
+		// prevent DoS attacks
+		if(strlen($password) > 72)
+			throw new CException('Passwords must be 72 characters or less');
+
+		$hasher = $this->getPasswordHasher();
+		return $hasher->CheckPassword($password, $this->initialPassword);
 	}
 
 	/**
-	 * Executed after validation, but before saving. Generates a fresh salt for new passwords.
+	 * Convert the stored user password to a hash that may be safely stored.
+	 */
+	private function createPasswordHash()
+	{
+		// prevent DoS attacks
+		if(strlen($this->password) > 72)
+			throw new CException('Passwords must be 72 characters or less');
+
+		$hasher = $this->getPasswordHasher();
+		$hash = $hasher->HashPassword($this->password);
+		if(strlen($hash) < 20)
+			throw new CException("Internal error in password hashing");
+		$this->password = $hash;
+	}
+
+	/**
+	 * Executed after validation, but before saving. Generates a fresh hash for new passwords.
 	 */
 	protected function beforeSave()
 	{
@@ -307,10 +325,12 @@ class User extends CActiveRecord
 		return parent::beforeSave();
 	}
 
-	private function createPasswordHash()	
+	/**
+	 * Instantiate phpass with our settings
+	 */
+	private function getPasswordHasher()
 	{
-		$this->salt = $this->createSalt();
-		$this->password = md5($this->salt . $this->password);
+		return new PasswordHash(8, false);
 	}
 
 	protected function afterFind()
@@ -329,33 +349,22 @@ class User extends CActiveRecord
 		$this->old_password = '';
 	}
 
-	private function createSalt($len = 20)
-	{
-		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!$%&/()=[]{}+#-*~.,_';
-		$salt = '';
-
-		for($i = 0; $i < $len; $i++)
-			$salt .= substr($alphabet, rand(0, strlen($alphabet) - 1), 1);
-
-		return $salt;
-	}
-
 	/**
 	 * Creates a random password.
 	 */
 	public function createRandomPassword()
 	{
-		$this->password = $this->createSalt(12);
+		$this->password = $this->urlFriendlyGibberish(12);
 		return $this->password;
 	}
 
 	public function createActivationCode()
 	{
-		$this->activationcode = $this->genUrlFriendly();
+		$this->activationcode = $this->urlFriendlyGibberish();
 		return $this->activationcode;
 	}
 
-	private function genUrlFriendly($len = 20)
+	private function urlFriendlyGibberish($len = 20)
 	{
 		$alphabet = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 		$salt = '';

@@ -9,11 +9,11 @@
  * @property integer $user_id
  * @property string $username
  * @property string $password
- * @property string $salt
  * @property string $email
  * @property string $realname
  * @property string $slogan
  * @property integer $active
+ * @property string $activationcode
  */
 class UserHistory extends User
 {
@@ -36,12 +36,11 @@ class UserHistory extends User
 	}
 
 	/**
-	 * Executed after validation, but before saving. Original method on User generates a fresh salt for new passwords.
+	 * Executed after validation, but before saving. Original method on User generates a fresh hash for new passwords.
 	 */
 	protected function beforeSave()
 	{
 		$this->password = $this->referenceModel->password;
-		$this->salt = $this->referenceModel->salt;
 		return CActiveRecord::beforeSave();
 	}
 
