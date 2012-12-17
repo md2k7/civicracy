@@ -10,7 +10,7 @@ NOTE: there is no need to escape things with CHtml::encode() here, as this is no
 
 Du hast nun die Möglichkeit, Dich auf der Civicracy-Plattform zu registrieren.
 
-Bitte vergebe dazu hier ein neues Passwort: <?php echo $url; ?>
+Bitte vergib dazu hier ein neues Passwort: <?php echo $url; ?>
 
 
 Danach kannst Du Deine Stimme abgeben.
