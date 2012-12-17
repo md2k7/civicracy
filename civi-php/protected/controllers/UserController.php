@@ -234,7 +234,7 @@ class UserController extends Controller
 	 */
 	private function getImportedUsers()
 	{
-		return User::model()->findAll('activationcode = :activationcode AND active = :active', array('activationcode'=>'', 'active'=>0));
+		return User::model()->findAll('activationcode IS NULL AND password = :password AND active = :active', array('password'=>'', 'active'=>0));
 	}
 
 	/**

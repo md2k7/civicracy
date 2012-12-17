@@ -13,7 +13,7 @@ Du hast nun die Möglichkeit, Dich auf der Civicracy-Plattform zu registrieren.
 Bitte vergebe dazu hier ein neues Passwort: <?php echo $url; ?>
 
 
-Danach kannst du deine Stimme abgeben.
+Danach kannst Du Deine Stimme abgeben.
 
 Viel Spaß mit Civi!
 
