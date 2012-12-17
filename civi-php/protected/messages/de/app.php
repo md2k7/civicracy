@@ -19,7 +19,7 @@
  * @version $Id: $
  */
 return array (
-  'activation.subject' => 'Benutzer für Civicracy anlegen',
+  'activation.subject' => 'Benutzer für Civicracy kann angelegt werden',
   'cancel.button' => 'Abbrechen',
   'category.create.button' => 'Erstellen',
   'category.save.button' => 'Speichern',

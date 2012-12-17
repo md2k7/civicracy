@@ -58,9 +58,9 @@ class UserController extends Controller
 	/**
 	 * Activation of user via activation code from e-mail.
 	 */
-	public function actionActivate($id, $code)
+	public function actionActivate($code)
 	{
-		$user = User::model()->findByPk($id);
+		$user = User::model()->find('activationcode = :activationcode', array(':activationcode'=>$code));
 		$valid = ($user !== null && $user->activationcode !== null && $user->activationcode == $code);
 
 		if($valid && isset($_POST['User'])) {
@@ -430,7 +430,7 @@ class UserController extends Controller
 		} else {
 			$body = $this->renderPartial('activationMail', array(
 				'model' => $user,
-				'url' => $this->createAbsoluteUrl('/user/activate', array('id' => $user->id, 'code' => $code)),
+				'url' => $this->createAbsoluteUrl('/user/activate', array('code' => $code)),
 			), true);
 
 			require_once(Yii::getPathOfAlias('webroot') . '/phpmailer/class.phpmailer.php');
