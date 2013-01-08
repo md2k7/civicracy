@@ -53,7 +53,7 @@ $activate = (isset($activate) && $activate);
 	</div>
 <?php endif; ?>
 
-<?php if(!(property_exists(Yii::app(), 'isAdmin') && Yii::app()->user->isAdmin)): ?>
+<?php if(!(property_exists(Yii::app()->user, 'isAdmin') && Yii::app()->user->isAdmin)): ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'slogan'); ?>
 		<p><?php echo Yii::t('app', 'models.slogan.description'); ?></p>
