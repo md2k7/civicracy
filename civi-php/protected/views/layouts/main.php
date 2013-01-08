@@ -41,6 +41,7 @@
 		array('label' => CHtml::encode(Yii::t('app', 'menu.login')), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 		array('label' => CHtml::encode(Yii::t('app', 'menu.settings')), 'url'=>array('/user/settings'), 'visible'=>!Yii::app()->user->isGuest),
 		array('label' => CHtml::encode(Yii::t('app', 'menu.logout', array('{user}' => Yii::app()->user->name))), 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
+		array('label' => CHtml::encode(Yii::t('app', 'menu.register')), 'url'=>array('/user/create'), 'visible'=>Yii::app()->user->isGuest),
 	),
 	'htmlOptions'=>array('class' => 'nav'),
 )); ?>
