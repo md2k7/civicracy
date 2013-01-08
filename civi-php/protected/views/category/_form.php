@@ -51,6 +51,13 @@
 		<?php echo $form->error($model,'viewboard'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'registrationcode'); ?>
+		<p><?php echo Yii::t('app', 'models.registrationCode.description'); ?></p>
+		<?php echo $form->textField($model,'registrationcode',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'registrationcode'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'category.create.button') : Yii::t('app', 'category.save.button'), CiviGlobals::$buttonClass); ?>
 	</div>

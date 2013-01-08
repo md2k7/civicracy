@@ -18,6 +18,7 @@
  */
 class User extends CActiveRecord
 {
+	public $registrationCode;
 	public $repeat_password;
 	public $old_password;
 	public $initialPassword; // stores the password hash
@@ -50,7 +51,9 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, email, realname', 'required'),
-			array('password, repeat_password, old_password', 'default'),
+			array('password, repeat_password, old_password, registrationCode', 'default'),
+			array('registrationCode', 'required', 'on'=>'anonReg'),
+			array('registrationCode', 'validRegistrationCode', 'on'=>'anonReg'),
 			array('password', 'required', 'on'=>'settings'),
 			array('slogan', 'default'),
 			array('reset_password', 'default', 'value'=>false),
@@ -92,6 +95,7 @@ class User extends CActiveRecord
 			'email' => Yii::t('app', 'models.email'),
 			'realname' => Yii::t('app', 'models.realname'),
 			'slogan' => Yii::t('app', 'models.slogan'),
+			'registrationCode' => Yii::t('app', 'models.registrationCode'),
 		);
 	}
 
@@ -152,7 +156,7 @@ class User extends CActiveRecord
 
 	/**
 	 * @param $users array user id array
-	 * @return VoteCount our weight in a specific category queried
+	 * @return VoteCount our weightproperty_exists(Yii::app()->user, 'isAdmin') &&  in a specific category queried
 	 */
 	public function getVoteCountInCategoryInternal($category, $users) {
 		$votes = Vote::model()->findAllByAttributes(array('category_id' => $category->id));
@@ -412,6 +416,18 @@ class User extends CActiveRecord
 		if(!empty($this->password))
 			if(!empty($this->old_password) && !$this->validatePassword($this->old_password))
 				$this->addError($attribute, Yii::t('app', 'models.old_password.invalid'));
+	}
+
+	/**
+	 * Check if specified registrationCode attribute is valid.
+	 */
+	public function validRegistrationCode($attribute, $params)
+	{
+		// check registration code from category
+		$category = Category::model()->find('active=:active', array('active' => 1));
+
+		if($this->registrationCode !== $category->registrationcode || $category->registrationcode == '')
+			$this->addError('registrationCode', Yii::t('app', 'models.registrationCode.invalid'));
 	}
 
 	/**

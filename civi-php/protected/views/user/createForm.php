@@ -28,6 +28,14 @@
 		<?php echo Yii::t('app', 'user.registration.email'); ?>
 	</div>
 
+<?php if(!(property_exists(Yii::app()->user, 'isAdmin') && Yii::app()->user->isAdmin)): ?>
+	<div class="row">
+		<?php echo $form->labelEx($model,'registrationCode'); ?>
+		<?php echo $form->textField($model,'registrationCode',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'registrationCode'); ?>
+	</div>
+<?php endif; ?>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton(Yii::t('app', 'user.create.button'), CiviGlobals::$buttonClass); ?>
 	</div>

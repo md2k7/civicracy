@@ -12,6 +12,7 @@
  * @property float $rmax
  * @property float $tmax
  * @property boolean $viewboard
+ * @property string $registrationcode
  * @property integer $active
  *
  * The followings are the available model relations:
@@ -46,8 +47,7 @@ class Category extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name', 'required'),
-			array('institution', 'default'),
-			array('description', 'default'),
+			array('institution, description, registrationcode', 'default'),
 			array('name, institution', 'length', 'max'=>255),
 			array('boardsize, rmax, tmax', 'required'),
 			array('boardsize, rmax, tmax', 'numerical'),
@@ -84,6 +84,7 @@ class Category extends CActiveRecord
 			'rmax' => Yii::t('app', 'models.rmax'),
 			'tmax' => Yii::t('app', 'models.tmax'),
 			'viewboard' => Yii::t('app', 'models.viewboard'),
+			'registrationcode' => Yii::t('app', 'models.registrationCode'),
 		);
 	}
 

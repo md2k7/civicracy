@@ -27,15 +27,15 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform the actions
-				'actions'=>array('index','view','create','update','admin','settings','delete', 'import'),
+				'actions'=>array('index','view','update','admin','settings','delete', 'import'),
 				'users'=>array('admin'),
 			),
 			array('allow', // allow all authenticated users to change their settings
 				'actions'=>array('settings'),
 				'users'=>array('@'),
 			),
-			array('allow', // allow everyone to activate their user
-				'actions'=>array('activate'),
+			array('allow', // allow everyone to activate their user and create a new one (with registrationCode)
+				'actions'=>array('activate','create','createSuccess'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -108,7 +108,11 @@ class UserController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new User;
+		$isAdmin = (property_exists(Yii::app()->user, 'isAdmin') && Yii::app()->user->isAdmin);
+		if($isAdmin)
+			$model=new User;
+		else
+			$model=new User('anonReg');
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -120,7 +124,10 @@ class UserController extends Controller
 
 			if($this->saveUserAndHistory($model)) {
 				$this->sendActivationEmail($model);
-				$this->redirect(array('view','id'=>$model->id));
+				if($isAdmin)
+					$this->redirect(array('view','id'=>$model->id));
+				else
+					$this->redirect(array('createSuccess'));
 			}
 		}
 
@@ -129,6 +136,11 @@ class UserController extends Controller
 		$this->render('create',array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionCreateSuccess()
+	{
+		$this->render('createSuccess');
 	}
 
 	/**

@@ -14,6 +14,7 @@
  * @property float $rmax
  * @property float $tmax
  * @property boolean $viewboard
+ * @property string $registrationcode
  * @property integer $active
  * 
  *
