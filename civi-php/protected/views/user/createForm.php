@@ -1,3 +1,8 @@
+<?php
+
+$isAdmin = (property_exists(Yii::app()->user, 'isAdmin') && Yii::app()->user->isAdmin);
+
+?>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -25,10 +30,10 @@
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'email'); ?>
-		<?php echo Yii::t('app', 'user.registration.email'); ?>
+		<?php echo Yii::t('app', $isAdmin ? 'user.registration.email' : 'user.activation.email'); ?>
 	</div>
 
-<?php if(!(property_exists(Yii::app()->user, 'isAdmin') && Yii::app()->user->isAdmin)): ?>
+<?php if(!$isAdmin): ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'registrationCode'); ?>
 		<?php echo $form->textField($model,'registrationCode',array('size'=>60,'maxlength'=>128)); ?>

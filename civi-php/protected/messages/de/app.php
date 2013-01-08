@@ -115,6 +115,7 @@ return array (
   'sidebar.operations' => 'Aktionen',
   'site.motto' => 'Demokratisch Entscheidungsträger finden',
   'timestamp.format' => 'd.m.Y H:i:s',
+  'user.activation.email' => '<p class="note">Das Passwort kann erst nach Bestätigung der E-Mail-Adresse vergeben werden.</p>',
   'user.activation.success' => '<div class="alert alert-success"><p>Benutzer erfolgreich aktiviert.</p></div>',
   'user.create.button' => 'Erstellen',
   'user.deleteConfirmation' => 'Diese Person wirklich löschen?',

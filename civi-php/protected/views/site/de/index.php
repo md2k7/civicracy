@@ -17,6 +17,9 @@
 				</div>
 <?php */ ?>
 				<div class="register-box">
+					<p><a class="btn btn-primary btn-large" href="<?php echo $this->createUrl('/user/create'); ?>">Benutzer erstellen</a></p><p>Neu hier?</p>
+				</div>
+				<div class="register-box">
 					<p><a class="btn btn-primary btn-large" href="<?php echo $this->createUrl('/site/login'); ?>">Login</a></p><p>Ergebnisse betrachten und abstimmen.</p>
 				</div>
 			</div>
