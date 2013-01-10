@@ -60,7 +60,7 @@ class User extends CActiveRecord
 			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'settings'),
 			array('username, password, email, realname', 'length', 'max'=>128),
 			array('username, email, realname', 'length', 'max'=>128),
-			array('username, realname', 'isUniqueAttribute'),
+			array('username, realname, email', 'isUniqueAttribute'),
 			array('old_password', 'validOldPassword'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
