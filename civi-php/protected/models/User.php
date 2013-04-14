@@ -14,7 +14,15 @@
  * @property string $activationcode
  *
  * The followings are the available model relations:
+ *
  * @property Category[] $tblCategories
+ *
+ * The following scenarios are supported:
+ * - insert: used by admin to create a user
+ * - update: used by admin to change user's real name, e-mail or send her a new password
+ * - anonReg: register a new user anonymously (without being logged in) via registration code
+ * - activate: activate user via activation code (from e-mail) after registration
+ * - settings: user changing her profile
  */
 class User extends CActiveRecord
 {
@@ -43,6 +51,8 @@ class User extends CActiveRecord
 	}
 
 	/**
+	 * Validation rules. For supported scenarios, see class documentation comment above.
+	 *
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -54,14 +64,14 @@ class User extends CActiveRecord
 			array('password, repeat_password, old_password, registrationCode', 'default'),
 			array('registrationCode', 'required', 'on'=>'anonReg'),
 			array('registrationCode', 'validRegistrationCode', 'on'=>'anonReg'),
-			array('password', 'required', 'on'=>'settings'),
+			array('password', 'required', 'on'=>'activate'),
 			array('slogan', 'default'),
 			array('reset_password', 'default', 'value'=>false),
-			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>'settings'),
+			array('password', 'compare', 'compareAttribute'=>'repeat_password', 'on'=>array('settings', 'activate')),
 			array('username, password, email, realname', 'length', 'max'=>128),
 			array('username, email, realname', 'length', 'max'=>128),
 			array('username, realname, email', 'isUniqueAttribute'),
-			array('old_password', 'validOldPassword'),
+			array('old_password', 'validOldPassword', 'on'=>'settings'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('username, realname, slogan', 'safe', 'on'=>'search'),
@@ -288,6 +298,9 @@ class User extends CActiveRecord
 	 */
 	public function validatePassword($password)
 	{
+		if(empty($password))
+			return false;
+
 		// prevent DoS attacks
 		if(strlen($password) > 72)
 			throw new CException('Passwords must be 72 characters or less');
@@ -321,7 +334,17 @@ class User extends CActiveRecord
 		if(empty($this->password)) {
 			$this->password = $this->initialPassword;
 		} else {
-			if(!empty($this->old_password) && !$this->validatePassword($this->old_password))
+			/*
+			 * if initialPassword ("old" password from DB) is empty, we are either...
+			 *
+			 * - registering a new user (user/create via registration code), or
+			 * - activating a new user (user/activate via activation code).
+			 *
+			 * if we are the admin resetting a password, scenario will be 'update'.
+			 *
+			 * we can't check for a valid password in any of these cases.
+			 */
+			if(!empty($this->initialPassword) && $this->scenario != 'update' && !$this->validatePassword($this->old_password))
 				throw new CException("Internal error in User::beforeSave()"); // we should've validated before
 			$this->createPasswordHash();
 		}
@@ -414,7 +437,7 @@ class User extends CActiveRecord
 	public function validOldPassword($attribute, $params)
 	{
 		if(!empty($this->password))
-			if(!empty($this->old_password) && !$this->validatePassword($this->old_password))
+			if(!$this->validatePassword($this->old_password))
 				$this->addError($attribute, Yii::t('app', 'models.old_password.invalid'));
 	}
 

@@ -64,7 +64,7 @@ class UserController extends Controller
 		$valid = ($user !== null && $user->activationcode !== null && $user->activationcode == $code);
 
 		if($valid && isset($_POST['User'])) {
-			$user->scenario = 'settings';
+			$user->scenario = 'activate';
 			$user->attributes = $_POST['User'];
 			$user->active = true;
 			$user->activationcode = null;
