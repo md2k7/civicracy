@@ -27,7 +27,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform the actions
-				'actions'=>array('index','view','update','admin','settings','delete', 'import'),
+				'actions'=>array('index','view','update','admin','settings','delete', 'import', 'resendActivationMail'),
 				'users'=>array('admin'),
 			),
 			array('allow', // allow all authenticated users to change their settings
@@ -136,6 +136,15 @@ class UserController extends Controller
 		$this->render('create',array(
 			'model'=>$model,
 		));
+	}
+
+	/**
+	 * Resend activation e-mail. Useful if it hasn't been received for some reason.
+	 */
+	public function actionResendActivationMail($id)
+	{
+		$model = $this->loadModel($id);
+		$this->sendActivationEmail($model);
 	}
 
 	public function actionCreateSuccess()
